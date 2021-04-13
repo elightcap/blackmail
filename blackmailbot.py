@@ -15,8 +15,15 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 client = discord.Client()
 timeout = 7200.0
+bot = commands.Bot(command_prefix='.'
+@bot.event
+async def on_ready():
+     removeRole.start()
+     print('bot is active')
 
-async def removeRole();
+@tasks.loop(seconds=10)
+async def removeRole():
+     channel = bot.getchannel(setup)
      remove = "!mass-role remove @everyone @blackmailer"
      send = await message.channel.send(remove)
      time.sleep(5)
@@ -26,7 +33,4 @@ async def removeRole();
      await send.delete()
      await send2.delete()
 
-l = task.LoopingCall(removeRole)
-l.start(timeout)
-
-reactor.run()
+bot.run(token)
