@@ -43,6 +43,9 @@ async def on_message(message):
           aID = message.author.id
           sAmount = case.replace("!buyin ", "")
           amount = int(sAmount)
+          if amount <= 1:
+               mes = "Must buy minimum 2 chips"
+               return
           url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
           r = requests.get(url, headers=headers)
           json_data = json.loads(r.text)
