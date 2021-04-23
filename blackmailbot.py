@@ -89,8 +89,8 @@ async def on_message(message):
           #          print("user doesnt have chips")
           #          mes = "ya broke"
           #          await message.channel.send(mes)
-
-     if message.author.id == pokerBotID and "done!" in case:
+     print(message.author.id)
+     if message.author.id == 613156357239078913 and "done!" in case:
           print("users got the chips")
           payout = str((amount//3)*.9)
           rake = str((amount//3)*.1)
