@@ -40,7 +40,7 @@ async def on_message(message):
          r = requests.get(url, headers=headers)
          json_data = json.loads(r.text)
          print(json_data)
-         uMoney = json_data['cash']
+         uMoney = int(json_data['cash'])
          cost = amount//3
          if uMoney < cost:
               mes = "Not even money. Loser."
