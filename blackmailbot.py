@@ -72,7 +72,7 @@ async def on_message(message):
           @client.event
           async def on_response(message):
                def check(m):
-                    return user == pokerBotID
+                    return "done!" in m.content and m.channel == channel
 
                message = await client.wait_for('message', check=check)
                if "done!" in message.content:
