@@ -73,8 +73,8 @@ async def on_message(message):
           send = await message.channel.send(mes)
 
           @client.event
-          async def on_message_edit(message):
-               print(message)
+          async def on_message_edit():
+               print(self)
                def check(m):
                     return message.mentions[0] == pokerBotID
           
