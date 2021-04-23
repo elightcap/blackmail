@@ -51,7 +51,8 @@ async def on_message(message):
          else:
               mes = "!pac {0.author.mention} {1}".format(message, amount)
               send = await message.channel.send(mes)
-
+              builder = {"cash: {}".format(cost)}
+              rp = requests.patch(url, headers=headers, data=builder)
 
 
 
