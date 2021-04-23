@@ -2,6 +2,7 @@ import os
 import requests
 import discord
 import json
+import math
 from discord.ext import tasks, commands
 from dotenv import load_dotenv
 
@@ -27,7 +28,7 @@ async def get_all_members_ids(discguild):
 
 
 @client.event
-async def on_message(message)
+async def on_message(message):
     if message.author == client.user:
         return
     msg = message.content
@@ -39,6 +40,13 @@ async def on_message(message)
          r = requests.get(url, headers=headers)
          json_data = json.loads{r.text}
          uMoney = json_data['cash']
+         cost = amount//3
+         if uMoney < cost:
+              mes = "Not even money. Loser."
+              send = await message.channel.send(mes)
+              return
+          else:
+               mes = "!pac {0.authut.mention} {}".format(message, amount)
 
 
 
