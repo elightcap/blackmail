@@ -19,7 +19,7 @@ client = discord.Client(intents=intents)
 headers = {'Authorization': unbkey}
 
 
-@tasks.loop(seconds=5)
+@tasks.loop(minutes=120)
 async def get_all_members_ids(discguild):
      for guild in client.guilds:
           for member in guild.members:
@@ -28,6 +28,7 @@ async def get_all_members_ids(discguild):
                          role = discord.utils.get(
                               member.guild.roles, name="Blackmailer")
                          await member.remove_roles(role)
+                         print("{} removed from blackmailers".format(str(member))
 
 
 @client.event
