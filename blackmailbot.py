@@ -78,8 +78,9 @@ async def on_message(message):
 
           @client.event
           async def on_raw_message_edit(edit):
-               for key in edit.keys():
-                    print(key)
+               print(edit)
+               #for key in edit.keys():
+               #     print(key)
                if "done! I removed" in str(edit):
                     print("user has chips")
                     payout = str((amount//2)*.9)
