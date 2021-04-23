@@ -28,7 +28,7 @@ async def get_all_members_ids(discguild):
                          role = discord.utils.get(
                               member.guild.roles, name="Blackmailer")
                          await member.remove_roles(role)
-                         print("{} removed from blackmailers".format(str(member))
+                         print("{} removed from blackmailers".format(str(member)))
 
 
 @client.event
