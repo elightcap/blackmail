@@ -78,7 +78,8 @@ async def on_message(message):
 
           @client.event
           async def on_raw_message_edit(edit):
-               print(edit)
+               for key in edit.keys():
+                    print(key)
                if "done! I removed" in str(edit):
                     print("user has chips")
                     payout = str((amount//2)*.9)
@@ -93,7 +94,7 @@ async def on_message(message):
                else:
                     print("user doesnt have chips")
                     mes = "ya broke"
-                    await message.channel.send(mes)
+                    send = await message.channel.send(mes)
      #print(case)
      #if message.author.id == 613156357239078913 and "done!" in case:
      #     print("users got the chips")
