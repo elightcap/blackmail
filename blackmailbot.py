@@ -33,12 +33,13 @@ async def on_message(message):
         return
     msg = message.content
     case = msg.lower()
-    if "!buy chips" in case:
+    if "!get chips" in case:
          aID = message.author.id
          amount = case.replace("!price ", "")
          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
          r = requests.get(url, headers=headers)
          json_data = json.loads(r.text)
+         print(json_data)
          uMoney = json_data['cash']
          cost = amount//3
          if uMoney < cost:
