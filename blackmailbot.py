@@ -48,7 +48,7 @@ async def on_message(message):
           uMoney = int(strMoney)
           cost = amount//3
           if uMoney < cost:
-               mes = "Not even money. Loser."
+               mes = "Not enough money. Loser."
                send = await message.channel.send(mes)
                return
           else:
@@ -59,7 +59,7 @@ async def on_message(message):
                jsonString = json.dumps(builder, indent=4)
                rp = requests.patch(url, headers=headers, data=jsonString)
                print(jsonString)
-               
+
      if "!exchange chips" in case:
           aID = message.author.id
           sAmount = case.replace("!exchange chips ", "")
@@ -76,7 +76,7 @@ async def on_message(message):
                payout = str(amount*3)
                builder = {'cash': payout}
                jsonString = json.dumps(builder, indent=4)
-               rp = requests.patch(url, headers=headers, data=)
+               rp = requests.patch(url, headers=headers, data=jsonString)
 
           else:
                mes = "ya broke"
