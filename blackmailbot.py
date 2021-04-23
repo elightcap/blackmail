@@ -18,13 +18,15 @@ intents.members = True
 client = discord.Client(intents=intents)
 headers = {'Authorization': unbkey}
 
+
 @tasks.loop(seconds=5)
 async def get_all_members_ids(discguild):
      for guild in client.guilds:
           for member in guild.members:
                for role in member.roles:
                     if role.name == "Blackmailer":
-                         role = discord.utils.get(member.guild.roles, name="Blackmailer")
+                         role = discord.utils.get(
+                             member.guild.roles, name="Blackmailer")
                          await member.remove_roles(role)
 
 
@@ -38,7 +40,8 @@ async def on_message(message):
          aID = message.author.id
          sAmount = case.replace("!get chips ", "")
          amount = int(sAmount)
-         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
+         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(
+             aID)
          r = requests.get(url, headers=headers)
          json_data = json.loads(r.text)
          print(json_data)
@@ -52,17 +55,18 @@ async def on_message(message):
          else:
               mes = "!pac {0.author.mention} {1}".format(message, amount)
               send = await message.channel.send(mes)
-              nCost = '-'+ str(cost)
+              nCost = '-' + str(cost)
               builder = {'cash': nCost}
               jsonString = json.dumps(builder, indent=4)
               rp = requests.patch(url, headers=headers, data=jsonString)
               print(jsonString)
 
-     if "!exchange chips" in case:
+    if "!exchange chips" in case:
          aID = message.author.id
          sAmount = case.replace("!exchange chips ", "")
          amount = int(sAmount)
-         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
+         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(
+             aID)
          mes = "!prc {}".format(sAmount)
          send = await message.channel.send(mes)
 
