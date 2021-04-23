@@ -82,7 +82,7 @@ async def on_message(message):
                     rp = requests.patch(url, headers=headers, data=jsonString)
 
                else:
-                    print "user doesnt have chips"
+                    print("user doesnt have chips")
                     mes = "ya broke"
                     await message.channel.send(mes)
 
