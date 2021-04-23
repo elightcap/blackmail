@@ -45,15 +45,16 @@ async def on_message(message):
           url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
           r = requests.get(url, headers=headers)
           json_data = json.loads(r.text)
-          print(json_data)
           strMoney = json_data['cash']
           uMoney = int(strMoney)
           cost = amount//3
           if uMoney < cost:
+               print("broke bitch")
                mes = "Not enough money. Loser."
                send = await message.channel.send(mes)
                return
           else:
+               print("buyin")
                mes = "!pac {0.author.mention} {1}".format(message, amount)
                send = await message.channel.send(mes)
                nCost = '-' + str(cost)
@@ -69,7 +70,6 @@ async def on_message(message):
           url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
           mes = "!prc {0.author.mention} {1}".format(message, sAmount)
           send = await message.channel.send(mes)
-          print(message.author)
 
           #@client.event
           #async def on_message(message):
