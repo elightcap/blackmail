@@ -52,9 +52,9 @@ async def on_message(message):
               #mes = "!pac {0.author.mention} {1}".format(message, amount)
               #send = await message.channel.send(mes)
               builder = {"cash: {}".format(cost)}
+              jsonString = json.dumps(builder, indent=4)
               #rp = requests.patch(url, headers=headers, data=builder)
-              print(builder)
-              print(url)
+              print(jsonString)
 
 
 
