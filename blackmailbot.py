@@ -79,7 +79,7 @@ async def on_message(message):
           @client.event
           async def on_raw_message_edit(message):
                print(message)
-               if "done! I removed" in message:
+               if "done! I removed" in str(message):
                     print("user has chips")
                     payout = str((amount//2)*.9)
                     rake = str((amount//2)*.1)
