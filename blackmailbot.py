@@ -49,10 +49,11 @@ async def on_message(message):
               send = await message.channel.send(mes)
               return
          else:
-              mes = "!pac {0.author.mention} {1}".format(message, amount)
-              send = await message.channel.send(mes)
+              #mes = "!pac {0.author.mention} {1}".format(message, amount)
+              #send = await message.channel.send(mes)
               builder = {"cash: {}".format(cost)}
-              rp = requests.patch(url, headers=headers, data=builder)
+              #rp = requests.patch(url, headers=headers, data=builder)
+              print(builder)
               print(url)
 
 
