@@ -58,7 +58,7 @@ async def on_message(message):
               rp = requests.patch(url, headers=headers, data=jsonString)
               print(jsonString)
 
-     if "!exchange chips" in case
+     if "!exchange chips" in case:
          aID = message.author.id
          sAmount = case.replace("!exchange chips ", "")
          amount = int(sAmount)
