@@ -45,6 +45,7 @@ async def on_message(message):
           amount = int(sAmount)
           if amount <= 1:
                mes = "Must buy minimum 2 chips"
+               send = await message.channel.send(mes)
                return
           url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
           r = requests.get(url, headers=headers)
@@ -76,12 +77,8 @@ async def on_message(message):
           send = await message.channel.send(mes)
 
           @client.event
-          async def on_message_edit():
-               print(self)
-               def check(m):
-                    return message.mentions[0] == pokerBotID
-          
-               message = await client.wait_for('message', check=check)
+          async def on_raw_message_edit():
+               print(message)
                if "done!" in message.content:
                     print("user has chips")
                     payout = str((amount//2)*.9)
