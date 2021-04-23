@@ -16,6 +16,7 @@ client = discord.Client()
 Blackmail_role_name = "Blackmailer"
 intents = discord.Intents.default()
 intents.members = True
+intents.messages=True
 client = discord.Client(intents=intents)
 headers = {'Authorization': unbkey}
 
@@ -71,36 +72,36 @@ async def on_message(message):
           mes = "!prc {0.author.mention} {1}".format(message, sAmount)
           send = await message.channel.send(mes)
 
-          #@client.event
-          #async def on_message(message):
-          #     print(message)
-          #     def check(m):
-          #          return message.mentions[0] == pokerBotID
-          #
-          #     message = await client.wait_for('message', check=check)
-          #     if "done!" in message.content:
-          #          print("user has chips")
-          #          payout = str(amount*3)
-          #          builder = {'cash': payout}
-          #          jsonString = json.dumps(builder, indent=4)
-          #          rp = requests.patch(url, headers=headers, data=jsonString)
-          #
-          #     else:
-          #          print("user doesnt have chips")
-          #          mes = "ya broke"
-          #          await message.channel.send(mes)
-     print(case)
-     if message.author.id == 613156357239078913 and "done!" in case:
-          print("users got the chips")
-          payout = str((amount//3)*.9)
-          rake = str((amount//3)*.1)
-          payBuilder = {'cash': payout}
-          rakeBuilder = {'bank': rake}
-          payJson = json.dumps(payBuilder, indent=4)
-          rakeJson = json.dumps(rakeBuilder, indent=4)
-          rp = requests.patch(url, headers=headers, data=payJson)
-          rr = requests.patch(botUrl, headers=headers, data=rakeJson)
+          @client.event
+          async def on_raw_message_edit(message):
+               print(message)
+               def check(m):
+                    return message.mentions[0] == pokerBotID
           
+               message = await client.wait_for('message', check=check)
+               if "done!" in message.content:
+                    print("user has chips")
+                    payout = str(amount*3)
+                    builder = {'cash': payout}
+                    jsonString = json.dumps(builder, indent=4)
+                    rp = requests.patch(url, headers=headers, data=jsonString)
+          
+               else:
+                    print("user doesnt have chips")
+                    mes = "ya broke"
+                    await message.channel.send(mes)
+     #print(case)
+     #if message.author.id == 613156357239078913 and "done!" in case:
+     #     print("users got the chips")
+     #     payout = str((amount//3)*.9)
+     #     rake = str((amount//3)*.1)
+     #     payBuilder = {'cash': payout}
+     #     rakeBuilder = {'bank': rake}
+     #     payJson = json.dumps(payBuilder, indent=4)
+     #     rakeJson = json.dumps(rakeBuilder, indent=4)
+     #     rp = requests.patch(url, headers=headers, data=payJson)
+     #     rr = requests.patch(botUrl, headers=headers, data=rakeJson)
+     #     
 
 
 get_all_members_ids.start(GUILD)
