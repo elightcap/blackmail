@@ -77,9 +77,9 @@ async def on_message(message):
           send = await message.channel.send(mes)
 
           @client.event
-          async def on_raw_message_edit(message):
-               print(message)
-               if "done! I removed" in str(message):
+          async def on_raw_message_edit(edit):
+               print(edit)
+               if "done! I removed" in str(edit):
                     print("user has chips")
                     payout = str((amount//2)*.9)
                     rake = str((amount//2)*.1)
