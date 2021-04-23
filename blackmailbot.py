@@ -67,6 +67,7 @@ async def on_message(message):
           url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
           mes = "!prc {0.author.mention} {1}".format(message, sAmount)
           send = await message.channel.send(mes)
+          print(message.author)
 
           @client.event
           async def on_response(message):
