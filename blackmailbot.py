@@ -73,30 +73,32 @@ async def on_message(message):
           send = await message.channel.send(mes)
 
           @client.event
-          async def on_message(message):
-               if message.author.id == 613156357239078913:
-                    async def on_message_edit(message):          
-                         print(message)
-                         if "done!" in message.content:
-                              print("user has chips")
-                              payout = str((amount//2)*.9)
-                              rake = str((amount//2)*.1)
-                              payBuilder = {'cash': payout}
-                              rakeBuilder = {'bank': rake}
-                              payJson = json.dumps(payBuilder, indent=4)
-                              rakeJson = json.dumps(rakeBuilder, indent=4)
-                              rp = requests.patch(url, headers=headers, data=payJson)
-                              rr = requests.patch(botUrl, headers=headers, data=rakeJson)
-
-                         else:
-                              print("user doesnt have chips")
-                              mes = "ya broke"
-                              await message.channel.send(mes)
+          async def on_message_edit(message):
+               print(message)
+               def check(m):
+                    return message.mentions[0] == pokerBotID
+          
+               message = await client.wait_for('message', check=check)
+               if "done!" in message.content:
+                    print("user has chips")
+                    payout = str((amount//2)*.9)
+                    rake = str((amount//2)*.1)
+                    payBuilder = {'cash': payout}
+                    rakeBuilder = {'bank': rake}
+                    payJson = json.dumps(payBuilder, indent=4)
+                    rakeJson = json.dumps(rakeBuilder, indent=4)
+                    rp = requests.patch(url, headers=headers, data=payJson)
+                    rr = requests.patch(botUrl, headers=headers, data=rakeJson)
+          
+               else:
+                    print("user doesnt have chips")
+                    mes = "ya broke"
+                    await message.channel.send(mes)
      #print(case)
      #if message.author.id == 613156357239078913 and "done!" in case:
      #     print("users got the chips")
-     #     payout = str((amount//3)*.9)
-     #     rake = str((amount//3)*.1)
+     #     payout = str((amount//2s)*.9)
+     #     rake = str((amount//2)*.1)
      #     payBuilder = {'cash': payout}
      #     rakeBuilder = {'bank': rake}
      #     payJson = json.dumps(payBuilder, indent=4)
