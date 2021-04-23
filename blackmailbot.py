@@ -10,8 +10,8 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 unbkey = os.getenv('UNBKEY')
-pokerBotID = "@Poker Now Bot#8842"
-botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/botid"
+pokerBotID = "613156357239078913"
+botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156357239078913"
 client = discord.Client()
 Blackmail_role_name = "Blackmailer"
 intents = discord.Intents.default()
