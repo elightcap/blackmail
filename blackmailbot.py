@@ -10,6 +10,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 unbkey = os.getenv('UNBKEY')
+pokerBotID = "613156357239078913"
 client = discord.Client()
 Blackmail_role_name = "Blackmailer"
 intents = discord.Intents.default()
@@ -56,6 +57,33 @@ async def on_message(message):
               jsonString = json.dumps(builder, indent=4)
               rp = requests.patch(url, headers=headers, data=jsonString)
               print(jsonString)
+
+     if "!exchange chips" in case
+         aID = message.author.id
+         sAmount = case.replace("!exchange chips ", "")
+         amount = int(sAmount)
+         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
+         mes = "!prc {}".format(sAmount)
+         send = await message.channel.send(mes)
+
+         def check(user):
+              return user == pokerBotID
+
+          message = await client.wait_for('message',check=check)
+          if "Done!" in message.content:
+               payout = str(amount*3)
+               builder = {'cash': payout}
+               jsonString = json.dumps(builder, indent=4)
+               rp = requests.patch(url, headers=headers, data = )
+
+          else:
+               mes = "ya broke"
+               await message.channel.send(mes)
+          
+
+         
+
+
 
 
 
