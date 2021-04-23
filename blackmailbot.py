@@ -35,7 +35,7 @@ async def on_message(message):
     case = msg.lower()
     if "!get chips" in case:
          aID = message.author.id
-         amount = case.replace("!price ", "")
+         amount = case.replace("!get chips ", "")
          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(aID)
          r = requests.get(url, headers=headers)
          json_data = json.loads(r.text)
