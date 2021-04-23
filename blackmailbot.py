@@ -49,7 +49,7 @@ async def on_message(message):
               send = await message.channel.send(mes)
               return
          else:
-              mes = "!pac {0.authur.mention} {}".format(message, amount)
+              mes = "!pac {0.author.mention} {}".format(message, amount)
 
 
 
