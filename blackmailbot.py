@@ -34,8 +34,8 @@ async def get_all_members_ids(discguild):
 
 @client.event
 async def on_message(message):
-     #if message.author == client.user:
-     #   return
+     if message.author == client.user:
+        return
      msg = message.content
      case = msg.lower()
      if "!buyin" in case:
@@ -89,7 +89,7 @@ async def on_message(message):
           #          print("user doesnt have chips")
           #          mes = "ya broke"
           #          await message.channel.send(mes)
-     print(message.author.id)
+     print(case)
      if message.author.id == 613156357239078913 and "done!" in case:
           print("users got the chips")
           payout = str((amount//3)*.9)
