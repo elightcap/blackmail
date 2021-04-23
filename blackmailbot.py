@@ -45,8 +45,8 @@ async def on_message(message):
               mes = "Not even money. Loser."
               send = await message.channel.send(mes)
               return
-          else:
-               mes = "!pac {0.authut.mention} {}".format(message, amount)
+         else:
+              mes = "!pac {0.authut.mention} {}".format(message, amount)
 
 
 
