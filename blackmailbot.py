@@ -47,18 +47,19 @@ async def on_message(message):
           strMoney = json_data['cash']
           uMoney = int(strMoney)
           cost = amount//3
-               if uMoney < cost:
-                    mes = "Not even money. Loser."
-                    send = await message.channel.send(mes)
-                    return
-               else:
-                    mes = "!pac {0.author.mention} {1}".format(message, amount)
-                    send = await message.channel.send(mes)
-                    nCost = '-' + str(cost)
-                    builder = {'cash': nCost}
-                    jsonString = json.dumps(builder, indent=4)
-                    rp = requests.patch(url, headers=headers, data=jsonString)
-                    print(jsonString) 
+          if uMoney < cost:
+               mes = "Not even money. Loser."
+               send = await message.channel.send(mes)
+               return
+          else:
+               mes = "!pac {0.author.mention} {1}".format(message, amount)
+               send = await message.channel.send(mes)
+               nCost = '-' + str(cost)
+               builder = {'cash': nCost}
+               jsonString = json.dumps(builder, indent=4)
+               rp = requests.patch(url, headers=headers, data=jsonString)
+               print(jsonString)
+               
      if "!exchange chips" in case:
           aID = message.author.id
           sAmount = case.replace("!exchange chips ", "")
