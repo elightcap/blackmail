@@ -77,7 +77,7 @@ async def on_message(message):
           send = await message.channel.send(mes)
 
           @client.event
-          async def on_raw_message_edit():
+          async def on_raw_message_edit(message):
                print(message)
                if "done!" in message.content:
                     print("user has chips")
