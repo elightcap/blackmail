@@ -32,8 +32,8 @@ async def get_all_members_ids(discguild):
 
 @client.event
 async def on_message(message):
-     if message.author == client.user:
-        return
+     #if message.author == client.user:
+     #   return
      msg = message.content
      case = msg.lower()
      if "!get chips" in case:
@@ -72,15 +72,17 @@ async def on_message(message):
           async def on_response(message):
                def check(m):
                     return user == pokerBotID
-     
+
                message = await client.wait_for('message', check=check)
                if "done!" in message.content:
+                    print("user has chips")
                     payout = str(amount*3)
                     builder = {'cash': payout}
                     jsonString = json.dumps(builder, indent=4)
                     rp = requests.patch(url, headers=headers, data=jsonString)
-     
+
                else:
+                    print "user doesnt have chips"
                     mes = "ya broke"
                     await message.channel.send(mes)
 
