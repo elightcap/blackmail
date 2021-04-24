@@ -78,11 +78,11 @@ async def on_message(message):
 
           @client.event
           async def on_raw_message_edit(edit):
-               print(edit.data)
                msgData = edit.data
                editID = msgData['id']
                if editID == pokerBotID:
-                    print(editID)
+                    #print(edit.data)
+                    #print(editID)
                     #for key in edit.keys():
                     #     print(key)
                     if "done! I removed" in str(edit):
@@ -95,7 +95,7 @@ async def on_message(message):
                          rakeJson = json.dumps(rakeBuilder, indent=4)
                          rp = requests.patch(url, headers=headers, data=payJson)
                          rr = requests.patch(botUrl, headers=headers, data=rakeJson)
-               
+
                     else:
                          print("user doesnt have chips")
                          mes = "ya broke"
