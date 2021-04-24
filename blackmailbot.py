@@ -79,6 +79,9 @@ async def on_message(message):
           @client.event
           async def on_raw_message_edit(edit):
                print(edit.data)
+               msgData = edit.data
+               editID = msgData['id']
+               print(editID)
                #for key in edit.keys():
                #     print(key)
                if "done! I removed" in str(edit):
