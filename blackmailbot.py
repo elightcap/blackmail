@@ -80,8 +80,8 @@ async def on_message(message):
           async def on_raw_message_edit(edit):
                msgData = edit.data
                editID = str(msgData['id'])
-               print pokerBotID
-               print editID
+               print(pokerBotID)
+               print(editID)
                return editID == pokerBotID
                if editID == pokerBotID:
                     #print(edit.data)
