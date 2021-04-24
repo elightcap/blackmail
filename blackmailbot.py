@@ -79,7 +79,7 @@ async def on_message(message):
           @client.event
           async def on_raw_message_edit(edit):
                msgData = edit.data
-               editID = str(msgData['id'])
+               editID = str(msgData['author']['id'])
                print(pokerBotID)
                print(editID)
                print(edit.data)
