@@ -99,7 +99,7 @@ async def on_message(message):
                          rp = requests.patch(url, headers=headers, data=payJson)
                          rr = requests.patch(botUrl, headers=headers, data=rakeJson)
 
-                    else:
+                    elif "this user only has" in str(edit):
                          print("user doesnt have chips")
                          mes = "ya broke"
                          send = await message.channel.send(mes)
