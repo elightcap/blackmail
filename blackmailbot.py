@@ -81,24 +81,25 @@ async def on_message(message):
                print(edit.data)
                msgData = edit.data
                editID = msgData['id']
-               print(editID)
-               #for key in edit.keys():
-               #     print(key)
-               if "done! I removed" in str(edit):
-                    print("user has chips")
-                    payout = str((amount//2)*.9)
-                    rake = str((amount//2)*.1)
-                    payBuilder = {'cash': payout}
-                    rakeBuilder = {'bank': rake}
-                    payJson = json.dumps(payBuilder, indent=4)
-                    rakeJson = json.dumps(rakeBuilder, indent=4)
-                    rp = requests.patch(url, headers=headers, data=payJson)
-                    rr = requests.patch(botUrl, headers=headers, data=rakeJson)
-          
-               else:
-                    print("user doesnt have chips")
-                    mes = "ya broke"
-                    send = await message.channel.send(mes)
+               if editID == pokerBotID:
+                    print(editID)
+                    #for key in edit.keys():
+                    #     print(key)
+                    if "done! I removed" in str(edit):
+                         print("user has chips")
+                         payout = str((amount//2)*.9)
+                         rake = str((amount//2)*.1)
+                         payBuilder = {'cash': payout}
+                         rakeBuilder = {'bank': rake}
+                         payJson = json.dumps(payBuilder, indent=4)
+                         rakeJson = json.dumps(rakeBuilder, indent=4)
+                         rp = requests.patch(url, headers=headers, data=payJson)
+                         rr = requests.patch(botUrl, headers=headers, data=rakeJson)
+               
+                    else:
+                         print("user doesnt have chips")
+                         mes = "ya broke"
+                         send = await message.channel.send(mes)
      #print(case)
      #if message.author.id == 613156357239078913 and "done!" in case:
      #     print("users got the chips")
