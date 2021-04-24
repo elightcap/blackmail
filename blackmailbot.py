@@ -82,8 +82,7 @@ async def on_message(message):
                editID = str(msgData['author']['id'])
                print(pokerBotID)
                print(editID)
-               print(edit.data)
-               return editID == pokerBotID
+               #print(edit.data)
                if editID == pokerBotID:
                     #print(edit.data)
                     #print(editID)
