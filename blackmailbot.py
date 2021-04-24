@@ -78,7 +78,7 @@ async def on_message(message):
 
           @client.event
           async def on_raw_message_edit(edit):
-               print(edit)
+               print(edit.data)
                #for key in edit.keys():
                #     print(key)
                if "done! I removed" in str(edit):
