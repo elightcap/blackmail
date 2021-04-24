@@ -85,7 +85,7 @@ async def on_message(message):
                #print(edit.data)
                if editID == pokerBotID:
                     #print(edit.data)
-                    #print(editID)
+                    print("in for loop")
                     #for key in edit.keys():
                     #     print(key)
                     if "done! I removed" in str(edit):
