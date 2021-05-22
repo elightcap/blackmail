@@ -136,9 +136,11 @@ async def on_message(message):
          if "patent troll" in roles:
                aID = message.author.id
                loser = case.replace("!strike ","")
-               if loser != "":
-                    pt = discord.utils.get(message.guild.roles, name="Patent Troll")
-                    await message.author.remove_roles(pt)
+               if loser == "":
+                    mes = "choose somebody to copystrike"
+                    send = await message.channel.send(mes)
+                    return
+               else:
                     loser = int(loser.replace("<@!","").replace(">",""))
                     person = message.guild.get_member(loser)
                     loserroles = [x.name.lower() for x in person.roles]
