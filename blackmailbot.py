@@ -159,11 +159,11 @@ async def on_message(message):
                          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
                          r = requests.get(url, headers=headers)
                          json_data = json.loads(r.text)
-                         strMoney = json_data['cash']
+                         strMoney = json_data['total']
                          uMoney = float(strMoney)
                          percent = float(uMoney*.3)
                          fee = '-' + str(int(percent))
-                         builder = {'cash': fee}
+                         builder = {'total': fee}
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(url, headers=headers, data=jsonString)
                          mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,fee)
