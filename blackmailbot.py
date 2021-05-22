@@ -134,11 +134,11 @@ async def on_message(message):
      elif "!strike" in case:
          roles = [y.name.lower() for y in message.author.roles]
          if "patent troll" in roles:
-               pt = discord.utils.get(message.guild.roles, name="Patent Troll")
-               await message.author.remove_roles(pt)
                aID = message.author.id
                loser = case.replace("!strike ","")
-               if loser:
+               if loser != "":
+                    pt = discord.utils.get(message.guild.roles, name="Patent Troll")
+                    await message.author.remove_roles(pt)
                     loser = int(loser.replace("<@!","").replace(">",""))
                     person = message.guild.get_member(loser)
                     loserroles = [x.name.lower() for x in person.roles]
