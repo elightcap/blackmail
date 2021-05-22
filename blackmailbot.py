@@ -135,9 +135,9 @@ async def on_message(message):
          roles = [y.name.lower() for y in message.author.roles]
          if "patent troll" in roles:
                aID = message.author.id
-               loser = await case.replace("!strike ","")
+               loser = case.replace("!strike ","")
                print(loser)
-               if loser == "":
+               if len(loser) < 8 :
                     mes = "choose somebody to copystrike"
                     send = await message.channel.send(mes)
                     return
@@ -168,6 +168,8 @@ async def on_message(message):
                          rp = requests.patch(url, headers=headers, data=jsonString)
                          mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,fee)
                          send = await message.channel.send(mes)
+                    pt = discord.utils.get(message.guild.roles, name="Patent Troll")
+                    await message.author.remove_roles(pt)
 
 
 get_all_members_ids.start(GUILD)
