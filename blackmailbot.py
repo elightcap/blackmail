@@ -128,10 +128,16 @@ async def on_message(message):
          if "patent troll" in roles:
                aID = message.author.id
                loser = case.replace("!strike ","")
-               loser = loser.replace("<@","").replace(">","")
-               print(loser)
-               loserroles = discord.utils.get(member.roles, id=loser)
-               print(loserroles)
+               loser = loser.replace("<@!","").replace(">","")
+               loserroles = message.guild.get_member(loser)
+               if "Lawyer'd Up" in loserroles:
+                    return
+               elif "Public Defender" in loserroles:
+                    pd = discord.utils.get(
+                              message.guild.roles, name="Blackmailer")
+                    await loser.remove_roles(pd)
+               else:
+                    print("fucked")
 
 
 get_all_members_ids.start(GUILD)
