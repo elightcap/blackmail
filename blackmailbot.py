@@ -130,7 +130,8 @@ async def on_message(message):
                loser = case.replace("!strike ","")
                loser = loser.replace("<@","").replace(">","")
                print(loser)
-               loser2 = get_user(loser)
+               loserroles = discord.utils.get(member.roles, id=loser)
+               print(loserroles)
 
 
 get_all_members_ids.start(GUILD)
