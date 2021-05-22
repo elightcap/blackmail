@@ -166,7 +166,7 @@ async def on_message(message):
                          percentCash = float(uCash*.3)
                          percentBank = float(uBank*.3)
                          feeCash = '-' + str(int(percentCash))
-                         feeBank = '-' + str(int(strBank))
+                         feeBank = '-' + str(int(percentBank))
                          builder = {'cash': feeCash, 'Bank':feeBank}
                          total = str(percentBank + percentCash)
                          jsonString = json.dumps(builder, indent=4)
