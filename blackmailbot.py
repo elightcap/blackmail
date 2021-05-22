@@ -139,7 +139,16 @@ async def on_message(message):
                               message.guild.roles, name="Public Defender")
                     await person.remove_roles(pd)
                else:
-                    print("fucked")
+                    url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
+                    r = requests.get(url, headers=headers)
+                    json_data = json.loads(r.text)
+                    strMoney = json_data['cash']
+                    uMoney = float(strMoney)
+                    percent = float(amount*.3)
+                    fee = '-' + str(int(percent))
+                    builder = {'cash': fee}
+                    jsonString = json.dumps(builder, indent=4)
+                    rp = requests.patch(url, headers=headers, data=jsonString)
 
 
 get_all_members_ids.start(GUILD)
