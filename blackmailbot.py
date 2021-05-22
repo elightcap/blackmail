@@ -131,6 +131,9 @@ async def on_message(message):
                          print("user doesnt have chips")
                          mes = "ya broke"
                          send = await message.channel.send(mes)
+     ###strike function to remove 30% of money from targeted user.
+     ###person calling must have the "Patent Troll" role, and
+     ###will fail if the target has either of the lawyer roles
      elif "!strike" in case:
          roles = [y.name.lower() for y in message.author.roles]
          if "patent troll" in roles:
@@ -168,7 +171,7 @@ async def on_message(message):
                          feeCash = '-' + str(int(percentCash))
                          feeBank = '-' + str(int(percentBank))
                          builder = {'cash': feeCash, 'bank':feeBank}
-                         total = str(percentBank + percentCash)
+                         total = str(int(percentBank + percentCash))
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(url, headers=headers, data=jsonString)
                          mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,total)
