@@ -136,6 +136,7 @@ async def on_message(message):
          if "patent troll" in roles:
                aID = message.author.id
                loser = case.replace("!strike ","")
+               print(loser)
                if loser == "":
                     mes = "choose somebody to copystrike"
                     send = await message.channel.send(mes)
