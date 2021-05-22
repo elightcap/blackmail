@@ -130,11 +130,10 @@ async def on_message(message):
                loser = case.replace("!strike ","")
                loser = int(loser.replace("<@!","").replace(">",""))
                person = message.guild.get_member(loser)
-               print(person.roles)
                loserroles = [x.name.lower for x in person.roles]
-               if "Lawyer'd Up" in loserroles:
+               if "lawyer'd up" in loserroles:
                     return
-               elif "Public Defender" in loserroles:
+               elif "public defender" in loserroles:
                     pd = discord.utils.get(
                               message.guild.roles, name="Blackmailer")
                     await loser.remove_roles(pd)
