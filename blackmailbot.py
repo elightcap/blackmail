@@ -41,7 +41,7 @@ async def get_all_members_ids(discguild):
                          await member.remove_roles(role)
                          print("{} removed from blackmailers".format(str(member)))
 
-@tasks.loop(days=7)
+@tasks.loop(hours=168)
 async def remove_lawyer(discguild):
      for guild in client.guilds:
           for member in guild.members:
