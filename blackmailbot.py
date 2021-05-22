@@ -129,8 +129,9 @@ async def on_message(message):
                aID = message.author.id
                loser = case.replace("!strike ","")
                loser = loser.replace("<@!","").replace(">","")
-               member = message.guild.get_member(loser)
-               loserroles = [x.name.lower for x in member.roles]
+               person = message.guild.get_member(loser)
+               print(person.roles)
+               loserroles = [x.name.lower for x in person.roles]
                if "Lawyer'd Up" in loserroles:
                     return
                elif "Public Defender" in loserroles:
