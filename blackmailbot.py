@@ -123,8 +123,9 @@ async def on_message(message):
                          mes = "ya broke"
                          send = await message.channel.send(mes)
      elif "!strike" in case:
-          print(message.author.roles)
-          if  "patent trolls" in [y.name.lower() for y in message.author.roles]:
+          print(message.author.roles.name)
+         roles = message.author.roles
+         if roles contains "patent troll":
                aID = message.author.id
                loser = case.replace("!strike","")
                print(loser)
