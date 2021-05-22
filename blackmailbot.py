@@ -159,14 +159,19 @@ async def on_message(message):
                          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
                          r = requests.get(url, headers=headers)
                          json_data = json.loads(r.text)
-                         strMoney = json_data['total']
-                         uMoney = float(strMoney)
-                         percent = float(uMoney*.3)
-                         fee = '-' + str(int(percent))
-                         builder = {'total': fee}
+                         strCash = json_data['cash']
+                         strBank = json_data['bank']
+                         uCash = float(strCash)
+                         uBank = float(strBank)
+                         percentCash = float(uCash*.3)
+                         percentBank = float(uBank*.3)
+                         feeCash = '-' + str(int(percentCash))
+                         feeBank = '-' + str(int(strBank))
+                         builder = {'cash': feeCash, 'Bank':feeBank}
+                         total = str(percentBank + percentCash)
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(url, headers=headers, data=jsonString)
-                         mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,fee)
+                         mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,total)
                          send = await message.channel.send(mes)
                     pt = discord.utils.get(message.guild.roles, name="Patent Troll")
                     await message.author.remove_roles(pt)
