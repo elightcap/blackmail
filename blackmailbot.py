@@ -150,11 +150,11 @@ async def on_message(message):
                     loserroles = [x.name.lower() for x in person.roles]
                     print(loserroles)
                     if "lawyer'd up" in loserroles:
-                         mes = "{} has a good lawyer".format(person)
+                         mes = "{} has a good lawyer".format(person.mention)
                          send = await message.channel.send(mes)
                          return
                     elif "public defender" in loserroles:
-                         mes = "{} was barely able to afford a public defender".format(person)
+                         mes = "{} was barely able to afford a public defender".format(person.mention)
                          send = await message.channel.send(mes)
                          pd = discord.utils.get(message.guild.roles, name="Public Defender")
                          await person.remove_roles(pd)
