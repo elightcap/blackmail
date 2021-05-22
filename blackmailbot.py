@@ -37,10 +37,18 @@ async def get_all_members_ids(discguild):
           for member in guild.members:
             for role in member.roles:
                     if role.name == "Blackmailer":
-                         role = discord.utils.get(
-                              member.guild.roles, name="Blackmailer")
+                         role = discord.utils.get(member.guild.roles, name="Blackmailer")
                          await member.remove_roles(role)
                          print("{} removed from blackmailers".format(str(member)))
+
+@tasks.loop(days=7)
+async def remove_lawyer(discguild):
+     for guild in client.guilds:
+          for member in guild.members:
+               for role in member.roles:
+                    if role.name == "Lawyer'd Up":
+                         role = discord.utils.get(member.guild.roles, name="Lawyer'd Up")
+                         await member.remove_roles(role)
 
 
 
@@ -130,32 +138,33 @@ async def on_message(message):
                await message.author.remove_roles(pt)
                aID = message.author.id
                loser = case.replace("!strike ","")
-               loser = int(loser.replace("<@!","").replace(">",""))
-               person = message.guild.get_member(loser)
-               loserroles = [x.name.lower() for x in person.roles]
-               print(loserroles)
-               if "lawyer'd up" in loserroles:
-                    mes = "{} has a good lawyer".format(person)
-                    send = await message.channel.send(mes)
-                    return
-               elif "public defender" in loserroles:
-                    mes = "{} was barely able to afford a public defender".format(person)
-                    send = await message.channel.send(mes)
-                    pd = discord.utils.get(message.guild.roles, name="Public Defender")
-                    await person.remove_roles(pd)
-               else:
-                    url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
-                    r = requests.get(url, headers=headers)
-                    json_data = json.loads(r.text)
-                    strMoney = json_data['cash']
-                    uMoney = float(strMoney)
-                    percent = float(uMoney*.3)
-                    fee = '-' + str(int(percent))
-                    builder = {'cash': fee}
-                    jsonString = json.dumps(builder, indent=4)
-                    rp = requests.patch(url, headers=headers, data=jsonString)
-                    mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,fee)
-                    send = await message.channel.send(mes)
+               if loser:
+                    loser = int(loser.replace("<@!","").replace(">",""))
+                    person = message.guild.get_member(loser)
+                    loserroles = [x.name.lower() for x in person.roles]
+                    print(loserroles)
+                    if "lawyer'd up" in loserroles:
+                         mes = "{} has a good lawyer".format(person)
+                         send = await message.channel.send(mes)
+                         return
+                    elif "public defender" in loserroles:
+                         mes = "{} was barely able to afford a public defender".format(person)
+                         send = await message.channel.send(mes)
+                         pd = discord.utils.get(message.guild.roles, name="Public Defender")
+                         await person.remove_roles(pd)
+                    else:
+                         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
+                         r = requests.get(url, headers=headers)
+                         json_data = json.loads(r.text)
+                         strMoney = json_data['cash']
+                         uMoney = float(strMoney)
+                         percent = float(uMoney*.3)
+                         fee = '-' + str(int(percent))
+                         builder = {'cash': fee}
+                         jsonString = json.dumps(builder, indent=4)
+                         rp = requests.patch(url, headers=headers, data=jsonString)
+                         mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,fee)
+                         send = await message.channel.send(mes)
 
 
 get_all_members_ids.start(GUILD)
