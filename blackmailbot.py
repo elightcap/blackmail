@@ -126,6 +126,8 @@ async def on_message(message):
      elif "!strike" in case:
          roles = [y.name.lower() for y in message.author.roles]
          if "patent troll" in roles:
+               pt = discord.utils.get(message.guild.roles, name="Patent Troll")
+               await message.author.remove_roles(pt)
                aID = message.author.id
                loser = case.replace("!strike ","")
                loser = int(loser.replace("<@!","").replace(">",""))
@@ -133,10 +135,13 @@ async def on_message(message):
                loserroles = [x.name.lower() for x in person.roles]
                print(loserroles)
                if "lawyer'd up" in loserroles:
+                    mes = "{} has a good lawyer".format(person)
+                    send = await message.channel.send(mes)
                     return
                elif "public defender" in loserroles:
-                    pd = discord.utils.get(
-                              message.guild.roles, name="Public Defender")
+                    mes = "{} was barely able to afford a public defender".format(person)
+                    send = await message.channel.send(mes)
+                    pd = discord.utils.get(message.guild.roles, name="Public Defender")
                     await person.remove_roles(pd)
                else:
                     url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
@@ -149,6 +154,8 @@ async def on_message(message):
                     builder = {'cash': fee}
                     jsonString = json.dumps(builder, indent=4)
                     rp = requests.patch(url, headers=headers, data=jsonString)
+                    mes = "{} lost {} because they were too cheap to pay their legal fees".format(person,fee)
+                    send = await message.channel.send(mes)
 
 
 get_all_members_ids.start(GUILD)
