@@ -128,7 +128,7 @@ async def on_message(message):
          if "patent troll" in roles:
                aID = message.author.id
                loser = case.replace("!strike ","")
-               loser = loser.replace("<@!","").replace(">","")
+               loser = int(loser.replace("<@!","").replace(">",""))
                person = message.guild.get_member(loser)
                print(person.roles)
                loserroles = [x.name.lower for x in person.roles]
