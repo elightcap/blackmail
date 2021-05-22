@@ -137,7 +137,7 @@ async def on_message(message):
                elif "public defender" in loserroles:
                     pd = discord.utils.get(
                               message.guild.roles, name="Blackmailer")
-                    await loser.remove_roles(pd)
+                    await message.remove_roles(pd)
                else:
                     print("fucked")
 
