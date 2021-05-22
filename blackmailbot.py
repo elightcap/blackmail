@@ -144,7 +144,7 @@ async def on_message(message):
                     json_data = json.loads(r.text)
                     strMoney = json_data['cash']
                     uMoney = float(strMoney)
-                    percent = float(amount*.3)
+                    percent = float(uMoney*.3)
                     fee = '-' + str(int(percent))
                     builder = {'cash': fee}
                     jsonString = json.dumps(builder, indent=4)
