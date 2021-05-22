@@ -135,7 +135,7 @@ async def on_message(message):
          roles = [y.name.lower() for y in message.author.roles]
          if "patent troll" in roles:
                aID = message.author.id
-               loser = case.replace("!strike ","")
+               loser = await case.replace("!strike ","")
                print(loser)
                if loser == "":
                     mes = "choose somebody to copystrike"
