@@ -10,6 +10,7 @@ import discord
 import json
 import math
 from discord.ext import tasks, commands
+from discord.utils import get
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -129,6 +130,7 @@ async def on_message(message):
                loser = case.replace("!strike ","")
                loser = loser.replace("<@","").replace(">","")
                print(loser)
+               loser2 = get_user(loser)
 
 
 get_all_members_ids.start(GUILD)
