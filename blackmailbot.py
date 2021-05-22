@@ -122,6 +122,12 @@ async def on_message(message):
                          print("user doesnt have chips")
                          mes = "ya broke"
                          send = await message.channel.send(mes)
+     elif "!strike" in case:
+          print message.author.roles
+          if  "lawyer" in message.author.roles:
+               aID = message.author.id
+               loser = case.replace("!strike","")
+               print(loser)
 
 
 get_all_members_ids.start(GUILD)
