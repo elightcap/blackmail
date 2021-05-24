@@ -207,6 +207,7 @@ async def on_message(message):
                     mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
                     send = await message.channel.send(mes)
                     for member in members:
+                         memberProfile = message.guild.get_member(int(member))
                          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
                          r = requests.get(url, headers=headers)
                          json_data = json.loads(r.text)
@@ -214,7 +215,7 @@ async def on_message(message):
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(url, headers=headers, data=jsonString)
                          role = discord.utils.get(message.guild.roles, name="Little John")
-                         await message.remove_roles(role)
+                         await memberProfile.remove_roles(role)
                          print("{} removed from Little John".format(str(member)))
           else:
                return
