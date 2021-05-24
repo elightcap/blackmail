@@ -186,7 +186,7 @@ async def on_message(message):
           r = requests.get(url, headers=headers)
           json_data = json.loads(r.text)
           print(json_data)
-          leader = next((x for x in json_data if x.rank == 1), None)
+          leader = next((x for x in json_data[0] if x.rank == 1), None)
           print(leader)
 
 
