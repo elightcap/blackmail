@@ -91,7 +91,6 @@ async def on_message(message):
                builder = {'cash': nCost}
                jsonString = json.dumps(builder, indent=4)
                rp = requests.patch(url, headers=headers, data=jsonString)
-               print(jsonString)
 
      ##cashout function to turn chips into discord money at a rate of $1:2 chips.
      ##dealer takes a 10% rake in discord money, which is given to poker bot for use someday
@@ -111,8 +110,6 @@ async def on_message(message):
           async def on_raw_message_edit(edit):
                msgData = edit.data
                editID = str(msgData['author']['id'])
-               print(pokerBotID)
-               print(editID)
                ##making sure the editor is poker bot
                if editID == pokerBotID:
                     #print("in for loop")
@@ -139,7 +136,6 @@ async def on_message(message):
          if "patent troll" in roles:
                aID = message.author.id
                loser = case.replace("!strike ","")
-               print(loser)
                if len(loser) < 8 :
                     mes = "choose somebody to copystrike"
                     send = await message.channel.send(mes)
@@ -148,7 +144,6 @@ async def on_message(message):
                     loser = int(loser.replace("<@!","").replace(">",""))
                     person = message.guild.get_member(loser)
                     loserroles = [x.name.lower() for x in person.roles]
-                    print(loserroles)
                     if "lawyer'd up" in loserroles:
                          mes = "{} has a good lawyer".format(person.mention)
                          send = await message.channel.send(mes)
@@ -192,7 +187,8 @@ async def on_message(message):
                     r = requests.get(url, headers=headers)
                     json_data = json.loads(r.text)
                     leader = next((item for item in json_data if item["rank"] == "1"), None)
-                    leaderInfo = message.guild.get_member(leader['user_id'])
+                    leaderInfo = message.guild.get_member(int(leader['user_id']))
+                    print(leaderInfo)
                     leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
                     r = requests.get(leaderProfile, headers=headers)
                     json_data = json.loads(r.text)
