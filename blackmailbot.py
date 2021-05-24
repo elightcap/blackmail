@@ -198,7 +198,7 @@ async def on_message(message):
                percentCash = float(leaderCash*.1)
                percentBank = float(leaderBank*.1)
                total = float(percentBank+percentCash)
-               share = float(total//memberCount)
+               share = str(float(total//memberCount))
                feeCash = '-' + str(int(percentCash))
                feeBank = '-' + str(int(percentBank))
                builder = {'cash': feeCash, 'bank':feeBank}
@@ -206,8 +206,12 @@ async def on_message(message):
                jsonString = json.dumps(builder, indent=4)
                rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
                for member in members:
-                    print(member)
-
+                    url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
+                    r = requests.get(url, headers=headers)
+                    json_data = json.loads(r.text)
+                    builder = {'cash': share}
+                    jsonString = json.dumps(builder, indent=4)
+                    rp = requests.patch(url, headers=headers, data=jsonString)
           
 
 
