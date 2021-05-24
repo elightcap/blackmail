@@ -206,6 +206,8 @@ async def on_message(message):
                     rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
                     mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
                     send = await message.channel.send(mes)
+                    lj = discord.utils.get(message.guild.roles, name="Little John")
+                    await message.author.remove_roles(lj)
                     for member in members:
                          memberProfile = message.guild.get_member(int(member))
                          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
@@ -214,8 +216,6 @@ async def on_message(message):
                          builder = {'cash': share}
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(url, headers=headers, data=jsonString)
-                         role = discord.utils.get(message.guild.roles, name="Little John")
-                         await memberProfile.remove_roles(role)
                          print("{} removed from Little John".format(str(member)))
           else:
                return
