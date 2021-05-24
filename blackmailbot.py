@@ -213,7 +213,7 @@ async def on_message(message):
                          builder = {'cash': share}
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(url, headers=headers, data=jsonString)
-                         role = discord.utils.get(member.guild.roles, name="Little John")
+                         role = discord.utils.get(message.guild.roles, name="Little John")
                          await member.remove_roles(role)
                          print("{} removed from Little John".format(str(member)))
           else:
