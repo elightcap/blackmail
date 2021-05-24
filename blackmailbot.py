@@ -179,7 +179,7 @@ async def on_message(message):
                     pt = discord.utils.get(message.guild.roles, name="Patent Troll")
                     await message.author.remove_roles(pt)
      elif "!robinhood" in case:
-          role = discord.utils.get(message.guild.roles, name="Robinhood")
+          role = discord.utils.get(message.guild.roles, name="Merry People")
           print(role.members)
 
 
