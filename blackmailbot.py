@@ -180,7 +180,8 @@ async def on_message(message):
                     await message.author.remove_roles(pt)
      elif "!robinhood" in case:
           role = discord.utils.get(message.guild.roles, name="Merry People")
-          print(role.members)
+          members = [y.id.lower for y in role.members]
+          print(members)
 
 
 get_all_members_ids.start(GUILD)
