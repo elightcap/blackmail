@@ -205,6 +205,7 @@ async def on_message(message):
                     jsonString = json.dumps(builder, indent=4)
                     rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
                     mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
+                    send = await message.channel.send(mes)
                     for member in members:
                          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
                          r = requests.get(url, headers=headers)
