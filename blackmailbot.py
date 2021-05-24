@@ -187,7 +187,7 @@ async def on_message(message):
           r = requests.get(url, headers=headers)
           json_data = json.loads(r.text)
           leader = next((item for item in json_data if item["rank"] == "1"), None)
-          leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader)
+          leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
           print(leaderProfile)
           r = requests.get(leaderProfile, headers=headers)
           print(r)
