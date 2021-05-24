@@ -182,6 +182,11 @@ async def on_message(message):
           role = discord.utils.get(message.guild.roles, name="Merry People")
           members = [y.id for y in role.members]
           print(str(members))
+          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/"
+          r = requests.get(url, headers=headers)
+          json_data = json.loads(r.text)
+          leader = next((x for x in json_data if x.rank == 1), none)
+          print(leader)
 
 
 get_all_members_ids.start(GUILD)
