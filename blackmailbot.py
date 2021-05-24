@@ -186,7 +186,7 @@ async def on_message(message):
           r = requests.get(url, headers=headers)
           json_data = json.loads(r.text)
           leader = next((item for item in json_data if item["rank"] == "1"), None)
-          print(leader.user_id)
+          print(leader['user_id'])
 
 
 get_all_members_ids.start(GUILD)
