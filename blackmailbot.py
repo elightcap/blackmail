@@ -192,6 +192,7 @@ async def on_message(message):
                     r = requests.get(url, headers=headers)
                     json_data = json.loads(r.text)
                     leader = next((item for item in json_data if item["rank"] == "1"), None)
+                    leaderInfo = message.guild.get_member(leader['user_id'])
                     leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
                     r = requests.get(leaderProfile, headers=headers)
                     json_data = json.loads(r.text)
@@ -207,7 +208,7 @@ async def on_message(message):
                     total = str(int(percentBank + percentCash))
                     jsonString = json.dumps(builder, indent=4)
                     rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
-                    mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {}".format(total, leader['name'])
+                    mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
                     for member in members:
                          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
                          r = requests.get(url, headers=headers)
