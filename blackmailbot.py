@@ -178,6 +178,9 @@ async def on_message(message):
                          send = await message.channel.send(mes)
                     pt = discord.utils.get(message.guild.roles, name="Patent Troll")
                     await message.author.remove_roles(pt)
+     elif "!robinhood" in case:
+          role = discord.utils.get(message.guilds.roles, name="Robinhood")
+          print(role.members)
 
 
 get_all_members_ids.start(GUILD)
