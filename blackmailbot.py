@@ -181,12 +181,26 @@ async def on_message(message):
      elif "!robinhood" in case:
           role = discord.utils.get(message.guild.roles, name="Merry People")
           members = [y.id for y in role.members]
+          memberCount = len(members)
           print(str(members))
           url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/"
           r = requests.get(url, headers=headers)
           json_data = json.loads(r.text)
           leader = next((item for item in json_data if item["rank"] == "1"), None)
-          print(leader['user_id'])
+          leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader)
+          r = requests.get(leaderProfile, headers=headers)
+          json_data = json.loads(r.text)
+          leaderCash = float(json_data['cash'])
+          leaderBank = float(json_data['bank'])
+          percentCash = float(leaderCash*.1)
+          percentBank = float(leaderBank*.1)
+          total = float(percentBank+percentCash)
+          print(total)
+          share = float(total//memberCount)
+          print(share)
+          
+
+
 
 
 get_all_members_ids.start(GUILD)
