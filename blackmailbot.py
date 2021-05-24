@@ -179,39 +179,44 @@ async def on_message(message):
                     pt = discord.utils.get(message.guild.roles, name="Patent Troll")
                     await message.author.remove_roles(pt)
      elif "!robinhood" in case:
-          role = discord.utils.get(message.guild.roles, name="Merry People")
-          members = [y.id for y in role.members]
-          memberCount = len(members)
-          if memberCount == 0:
-               print("no members")
-               return
-          else:
-               url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/"
-               r = requests.get(url, headers=headers)
-               json_data = json.loads(r.text)
-               leader = next((item for item in json_data if item["rank"] == "1"), None)
-               leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
-               r = requests.get(leaderProfile, headers=headers)
-               json_data = json.loads(r.text)
-               leaderCash = float(json_data['cash'])
-               leaderBank = float(json_data['bank'])
-               percentCash = float(leaderCash*.1)
-               percentBank = float(leaderBank*.1)
-               total = float(percentBank+percentCash)
-               share = str(float(total//memberCount))
-               feeCash = '-' + str(int(percentCash))
-               feeBank = '-' + str(int(percentBank))
-               builder = {'cash': feeCash, 'bank':feeBank}
-               total = str(int(percentBank + percentCash))
-               jsonString = json.dumps(builder, indent=4)
-               rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
-               for member in members:
-                    url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
+          roles = [y.name.lower() for y in message.author.roles]
+          if "little john" in roles:
+               role = discord.utils.get(message.guild.roles, name="Merry People")
+               members = [y.id for y in role.members]
+               memberCount = len(members)
+               if memberCount == 0:
+                    print("no members")
+                    return
+               else:
+                    url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/"
                     r = requests.get(url, headers=headers)
                     json_data = json.loads(r.text)
-                    builder = {'cash': share}
+                    leader = next((item for item in json_data if item["rank"] == "1"), None)
+                    leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
+                    r = requests.get(leaderProfile, headers=headers)
+                    json_data = json.loads(r.text)
+                    leaderCash = float(json_data['cash'])
+                    leaderBank = float(json_data['bank'])
+                    percentCash = float(leaderCash*.1)
+                    percentBank = float(leaderBank*.1)
+                    total = float(percentBank+percentCash)
+                    share = str(float(total//memberCount))
+                    feeCash = '-' + str(int(percentCash))
+                    feeBank = '-' + str(int(percentBank))
+                    builder = {'cash': feeCash, 'bank':feeBank}
+                    total = str(int(percentBank + percentCash))
                     jsonString = json.dumps(builder, indent=4)
-                    rp = requests.patch(url, headers=headers, data=jsonString)
+                    rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
+                    mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {}".format(total, leader['name'])
+                    for member in members:
+                         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
+                         r = requests.get(url, headers=headers)
+                         json_data = json.loads(r.text)
+                         builder = {'cash': share}
+                         jsonString = json.dumps(builder, indent=4)
+                         rp = requests.patch(url, headers=headers, data=jsonString)
+          else:
+               return
           
 
 
