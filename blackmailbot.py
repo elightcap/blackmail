@@ -5,6 +5,7 @@
 ##
 ##
 import os
+import aiocron
 import requests
 import discord
 import json
@@ -41,8 +42,9 @@ async def get_all_members_ids(discguild):
                          await member.remove_roles(role)
                          print("{} removed from blackmailers".format(str(member)))
 
-@tasks.loop(hours=168)
-async def remove_lawyer(discguild):
+@aiocron.crontab('0 7 * * 1')
+async def remove_lawyer():
+     print("test")
      for guild in client.guilds:
           for member in guild.members:
                for role in member.roles:
@@ -227,4 +229,5 @@ async def on_message(message):
                return
 
 get_all_members_ids.start(GUILD)
+remove_lawyer.start()
 client.run(TOKEN)
