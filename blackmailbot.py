@@ -86,7 +86,7 @@ async def on_message(message):
                send = await message.channel.send(mes)
                return
           else:
-               if uMoney > 200000:
+               if amount > 200000:
                     mes = "The maximum amount the cashier allows is 200,000 chips"
                     send = await message.channel.send(mes)
                else:
