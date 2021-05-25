@@ -91,11 +91,6 @@ async def on_message(message):
                     send = await message.channel.send(mes)
                else:
                     print("buyin")
-                    check = "!pw {0.author.mention}".format(message)
-                    botChannel = client.get_channel(810662162195284049)
-                    checkMes = await botChannel.send(check)
-                    @client.event
-                    async def on_raw_message_edit(edit):
                          msgData = edit.data
                          editID = str(msgData['author']['id'])
                          if editID == pokerBotID:
