@@ -91,16 +91,12 @@ async def on_message(message):
                     send = await message.channel.send(mes)
                else:
                     print("buyin")
-                    msgData = edit.data
-                    editID = str(msgData['author']['id'])
-                    if editID == pokerBotID:
-                         print(msgData)
-                         mes = "!pac {0.author.mention} {1}".format(message, amount)
-                         send = await message.channel.send(mes)
-                         nCost = '-' + str(int(cost))
-                         builder = {'cash': nCost}
-                         jsonString = json.dumps(builder, indent=4)
-                         rp = requests.patch(url, headers=headers, data=jsonString)
+                    mes = "!pac {0.author.mention} {1}".format(message, amount)
+                    send = await message.channel.send(mes)
+                    nCost = '-' + str(int(cost))
+                    builder = {'cash': nCost}
+                    jsonString = json.dumps(builder, indent=4)
+                    rp = requests.patch(url, headers=headers, data=jsonString)
 
      ##cashout function to turn chips into discord money at a rate of $1:2 chips.
      ##dealer takes a 10% rake in discord money, which is given to poker bot for use someday
