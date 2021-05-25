@@ -91,7 +91,7 @@ async def on_message(message):
                     send = await message.channel.send(mes)
                else:
                     print("buyin")
-                    check = "!pw {message.author.mention} "
+                    check = "!pw {}.author.mention ".format(message)
                     botChannel = client.get_channel(810662162195284049)
                     checkMes = await botChannel.send(check)
                     @client.event
