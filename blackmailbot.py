@@ -171,7 +171,8 @@ async def on_message(message):
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(url, headers=headers, data=jsonString)
                          mes = "{} lost {} because they were too cheap to pay their legal fees".format(person.mention,total)
-                         send = await message.channel.send(mes)
+                         channel = client.get_channel(831400394184851456)
+                         send = await channel.send(mes)
                     pt = discord.utils.get(message.guild.roles, name="Patent Troll")
                     await message.author.remove_roles(pt)
      ###function that will remove
