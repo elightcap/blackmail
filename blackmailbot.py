@@ -32,8 +32,8 @@ headers = {'Authorization': unbkey}
 ##function to loop through all members 
 ##and if they have the black ailer role, remove it
 ## runs every 2 hours
-@tasks.loop(minutes=120)
-async def get_all_members_ids(discguild):
+@aiocron.crontab('0 */2 * * *')
+async def get_all_members_ids():
      for guild in client.guilds:
           for member in guild.members:
             for role in member.roles:
@@ -228,6 +228,6 @@ async def on_message(message):
           else:
                return
 
-get_all_members_ids.start(GUILD)
+get_all_members_ids.start()
 remove_lawyer.start()
 client.run(TOKEN)
