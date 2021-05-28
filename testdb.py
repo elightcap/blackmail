@@ -12,6 +12,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 dbUser = os.getenv('MARIAUSER')
 dbPass = os.getenv('MARIAPASS')
+GUILD = os.getenv('DISCORD_GUILD')
 client = discord.Client()
 intents = discord.Intents.default()
 intents.members = True
@@ -67,8 +68,8 @@ async def remove_robinhoodimmune():
             print(uDate)
             if uDate <= mDate:
                 if uTime <= newTime:
-                    role = discord.utils.get(member.guild.roles, name="Robinhood Immune")
                     member = guild.get_member(uUid)
+                    role = discord.utils.get(member.guild.roles, name="Robinhood Immune")
                     await member.remove_roles(role)
                     remove = "DELETE FROM `users` WHERE uid = (%s)"
                     data = (uUid)
