@@ -51,7 +51,7 @@ async def remove_robinhoodimmune():
         statement = "SELECT * from users;"
         cursor.execute(statement)
         result = cursor.fetchone()
-        if  result:
+        if result:
             for(uid, date, time) in cursor:
                 datetimenow = datetime.now()
                 addTime = timedelta(minutes=5)
@@ -64,9 +64,9 @@ async def remove_robinhoodimmune():
                 uTimestr = str(time)
                 uTime = datetime.strptime(uTimestr, "%H:%M:%S").time()
                 uUid = int(uid)
-                print({uid},{date})
+                print(uid,date)
                 if uDate <= mDate:
-                    if uTime >= newTime:
+                    if uTime <= newTime:
                         member = client.get_user(uid)
                         for guild in client.guilds:
                             for member in guild.members:
