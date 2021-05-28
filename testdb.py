@@ -4,7 +4,6 @@ import aiocron
 import datetime
 import mysql.connector as database
 from dotenv import load_dotenv
-from datetime import datetime
 from discord.ext import tasks
 from discord.utils import get
 
