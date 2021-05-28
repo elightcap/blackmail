@@ -1,9 +1,9 @@
 import os
 import discord
 import aiocron
-import datetime
 import mysql.connector as database
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 from discord.ext import tasks
 from discord.utils import get
 
@@ -51,7 +51,7 @@ async def remove_robinhoodimmune():
         cursor.execute(statement)
         for(uid, date, time) in cursor:
             datetimenow = datetime.now()
-            addTime = datetime.timedelta(minutes=1)
+            addTime = datetime.datetime.timedelta(minutes=1)
             mDate = datetimenow.strftime("%Y-%m-%d")
             mTime = datetimenow.strftime("%H:%M:%S")
             newTime = mTime - addTime
