@@ -50,7 +50,25 @@ async def remove_robinhoodimmune():
         statement = "SELECT * from users;"
         cursor.execute(statement)
         for(uid, date, time) in cursor:
-            print(f"{uid},{time}")
+            today = datetime(date.today)
+            datetimenow = datetime.now()
+            addTime = datetime.timedelta(minutes=1)
+            mDate = datetimenow.strftime("%Y-%m-%d")
+            mTime = datetimenow.strftime("%H:%M:%S")
+            newTime = mTime - addTime
+            uDate = datetime(date)
+            uTime = datetime(time)
+            uUid = int(uid)
+            if uDate <= mDate:
+                if uTime >= newTime:
+                    role = discord.utils.get(member.guild.roles, name="Robinhood Immune")
+                    member = guild.get_member(uUid)
+                    await member.remove_roles(role)
+                    remove = "DELETE FROM `users` WHERE uid = (%s)"
+                    data = (uUid)
+                    cursor.execute(remove, data)
+                    connection.commit()
+
     except database.Error as e:
         print(f"{e}")
 
