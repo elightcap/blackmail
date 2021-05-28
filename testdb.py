@@ -22,7 +22,7 @@ connection = database.connect(
     host='localhost',
     db='lawyer'
 )
-cursor = connection.cursor
+cursor = connection.cursor()
 
 @client.event
 async def on_member_update(before,after):
