@@ -41,7 +41,7 @@ async def on_member_update(before,after):
                 data = (user,mDate,mTime)
                 cursor.execute(statement,data)
                 connection.commit()
-                print("success")
+                print("success add")
             except database.Error as e:
                 print(f"update {e}")
 
@@ -60,14 +60,11 @@ async def remove_robinhoodimmune():
             newTime = (mTime - addTime).time()
             uDate = date
             uTimestr = str(time)
-            print(uTimestr)
             uTime = datetime.strptime(uTimestr, "%H:%M:%S").time()
             uUid = int(uid)
             print({uid},{date})
-            print(mDate)
-            print(uDate)
             if uDate <= mDate:
-                if uTime <= newTime:
+                if uTime >= newTime:
                     member = client.get_user(uid)
                     for guild in client.guilds:
                         for member in guild.members:
@@ -76,9 +73,10 @@ async def remove_robinhoodimmune():
                                     role  = discord.utils.get(member.guild.roles, name="Robinhood Immune")
                                     await member.remove_roles(role)
                                     remove = "DELETE FROM `users` WHERE uid = (%s)"
-                                    data = (uUid)
+                                    data = (uid,)
                                     cursor.execute(remove, data)
                                     connection.commit()
+                                    print("role removed")
 
     except database.Error as e:
         print(f" remove {e}")
