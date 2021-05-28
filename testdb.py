@@ -1,5 +1,6 @@
 import os
 import discord
+import aiocron
 import mysql.connector as database
 from dotenv import load_dotenv
 from datetime import datetime
@@ -44,4 +45,12 @@ async def on_member_update(before,after):
                 print(f"{e}")
             connection.close()
 
+@aiocron.crontab('*/1 * * * *')
+async def remove_robinhoodimmune():
+    try:
+        statement = "SELECT * from users;"
+        cursor.executre(statement)
+        print(statement)
+    except database.Error as e:
+        print(f"{e}")
 client.run(TOKEN)
