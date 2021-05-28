@@ -11,6 +11,11 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 dbUser = os.getenv('MARIAUSER')
 dbPass = os.getenv('MARIAPASS')
+client = discord.Client()
+intents = discord.Intents.default()
+intents.members = True
+intents.messages=True
+client = discord.Client(intents=intents)
 connection = database.connect(
     user = dbUser,
     password = dbPass,
