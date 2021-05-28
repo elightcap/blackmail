@@ -55,7 +55,7 @@ async def remove_robinhoodimmune():
             for row in rows:
                 uUid = int(row[0])
                 uDate = row[1]
-                uTime = row[2]
+                uTime = (row[2]).time()
                 try:
                     datetimenow = datetime.now()
                     addTime = timedelta(minutes=5)
