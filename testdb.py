@@ -48,11 +48,11 @@ async def on_member_update(before,after):
 @aiocron.crontab('*/1 * * * *')
 async def remove_robinhoodimmune():
     try:
-        statement = "SELECT * from users;"
-        cursor.execute(statement)
+        getUser = "SELECT * from users;"
+        cursor.execute(getUser)
         rows = cursor.fetchall()
         for row in rows:
-            print(row)
+            print(row[2])
             try:
                 for(uid, date, time) in cursor:
                     datetimenow = datetime.now()
