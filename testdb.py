@@ -58,6 +58,9 @@ async def remove_robinhoodimmune():
             uDate = datetime(date)
             uTime = datetime(time)
             uUid = int(uid)
+            print({uid},{date})
+            print(mDate)
+            print(uDate)
             if uDate <= mDate:
                 if uTime >= newTime:
                     role = discord.utils.get(member.guild.roles, name="Robinhood Immune")
