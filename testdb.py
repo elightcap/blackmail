@@ -51,7 +51,7 @@ async def remove_robinhoodimmune():
         statement = "SELECT * from users;"
         cursor.execute(statement)
         print(cursor)
-        if cursor.fetchone():
+        if len(cursor.fetchmany()):
             for(uid, date, time) in cursor:
                 datetimenow = datetime.now()
                 addTime = timedelta(minutes=5)
