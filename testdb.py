@@ -52,8 +52,8 @@ async def remove_robinhoodimmune():
         for(uid, date, time) in cursor:
             datetimenow = datetime.now()
             addTime = timedelta(minutes=5)
-            mDate = datetime(int(datetimenow.strftime("%Y-%m-%d")))
-            mTime = datetime(int(datetimenow.strftime("%H:%M:%S")))
+            mDate = datetime(datetimenow.strptime("%Y-%m-%d"))
+            mTime = datetime(datetimenow.strptime("%H:%M:%S"))
             newTime = mTime - addTime
             uDate = datetime(date)
             uTime = datetime(time)
