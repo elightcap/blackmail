@@ -36,7 +36,7 @@ async def on_member_update(before,after):
             user = after.name
             print(after.id)
             try:
-                statment = "INSERT INTO users (uid,date,time) VALUES (%s, %s, %s)"
+                statement = "INSERT INTO users (uid,date,time) VALUES (%s, %s, %s)"
                 data = (user,mDate,mTime)
                 cursor.execute(statement,data)
                 connection.commit()
