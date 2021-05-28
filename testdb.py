@@ -50,7 +50,10 @@ async def remove_robinhoodimmune():
     try:
         statement = "SELECT * from users;"
         cursor.execute(statement)
-        print(statement)
+        for(uid, date, time) in cursor:
+            print(f"{uid},{time}")
     except database.Error as e:
         print(f"{e}")
+
+remove_robinhoodimmune.start()
 client.run(TOKEN)
