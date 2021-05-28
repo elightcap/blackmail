@@ -65,9 +65,12 @@ async def remove_robinhoodimmune():
                     uTimestr = str(time)
                     uTime = datetime.strptime(uTimestr, "%H:%M:%S").time()
                     uUid = int(uid)
-                    print(uid,date)
+                    print(uid,time)
+                    print(uDate,mDate)
                     if uDate <= mDate:
+                        print(uTime,newTime)
                         if uTime <= newTime:
+                            print("here")
                             member = client.get_user(uid)
                             for guild in client.guilds:
                                 for member in guild.members:
@@ -81,7 +84,7 @@ async def remove_robinhoodimmune():
                                             connection.commit()
                                             print("role removed")
             except:
-                return
+                print("help")
         else:
             print("empty table")
 
