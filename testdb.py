@@ -42,7 +42,7 @@ async def on_member_update(before,after):
                 connection.commit()
                 print("success")
             except database.Error as e:
-                print(f"{e}")
+                print(f"update {e}")
 
 @aiocron.crontab('*/1 * * * *')
 async def remove_robinhoodimmune():
@@ -52,8 +52,8 @@ async def remove_robinhoodimmune():
         for(uid, date, time) in cursor:
             datetimenow = datetime.now()
             addTime = timedelta(minutes=5)
-            mDate = datetime(datetimenow.strftime("%Y-%m-%d"))
-            mTime = datetime(datetimenow.strftime("%H:%M:%S"))
+            mDate = datetime(int(datetimenow.strftime("%Y-%m-%d")))
+            mTime = datetime(int(datetimenow.strftime("%H:%M:%S")))
             newTime = mTime - addTime
             uDate = datetime(date)
             uTime = datetime(time)
@@ -72,7 +72,7 @@ async def remove_robinhoodimmune():
                     connection.commit()
 
     except database.Error as e:
-        print(f"{e}")
+        print(f" remove {e}")
 
 remove_robinhoodimmune.start()
 client.run(TOKEN)
