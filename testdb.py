@@ -51,37 +51,38 @@ async def remove_robinhoodimmune():
         getUser = "SELECT * from users;"
         cursor.execute(getUser)
         rows = cursor.fetchall()
-        for row in rows:
-            uUid = int(row[0])
-            uDate = row[1]
-            uTime = row[2]
-            try:
-                datetimenow = datetime.now()
-                addTime = timedelta(minutes=5)
-                dateNowStr = datetimenow.strftime("%Y-%m-%d")
-                timeNowStr = datetimenow.strftime("%H:%M:%S")
-                mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
-                mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
-                newTime = (mTime - addTime).time()
-                print(uDate,mDate)
-                if uDate <= mDate:
-                    print(uTime,newTime)
-                    if uTime <= newTime:
-                        print("here")
-                        member = client.get_user(uUid)
-                        for guild in client.guilds:
-                            for member in guild.members:
-                                for role in member.roles:
-                                    if role.name == "Robinhood Immune":
-                                        role  = discord.utils.get(member.guild.roles, name="Robinhood Immune")
-                                        await member.remove_roles(role)
-                                        remove = "DELETE FROM `users` WHERE uid = (%s)"
-                                        data = (uUid,)
-                                        cursor.execute(remove, data)
-                                        connection.commit()
-                                        print("role removed")
-            except:
-                print("help")
+        if rows:
+            for row in rows:
+                uUid = int(row[0])
+                uDate = row[1]
+                uTime = row[2]
+                try:
+                    datetimenow = datetime.now()
+                    addTime = timedelta(minutes=5)
+                    dateNowStr = datetimenow.strftime("%Y-%m-%d")
+                    timeNowStr = datetimenow.strftime("%H:%M:%S")
+                    mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
+                    mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
+                    newTime = (mTime - addTime).time()
+                    print(uDate,mDate)
+                    if uDate <= mDate:
+                        print(uTime,newTime)
+                        if uTime <= newTime:
+                            print("here")
+                            member = client.get_user(uUid)
+                            for guild in client.guilds:
+                                for member in guild.members:
+                                    for role in member.roles:
+                                        if role.name == "Robinhood Immune":
+                                            role  = discord.utils.get(member.guild.roles, name="Robinhood Immune")
+                                            await member.remove_roles(role)
+                                            remove = "DELETE FROM `users` WHERE uid = (%s)"
+                                            data = (uUid,)
+                                            cursor.execute(remove, data)
+                                            connection.commit()
+                                            print("role removed")
+                except:
+                    print("help")
 
     except database.Error as e:
         print(f" remove {e}")
