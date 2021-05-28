@@ -68,7 +68,7 @@ async def remove_robinhoodimmune():
             print(uDate)
             if uDate <= mDate:
                 if uTime <= newTime:
-                    member = client.get_member(uUid)
+                    member = client.guild.get_member(uUid)
                     role = discord.utils.get(member.guild.roles, name="Robinhood Immune")
                     await member.remove_roles(role)
                     remove = "DELETE FROM `users` WHERE uid = (%s)"
