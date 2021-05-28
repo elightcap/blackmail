@@ -50,8 +50,9 @@ async def remove_robinhoodimmune():
     try:
         statement = "SELECT * from users;"
         cursor.execute(statement)
-        result = cursor.fetchone()
-        if result:
+        rows = cursor.fetchall()
+        for row in rows:
+            print(row)
             try:
                 for(uid, date, time) in cursor:
                     datetimenow = datetime.now()
@@ -85,8 +86,6 @@ async def remove_robinhoodimmune():
                                             print("role removed")
             except:
                 print("help")
-        else:
-            print("empty table")
 
     except database.Error as e:
         print(f" remove {e}")
