@@ -33,8 +33,7 @@ async def on_member_update(before,after):
             datetimenow = datetime.now()
             mDate = datetimenow.strftime("%Y-%m-%d")
             mTime = datetimenow.strftime("%H:%M:%S")
-            user = after.name
-            print(after.id)
+            user = int(after.id)
             try:
                 statement = "INSERT INTO users (uid,date,time) VALUES (%s, %s, %s)"
                 data = (user,mDate,mTime)
