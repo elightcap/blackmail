@@ -49,7 +49,7 @@ async def on_member_update(before,after):
 async def remove_robinhoodimmune():
     try:
         statement = "SELECT * from users;"
-        cursor.executre(statement)
+        cursor.execute(statement)
         print(statement)
     except database.Error as e:
         print(f"{e}")
