@@ -81,8 +81,8 @@ async def remove_robinhoodimmune():
                                             cursor.execute(remove, data)
                                             connection.commit()
                                             print("role removed")
-                except:
-                    print("help")
+                except os.error as e:
+                    print(e)
 
     except database.Error as e:
         print(f" remove {e}")
