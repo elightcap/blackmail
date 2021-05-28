@@ -24,7 +24,7 @@ connection = database.connect(
     host='localhost',
     db='lawyer'
 )
-cursor = connection.cursor()
+cursor = connection.cursor(buffered=True)
 
 @client.event
 async def on_member_update(before,after):
@@ -68,13 +68,17 @@ async def remove_robinhoodimmune():
             print(uDate)
             if uDate <= mDate:
                 if uTime <= newTime:
-                    member = client.guilds.get_member(uUid)
-                    role = discord.utils.get(member.guild.roles, name="Robinhood Immune")
-                    await member.remove_roles(role)
-                    remove = "DELETE FROM `users` WHERE uid = (%s)"
-                    data = (uUid)
-                    cursor.execute(remove, data)
-                    connection.commit()
+                    member = client.get_user(uid)
+                    for guild in client.guilds:
+                        for member in guild.members:
+                            for role in member.roles:
+                                if role.name == "Robinhood Immune":
+                                    role  = discord.utils.get(member.guild.roles, name="Robinhood Immune")
+                                    await member.remove_roles(role)
+                                    remove = "DELETE FROM `users` WHERE uid = (%s)"
+                                    data = (uUid)
+                                    cursor.execute(remove, data)
+                                    connection.commit()
 
     except database.Error as e:
         print(f" remove {e}")
