@@ -50,7 +50,6 @@ async def remove_robinhoodimmune():
         statement = "SELECT * from users;"
         cursor.execute(statement)
         for(uid, date, time) in cursor:
-            today = datetime(date.today)
             datetimenow = datetime.now()
             addTime = datetime.timedelta(minutes=1)
             mDate = datetimenow.strftime("%Y-%m-%d")
