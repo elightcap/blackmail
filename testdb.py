@@ -43,7 +43,6 @@ async def on_member_update(before,after):
                 print("success")
             except database.Error as e:
                 print(f"{e}")
-            connection.close()
 
 @aiocron.crontab('*/1 * * * *')
 async def remove_robinhoodimmune():
