@@ -76,12 +76,13 @@ async def remove_robinhoodimmune():
                                     for role in member.roles:
                                         if role.name == "Robinhood Immune":
                                             role  = discord.utils.get(member.guild.roles, name="Robinhood Immune")
-                                            await member.remove_roles(role)
-                                            remove = "DELETE FROM `users` WHERE uid = (%s)"
-                                            data = (uUid,)
-                                            cursor.execute(remove, data)
-                                            connection.commit()
-                                            print("role removed")
+                                            if member.id == uUid:
+                                                await member.remove_roles(role)
+                                                remove = "DELETE FROM `users` WHERE uid = (%s)"
+                                                data = (uUid,)
+                                                cursor.execute(remove, data)
+                                                connection.commit()
+                                                print("role removed from {uUID}")
                 except os.error as e:
                     print(e)
 
