@@ -186,9 +186,13 @@ async def on_message(message):
                     if  "robinhood immune" in leaderRoles:
                          mes = "{} has outsmarted you! They are immune to my robbery".format(leaderInfo.mention)
                          send = await message.channel.send(mes)
+                         lj = discord.utils.get(message.guild.roles, name="Little John")
+                         await message.author.remove_roles(lj)
                     elif  "robbery victim" in leaderRoles:
                          mes = "I've already stolen from {}! lets give them a chance to learn their lesson".format(leaderInfo.mention)
                          send = await message.channel.send(mes)
+                         lj = discord.utils.get(message.guild.roles, name="Little John")
+                         await message.author.remove_roles(lj)
                     else:
                          leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
                          r = requests.get(leaderProfile, headers=headers)
@@ -223,7 +227,7 @@ async def on_message(message):
      elif "!nuke" in case:
           roles = [y.name.lower() for y in message.author.roles]
           print("nuke time")
-          if  "USA! USA! USA!" in roles:
+          if  "usa! usa! usa!" in roles:
                print("has nuke role")
                hiroshima =  case.replace("!nuke ","")
                if len(hiroshima) < 3:
@@ -240,6 +244,10 @@ async def on_message(message):
                     await nukeChannel.delete()
                except:
                     mes = "{} has implemented a missle defense system! it seems pretty flaky though...".format(hiroshima)
+               finally:
+                    usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
+                    await message.author.remove_roles(usa)
+
 
 
 
