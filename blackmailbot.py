@@ -243,25 +243,25 @@ async def on_message(message):
                i = 10
                while i >= 0:
                     mes = str(i)
-                    send = await message.channel.send(mes)
+                    send = await channel.send(mes)
                     time.sleep(1)
                     i -= 1
 
                try:
                     await nukeChannel.delete()
                     mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
-                    send = await message.channel.send(mes)
+                    send = await channel.send(mes)
                     usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
                     await message.author.remove_roles(usa)
                
                except AttributeError:
                     mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
-                    send = await message.channel.send(mes)
+                    send = await channel.send(mes)
                     usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
                     await message.author.remove_roles(usa)
                except:
                     mes = "You cant nuke a _SUPERPOWER_"
-                    send = await message.channel.send(mes)
+                    send = await channel.send(mes)
                     usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
                     await message.author.remove_roles(usa)
 
