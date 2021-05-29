@@ -388,7 +388,7 @@ async def remove_blackmail():
                user = dbUser,
                password = dbPass,
                host='localhost',
-               db='robbed'
+               db='blackmailer'
           )
           cursor = connection.cursor(buffered=True)
           getUser = "SELECT * from users;"
