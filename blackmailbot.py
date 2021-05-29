@@ -237,6 +237,8 @@ async def on_message(message):
                     return
                nukeChannel = discord.utils.get(message.guild.channels, name=hiroshima)
                print(nukeChannel)
+               warning = "@everyone NORAD has detected a nuvlear warhead! Take cover!"
+               send = await message.channel.send
                i = 10
                while i >= 0:
                     mes = str(i)
