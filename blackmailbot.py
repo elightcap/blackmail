@@ -230,7 +230,7 @@ async def on_message(message):
           if  "usa! usa! usa!" in roles:
                print("has nuke role")
                hiroshima =  case.replace("!nuke ","")
-               if len(hiroshima) < 3:
+               if len(hiroshima) < 8:
                     mes = "choose a channel to nuke"
                     send = await message.channel.send(mes)
                     return
@@ -239,6 +239,7 @@ async def on_message(message):
                while i >= 0:
                     mes = str(i)
                     send = await message.channel.send(mes)
+                    sleep(1)
                     i -= 1
                try:
                     await nukeChannel.delete()
