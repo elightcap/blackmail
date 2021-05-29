@@ -201,34 +201,41 @@ async def on_message(message):
                     json_data = json.loads(r.text)
                     leader = next((item for item in json_data if item["rank"] == "1"), None)
                     leaderInfo = message.guild.get_member(int(leader['user_id']))
-                    print(leaderInfo)
-                    leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
-                    r = requests.get(leaderProfile, headers=headers)
-                    json_data = json.loads(r.text)
-                    leaderCash = float(json_data['cash'])
-                    leaderBank = float(json_data['bank'])
-                    percentCash = float(leaderCash*.1)
-                    percentBank = float(leaderBank*.1)
-                    total = float(percentBank+percentCash)
-                    share = str(float(total//memberCount))
-                    feeCash = '-' + str(int(percentCash))
-                    feeBank = '-' + str(int(percentBank))
-                    builder = {'cash': feeCash, 'bank':feeBank}
-                    total = str(int(percentBank + percentCash))
-                    jsonString = json.dumps(builder, indent=4)
-                    rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
-                    mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
-                    send = await message.channel.send(mes)
-                    lj = discord.utils.get(message.guild.roles, name="Little John")
-                    await message.author.remove_roles(lj)
-                    for member in members:
-                         memberProfile = message.guild.get_member(int(member))
-                         url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
-                         r = requests.get(url, headers=headers)
+                    leaderRoles = [x.name.lower() for x in leaderInfo.roles]
+                    if  "robinhood immune" in leaderRoles:
+                         mes = "{} has outsmarted you! They are immune to my robbery".format(leaderInfo.mention)
+                         send = await message.channel.send(mes)
+                    elif  "robbery victim" in leaderRoles:
+                         mes = "I've already stolen from {}! lets give them a chance to learn their lesson".format(leaderInfo.mention)
+                         send = await message.channel.send(mes)
+                    else:
+                         leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
+                         r = requests.get(leaderProfile, headers=headers)
                          json_data = json.loads(r.text)
-                         builder = {'cash': share}
+                         leaderCash = float(json_data['cash'])
+                         leaderBank = float(json_data['bank'])
+                         percentCash = float(leaderCash*.1)
+                         percentBank = float(leaderBank*.1)
+                         total = float(percentBank+percentCash)
+                         share = str(float(total//memberCount))
+                         feeCash = '-' + str(int(percentCash))
+                         feeBank = '-' + str(int(percentBank))
+                         builder = {'cash': feeCash, 'bank':feeBank}
+                         total = str(int(percentBank + percentCash))
                          jsonString = json.dumps(builder, indent=4)
-                         rp = requests.patch(url, headers=headers, data=jsonString)
+                         rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
+                         mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
+                         send = await message.channel.send(mes)
+                         lj = discord.utils.get(message.guild.roles, name="Little John")
+                         await message.author.remove_roles(lj)
+                         for member in members:
+                              memberProfile = message.guild.get_member(int(member))
+                              url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
+                              r = requests.get(url, headers=headers)
+                              json_data = json.loads(r.text)
+                              builder = {'cash': share}
+                              jsonString = json.dumps(builder, indent=4)
+                              rp = requests.patch(url, headers=headers, data=jsonString)
           else:
                return
 
