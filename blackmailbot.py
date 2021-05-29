@@ -13,6 +13,7 @@ import requests
 import discord
 import json
 import math
+import time
 import mysql.connector as database
 from discord.ext import tasks, commands
 from discord.utils import get
@@ -239,7 +240,7 @@ async def on_message(message):
                while i >= 0:
                     mes = str(i)
                     send = await message.channel.send(mes)
-                    sleep(1)
+                    time.sleep(1)
                     i -= 1
                try:
                     await nukeChannel.delete()
