@@ -253,10 +253,14 @@ async def on_message(message):
                
                except AttributeError:
                     mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
-                    await message.author.remove_roles(mes)
+                    send = await message.channel.send(mes)
+                    usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
+                    await message.author.remove_roles(usa)
                except:
                     mes = "You cant nuke a _SUPERPOWER_"
-                    await message.author.remove_roles(mes)
+                    send = await message.channel.send(mes)
+                    usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
+                    await message.author.remove_roles(usa)
 
 
 
