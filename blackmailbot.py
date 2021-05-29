@@ -246,7 +246,7 @@ async def on_message(message):
 
                await nukeChannel.delete()
                mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
-               send = message.channel.send(mes)
+               send = await message.channel.send(mes)
                
                usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
                await message.author.remove_roles(usa)
