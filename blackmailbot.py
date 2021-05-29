@@ -222,7 +222,7 @@ async def on_message(message):
 
      elif "!nuke" in case:
           roles = [y.name.lower() for y in message.author.roles]
-          if  "usausausa" in roles:
+          if  "USA! USA! USA!" in roles:
                hiroshima =  case.replace("!nuke ","")
                if len(hiroshima) < 3:
                     mes = "choose a channel to nuke"
