@@ -243,15 +243,13 @@ async def on_message(message):
                     send = await message.channel.send(mes)
                     time.sleep(1)
                     i -= 1
-               try:
-                    await nukeChannel.delete()
-                    mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
-                    send = message.channel.send(mes)
-               except:
-                    mes = "{} has implemented a missle defense system! it seems pretty flaky though...".format(hiroshima)
-               finally:
-                    usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
-                    await message.author.remove_roles(usa)
+
+               await nukeChannel.delete()
+               mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
+               send = message.channel.send(mes)
+               
+               usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
+               await message.author.remove_roles(usa)
 
 
 
