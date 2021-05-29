@@ -236,6 +236,7 @@ async def on_message(message):
                     send = await message.channel.send(mes)
                     return
                nukeChannel = discord.utils.get(message.guild.channels, name=hiroshima)
+               print(nukeChannel)
                i = 10
                while i >= 0:
                     mes = str(i)
@@ -244,6 +245,8 @@ async def on_message(message):
                     i -= 1
                try:
                     await nukeChannel.delete()
+                    mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
+                    send = message.channel.send(mes)
                except:
                     mes = "{} has implemented a missle defense system! it seems pretty flaky though...".format(hiroshima)
                finally:
