@@ -10,14 +10,18 @@ import requests
 import discord
 import json
 import math
+import mysql.connector as database
 from discord.ext import tasks, commands
 from discord.utils import get
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 unbkey = os.getenv('UNBKEY')
+dbUser = os.getenv('MARIAUSER')
+dbPass = os.getenv('MARIAPASS')
 pokerBotID = "613156357239078913"
 botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156357239078913"
 client = discord.Client()
@@ -27,32 +31,6 @@ intents.members = True
 intents.messages=True
 client = discord.Client(intents=intents)
 headers = {'Authorization': unbkey}
-
-
-##function to loop through all members 
-##and if they have the black ailer role, remove it
-## runs every 2 hours
-@aiocron.crontab('0 */2 * * *')
-async def get_all_members_ids():
-     for guild in client.guilds:
-          for member in guild.members:
-            for role in member.roles:
-                    if role.name == "Blackmailer":
-                         role = discord.utils.get(member.guild.roles, name="Blackmailer")
-                         await member.remove_roles(role)
-                         print("{} removed from blackmailers".format(str(member)))
-
-@aiocron.crontab('0 7 * * 1')
-async def remove_lawyer():
-     print("test")
-     for guild in client.guilds:
-          for member in guild.members:
-               for role in member.roles:
-                    if role.name == "Lawyer'd Up":
-                         role = discord.utils.get(member.guild.roles, name="Lawyer'd Up")
-                         await member.remove_roles(role)
-
-
 
 ##on message events
 @client.event
@@ -239,6 +217,218 @@ async def on_message(message):
           else:
                return
 
-get_all_members_ids.start()
+@client.event
+async def on_member_update(before,after):
+     if len(before.roles)<len(after.roles):
+          newRole = next(role for role in after.roles if role not in before.roles)
+
+          if newRole.name == "Robbery Victim":
+               connection = database.connect(
+                    user = dbUser,
+                    password = dbPass,
+                    host='localhost',
+                    db='robbed'
+               )
+               cursor = connection.cursor(buffered=True)
+               datetimenow = datetime.now()
+               mDate = datetimenow.strftime("%Y-%m-%d")
+               mTime = datetimenow.strftime("%H:%M:%S")
+               user = int(after.id)
+               try:
+                    statement = "INSERT INTO users (uid,date,time) VALUES (%s, %s, %s)"
+                    data = (user,mDate,mTime)
+                    cursor.execute(statement,data)
+                    connection.commit()
+                    print("rob vic success add")
+               except database.Error as e:
+                    print(f"update {e}")
+
+          elif newRole.name == "Blackmailer":
+               connection = database.connect(
+                    user = dbUser,
+                    password = dbPass,
+                    host='localhost',
+                    db='robbed'
+            )
+               cursor = connection.cursor(buffered=True)
+               datetimenow = datetime.now()
+               mDate = datetimenow.strftime("%Y-%m-%d")
+               mTime = datetimenow.strftime("%H:%M:%S")
+               user = int(after.id)
+               try:
+                    statement = "INSERT INTO users (uid,date,time) VALUES (%s, %s, %s)"
+                    data = (user,mDate,mTime)
+                    cursor.execute(statement,data)
+                    connection.commit()
+                    print("blackmail success add")
+               except database.Error as e:
+                    print(f"update {e}")
+          elif newRole.name == "Lawyer'd Up":
+               connection = database.connect(
+                    user = dbUser,
+                    password = dbPass,
+                    host='localhost',
+                    db='robbed'
+               )
+               cursor = connection.cursor(buffered=True)
+               datetimenow = datetime.now()
+               mDate = datetimenow.strftime("%Y-%m-%d")
+               mTime = datetimenow.strftime("%H:%M:%S")
+               user = int(after.id)
+               try:
+                    statement = "INSERT INTO users (uid,date,time) VALUES (%s, %s, %s)"
+                    data = (user,mDate,mTime)
+                    cursor.execute(statement,data)
+                    connection.commit()
+                    print(" lawyer success add")
+               except database.Error as e:
+                    print(f"update {e}")
+
+@aiocron.crontab('*/1 * * * *')
+async def remove_robberyvictim():
+     try:
+          connection = database.connect(
+               user = dbUser,
+               password = dbPass,
+               host='localhost',
+               db='robbed'
+          )
+          cursor = connection.cursor(buffered=True)
+          getUser = "SELECT * from users;"
+          cursor.execute(getUser)
+          rows = cursor.fetchall()
+          if rows:
+               for row in rows:
+                    uUid = int(row[0])
+                    uDate = row[1]
+                    strTime = str(row[2])
+                    uTime = datetime.strptime(strTime,"%H:%M:%S" ).time()
+                    try:
+                         datetimenow = datetime.now()
+                         addTime = timedelta(minutes=5)
+                         dateNowStr = datetimenow.strftime("%Y-%m-%d")
+                         timeNowStr = datetimenow.strftime("%H:%M:%S")
+                         mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
+                         mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
+                         newTime = (mTime - addTime).time()
+                         if uDate <= mDate:
+                              if uTime <= newTime:
+                                   member = client.get_user(uUid)
+                                   for guild in client.guilds:
+                                        for member in guild.members:
+                                             for role in member.roles:
+                                                  if role.name == "Robbery Victim":
+                                                       role  = discord.utils.get(member.guild.roles, name="Robbery Victim")
+                                                       if member.id == uUid:
+                                                            await member.remove_roles(role)
+                                                            remove = "DELETE FROM `users` WHERE uid = (%s)"
+                                                            data = (uUid,)
+                                                            cursor.execute(remove, data)
+                                                            connection.commit()
+                                                            print("robvic role removed")
+                    except os.error as e:
+                         print(e)
+
+     except database.Error as e:
+          print(f" remove {e}")
+
+@aiocron.crontab('*/1 * * * *')
+async def remove_lawyer():
+     try:
+          connection = database.connect(
+                user = dbUser,
+                password = dbPass,
+                host='localhost',
+                db='lawyer'
+          )
+          cursor = connection.cursor(buffered=True)
+          getUser = "SELECT * from users;"
+          cursor.execute(getUser)
+          rows = cursor.fetchall()
+          if rows:
+               for row in rows:
+                    uUid = int(row[0])
+                    uDate = row[1]
+                    strTime = str(row[2])
+                    uTime = datetime.strptime(strTime,"%H:%M:%S" ).time()
+                    try:
+                         datetimenow = datetime.now()
+                         addTime = timedelta(minutes=5)
+                         addDays = timedelta(days=7)
+                         dateNowStr = datetimenow.strftime("%Y-%m-%d")
+                         timeNowStr = datetimenow.strftime("%H:%M:%S")
+                         mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
+                         newDate = (mDate - addDays).time()
+                         mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
+                         newTime = (mTime - addTime).time()
+                         if uDate <= newTime:
+                              if uTime <= newTime:
+                                   member = client.get_user(uUid)
+                                   for guild in client.guilds:
+                                        for member in guild.members:
+                                             for role in member.roles:
+                                                  if role.name == "Lawyer'd Up":
+                                                       role  = discord.utils.get(member.guild.roles, name="Lawyere'd Up")
+                                                       if member.id == uUid:
+                                                            await member.remove_roles(role)
+                                                            remove = "DELETE FROM `users` WHERE uid = (%s)"
+                                                            data = (uUid,)
+                                                            cursor.execute(remove, data)
+                                                            connection.commit()
+                                                            print("lawyer role removed")
+                    except os.error as e:
+                         print(e)
+     except database.Error as e:
+          print(f" remove {e}")
+
+@aiocron.crontab('*/1 * * * *')
+async def remove_blackmail():
+    try:
+          connection = database.connect(
+               user = dbUser,
+               password = dbPass,
+               host='localhost',
+               db='robbed'
+          )
+          cursor = connection.cursor(buffered=True)
+          getUser = "SELECT * from users;"
+          cursor.execute(getUser)
+          rows = cursor.fetchall()
+          if rows:
+               for row in rows:
+                    uUid = int(row[0])
+                    uDate = row[1]
+                    strTime = str(row[2])
+                    uTime = datetime.strptime(strTime,"%H:%M:%S" ).time()
+                    try:
+                         datetimenow = datetime.now()
+                         addTime = timedelta(hours=2)
+                         dateNowStr = datetimenow.strftime("%Y-%m-%d")
+                         timeNowStr = datetimenow.strftime("%H:%M:%S")
+                         mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
+                         mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
+                         newTime = (mTime - addTime).time()
+                         if uDate <= mDate:
+                              if uTime <= newTime:
+                                   member = client.get_user(uUid)
+                                   for guild in client.guilds:
+                                        for member in guild.members:
+                                             for role in member.roles:
+                                                  if role.name == "Blackmailer":
+                                                       role  = discord.utils.get(member.guild.roles, name="Blackmailer")
+                                                       if member.id == uUid:
+                                                            await member.remove_roles(role)
+                                                            remove = "DELETE FROM `users` WHERE uid = (%s)"
+                                                            data = (uUid,)
+                                                            cursor.execute(remove, data)
+                                                            connection.commit()
+                                                            print("blackmail role removed")
+                    except os.error as e:
+                         print(e)
+    except database.Error as e:
+        print(f" remove {e}")
+
+remove_robberyvictim.start()
 remove_lawyer.start()
+remove_blackmail.start()
 client.run(TOKEN)
