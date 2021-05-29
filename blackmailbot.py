@@ -5,6 +5,9 @@
 ##
 ##
 import os
+from typing import cast
+
+from requests.models import CaseInsensitiveDict
 import aiocron
 import requests
 import discord
@@ -217,6 +220,27 @@ async def on_message(message):
           else:
                return
 
+     elif "!nuke" in case:
+          roles = [y.name.lower() for y in message.author.roles]
+          if  "usausausa" in roles:
+               hiroshima =  case.replace("!nuke ","")
+               if len(hiroshima) < 3:
+                    mes = "choose a channel to nuke"
+                    send = await message.channel.send(mes)
+                    return
+               nukeChannel = discord.utils.get(message.guild.channels, name=hiroshima)
+               i = 10
+               while i >= 0:
+                    mes = str(i)
+                    send = await message.channel.send(mes)
+                    i -= 1
+               try:
+                    await nukeChannel.delete()
+               except:
+                    mes = "{} has implemented a missle defense system! it seems pretty flaky though...".format(hiroshima)
+
+
+
 @client.event
 async def on_member_update(before,after):
      if len(before.roles)<len(after.roles):
@@ -248,7 +272,7 @@ async def on_member_update(before,after):
                     user = dbUser,
                     password = dbPass,
                     host='localhost',
-                    db='robbed'
+                    db='blackmailer'
             )
                cursor = connection.cursor(buffered=True)
                datetimenow = datetime.now()
@@ -268,7 +292,7 @@ async def on_member_update(before,after):
                     user = dbUser,
                     password = dbPass,
                     host='localhost',
-                    db='robbed'
+                    db='lawyer'
                )
                cursor = connection.cursor(buffered=True)
                datetimenow = datetime.now()
