@@ -293,10 +293,13 @@ async def on_message(message):
                     data = (aID,newChannel.id,role.id)
                     cursor.execute(statement,data)
                     connection.commit()
+                    ownerRole = discord.utils.get(message.guild.roles, name="Home Builder")
+                    await message.author.remove_roles(ownerRole)
                except database.Error as e:
                     print(f" remove {e}")
           else:
                return
+
      elif "!privatize" in case:
           roles = [y.name.lower() for y in message.author.roles]
           if "home owner" in roles:
