@@ -323,10 +323,34 @@ async def on_message(message):
                except database.Error as e:
                     print(f" remove {e}")
 
-
-
-
-
+     elif "!invite" in case:
+          roles = [y.name.lower() for y in message.author.roles]
+          if "home owner" in case:
+               aID = message.author.id
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    invited = case.replace("!invite ", "")
+                    inviteID = int(invited.replace("<@!","").replace(">",""))
+                    person = message.guild.get_member(inviteID)
+                    statement = "SELECT * from owners WHERE owner=(%s)"
+                    data = (aID,)
+                    rows = cursor.fetchall()
+                    if rows:
+                         for row in rows:
+                              oID = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              if aID == oID:
+                                   channel =  client.get_channel(cID)
+                                   await channel.set_permissions(person, read_messages=False)
+               except database.Error as e:
+                    print(f" remove {e}")
 
 @client.event
 async def on_member_update(before,after):
