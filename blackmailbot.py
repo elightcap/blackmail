@@ -269,13 +269,13 @@ async def on_message(message):
           aID = message.author.id
           channelName = case.replace("!build ","")
           member = message.author
-          cat = discord.utils.get(message.guild.category_channel, name="Degen City")
+          cat = discord.utils.get(message.guild.categories, name="Degen City")
           overwrites = {
                message.guild.default_role: discord.PermissionOverwrite(read_messages=False),
                message.guild.me: discord.PermissionOverwrite(read_messages=True),
-               member: discord.PermissionOverwrite(read_messages=True)
+               member: discord.PermissionOverwrite(read_messages=True, manage_channels=True)
           }
-          client.guild.channel.create_text_channel(channelName, overwrites=overwrites, category=cat)
+          await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
 
 
 
