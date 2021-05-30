@@ -268,7 +268,7 @@ async def on_message(message):
      elif "!build" in case:
           aID = message.author.id
           channelName = case.replace("!build ","")
-          client.channel.create_text_channel(channelName)
+          await message.guild.create_text_channel(channelName)
 
 
 
