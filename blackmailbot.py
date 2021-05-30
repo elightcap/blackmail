@@ -266,16 +266,22 @@ async def on_message(message):
                     await message.author.remove_roles(usa)
 
      elif "!build" in case:
-          aID = message.author.id
-          channelName = case.replace("!build ","")
-          member = message.author
-          cat = discord.utils.get(message.guild.categories, name="Degen City")
-          overwrites = {
-               message.guild.default_role: discord.PermissionOverwrite(read_messages=False),
-               message.guild.me: discord.PermissionOverwrite(read_messages=True),
-               member: discord.PermissionOverwrite(read_messages=True, manage_channels=True)
-          }
-          await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
+          roles = [y.name.lower() for y in message.author.roles]
+          if "placeholderrolename" in roles:
+               aID = message.author.id
+               channelName = case.replace("!build ","")
+               cat = discord.utils.get(message.guild.categories, name="Degen City")
+               message.guild.create_role(name=channelName)
+               role = discord.utils.get(message.guild.roles, name=channelName)
+               await message.author.add_roles(role)
+               overwrites = {
+                    message.guild.default_role: discord.PermissionOverwrite(read_messages=False),
+                    message.guild.me: discord.PermissionOverwrite(read_messages=True),
+                    role: discord.PermissionOverwrite(read_messages=True, manage_channels=True)
+               }
+               await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
+          else:
+               return
 
 
 
