@@ -265,6 +265,11 @@ async def on_message(message):
                     usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
                     await message.author.remove_roles(usa)
 
+     elif "!build" in case:
+          aID = message.author.id
+          channelName = case.replace("!build ","")
+          message.channel.create_text_channel(channelName)
+
 
 
 
