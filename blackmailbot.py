@@ -308,9 +308,9 @@ async def on_message(message):
                          db='channels'
                     )
                     cursor = connection.cursor(buffered=True)
-                    statement = "SELECT * from owners WHERE owner=(%s)"
+                    statement = "SELECT * from owners WHERE owner = %s"
                     data = (aID,)
-                    cursor.execute(statement)
+                    cursor.execute(statement, data)
                     rows = cursor.fetchall()
                     if rows:
                          for row in rows:
@@ -318,7 +318,8 @@ async def on_message(message):
                               cID = int(row[1])
                               rID = int(row[2])
                               if aID == oID:
-                                   await message.guild.set_permissions(message.guild.default_role, read_messages=False)
+                                   channel =  client.get_channel(cID)
+                                   await channel.set_permissions(message.guild.default_role, read_messages=False)
                except database.Error as e:
                     print(f" remove {e}")
 
@@ -468,10 +469,10 @@ async def remove_lawyer():
                          dateNowStr = datetimenow.strftime("%Y-%m-%d")
                          timeNowStr = datetimenow.strftime("%H:%M:%S")
                          mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
-                         newDate = (mDate - addDays).time()
+                         newDate = (mDate - addDays)
                          mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
                          newTime = (mTime - addTime).time()
-                         if uDate <= newTime:
+                         if uDate <= newDate:
                               if uTime <= newTime:
                                    member = client.get_user(uUid)
                                    for guild in client.guilds:
