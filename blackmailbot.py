@@ -283,7 +283,8 @@ async def on_message(message):
                     role = discord.utils.get(message.guild.roles, name=channelName)
                     await message.author.add_roles(role)
                     overwrites = {
-                         role: discord.PermissionOverwrite(read_messages=True, send_messages=True)
+                         role: discord.PermissionOverwrite(read_messages=True, send_messages=True),
+                         message.guild.me: discord.PermissionOverwrite(read_messages=True)
                     }
                     await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
                     newChannel = discord.utils.get(message.guild.channels, name=channelName)
@@ -320,12 +321,13 @@ async def on_message(message):
                               if aID == oID:
                                    channel =  client.get_channel(cID)
                                    await channel.set_permissions(message.guild.default_role, read_messages=False)
+                                   await channel.set_permissions(message.guild.me, read_messages=True)
                except database.Error as e:
                     print(f" remove {e}")
 
      elif "!invite" in case:
           roles = [y.name.lower() for y in message.author.roles]
-          if "home owner" in case:
+          if "home owner" in roles:
                aID = message.author.id
                try:
                     connection = database.connect(
@@ -340,13 +342,16 @@ async def on_message(message):
                     member = message.guild.get_member(inviteID)
                     statement = "SELECT * from owners WHERE owner=(%s)"
                     data = (aID,)
+                    cursor.execute(statement,data)
                     rows = cursor.fetchall()
+                    print(rows)
                     if rows:
                          for row in rows:
                               oID = int(row[0])
                               cID = int(row[1])
                               rID = int(row[2])
                               if aID == oID:
+                                   print("invite")
                                    channel =  client.get_channel(cID)
                                    channelName = channel.name
                                    role = discord.utils.get(message.guild.roles, name=channelName)
