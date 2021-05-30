@@ -337,7 +337,7 @@ async def on_message(message):
                     cursor = connection.cursor(buffered=True)
                     invited = case.replace("!invite ", "")
                     inviteID = int(invited.replace("<@!","").replace(">",""))
-                    person = message.guild.get_member(inviteID)
+                    member = message.guild.get_member(inviteID)
                     statement = "SELECT * from owners WHERE owner=(%s)"
                     data = (aID,)
                     rows = cursor.fetchall()
@@ -348,7 +348,11 @@ async def on_message(message):
                               rID = int(row[2])
                               if aID == oID:
                                    channel =  client.get_channel(cID)
-                                   await channel.set_permissions(person, read_messages=False)
+                                   channelName = channel.name
+                                   role = discord.utils.get(message.guild.roles, name=channelName)
+                                   await member.add_roles(role)
+
+                                   
                except database.Error as e:
                     print(f" remove {e}")
 
