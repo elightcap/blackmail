@@ -267,19 +267,62 @@ async def on_message(message):
 
      elif "!build" in case:
           roles = [y.name.lower() for y in message.author.roles]
-          if "" in roles:
-               aID = message.author.id
-               channelName = case.replace("!build ","")
-               cat = discord.utils.get(message.guild.categories, name="Degen City")
-               await message.guild.create_role(name=channelName)
-               role = discord.utils.get(message.guild.roles, name=channelName)
-               await message.author.add_roles(role)
-               overwrites = {
-                    role: discord.PermissionOverwrite(read_messages=True, send_messages=True)
-               }
-               await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
+          if "home builder" in roles:
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    aID = message.author.id
+                    channelName = case.replace("!build ","")
+                    cat = discord.utils.get(message.guild.categories, name="Degen City")
+                    await message.guild.create_role(name=channelName)
+                    role = discord.utils.get(message.guild.roles, name=channelName)
+                    await message.author.add_roles(role)
+                    overwrites = {
+                         role: discord.PermissionOverwrite(read_messages=True, send_messages=True)
+                    }
+                    await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
+                    newChannel = discord.utils.get(message.guild.channels, name=channelName)
+                    print(newChannel.id)
+                    statement = "INSERT INTO owners (owner,channelid,roleid) VALUES (%s, %s,%s)"
+                    data = (aID,newChannel.id,role.id)
+                    cursor.execute(statement,data)
+                    connection.commit()
+               except database.Error as e:
+                    print(f" remove {e}")
           else:
                return
+     elif "!privatize" in case:
+          roles = [y.name.lower() for y in message.author.roles]
+          if "home owner" in roles:
+               aID = message.author.id
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    statement = "SELECT * from owners WHERE owner=(%s)"
+                    data = (aID,)
+                    cursor.execute(statement)
+                    rows = cursor.fetchall()
+                    if rows:
+                         for row in rows:
+                              oID = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              if aID == oID:
+                                   await message.guild.set_permissions(message.guild.default_role, read_messages=False)
+               except database.Error as e:
+                    print(f" remove {e}")
+
+
 
 
 
