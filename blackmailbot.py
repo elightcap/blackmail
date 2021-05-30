@@ -268,7 +268,14 @@ async def on_message(message):
      elif "!build" in case:
           aID = message.author.id
           channelName = case.replace("!build ","")
-          message.channel.create_text_channel(channelName)
+          member = message.author
+          cat = discord.utils.get(message.guild.category_channel, name="Degen City")
+          overwrites = {
+               message.guild.default_role: discord.PermissionOverwrite(read_messages=False),
+               message.guild.me: discord.PermissionOverwrite(read_messages=True),
+               member: discord.PermissionOverwrite(read_messages=True)
+          }
+          client.guild.channel.create_text_channel(channelName, overwrites=overwrites, category=cat)
 
 
 
