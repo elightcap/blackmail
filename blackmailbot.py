@@ -253,7 +253,7 @@ async def on_message(message):
                     send = await channel.send(mes)
                     usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
                     await message.author.remove_roles(usa)
-               
+
                except AttributeError:
                     mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
                     send = await channel.send(mes)
@@ -267,17 +267,15 @@ async def on_message(message):
 
      elif "!build" in case:
           roles = [y.name.lower() for y in message.author.roles]
-          if "placeholderrolename" in roles:
+          if "" in roles:
                aID = message.author.id
                channelName = case.replace("!build ","")
                cat = discord.utils.get(message.guild.categories, name="Degen City")
-               message.guild.create_role(name=channelName)
+               await message.guild.create_role(name=channelName)
                role = discord.utils.get(message.guild.roles, name=channelName)
                await message.author.add_roles(role)
                overwrites = {
-                    message.guild.default_role: discord.PermissionOverwrite(read_messages=False),
-                    message.guild.me: discord.PermissionOverwrite(read_messages=True),
-                    role: discord.PermissionOverwrite(read_messages=True, manage_channels=True)
+                    role: discord.PermissionOverwrite(read_messages=True, send_messages=True)
                }
                await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
           else:
