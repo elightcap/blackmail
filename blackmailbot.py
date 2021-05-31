@@ -236,7 +236,6 @@ async def on_message(message):
                     send = await message.channel.send(mes)
                     return
                nukeChannel = discord.utils.get(message.guild.channels, name=hiroshima)
-               print(nukeChannel)
                warning = "@everyone NORAD has detected a nuclear warhead! Take cover!"
                channel = client.get_channel(831400394184851456)
                send = await channel.send(warning)
@@ -248,11 +247,29 @@ async def on_message(message):
                     i -= 1
 
                try:
-                    await nukeChannel.delete()
-                    mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
-                    send = await channel.send(mes)
-                    usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
-                    await message.author.remove_roles(usa)
+                    nukeChannel = discord.utils.get(message.guild.channels, name=hiroshima)
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    statement="SELECT * FROM owners WHERE channelid=%s"
+                    data=nukeChannel.id
+                    cursor.execute(statement,data)
+                    rows = cursor.fetchall()
+                    if rows:
+                         for row in rows:
+                              oId = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              role = message.guild.get_role(rID)
+                              members = role.members
+                              for member in members:
+                                   await member.remove_role(role)
+                                   mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
+                                   send = await channel.send(mes)
 
                except AttributeError:
                     mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
