@@ -256,7 +256,7 @@ async def on_message(message):
                     )
                     cursor = connection.cursor(buffered=True)
                     statement="SELECT * FROM owners WHERE channelid=%s"
-                    data=nukeChannel.id
+                    data=(nukeChannel.id,)
                     cursor.execute(statement,data)
                     rows = cursor.fetchall()
                     if rows:
@@ -265,12 +265,16 @@ async def on_message(message):
                               cID = int(row[1])
                               rID = int(row[2])
                               role = message.guild.get_role(rID)
+                              print(role)
                               members = role.members
+                              print(members)
                               for member in members:
-                                   await member.remove_role(role)
+                                   print(member)
+                                   await member.remove_roles(role)
                                    mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
                                    send = await channel.send(mes)
-
+                              usa = discord.utils.get(message.guild.roles, name="USA! USA! USA!")
+                              await message.author.remove_roles(usa)
                except AttributeError:
                     mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
                     send = await channel.send(mes)
