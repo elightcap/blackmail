@@ -236,7 +236,6 @@ async def on_message(message):
                     send = await message.channel.send(mes)
                     return
                nukeChannel = discord.utils.get(message.guild.channels, name=hiroshima)
-               print(nukeChannel)
                warning = "@everyone NORAD has detected a nuclear warhead! Take cover!"
                channel = client.get_channel(831400394184851456)
                send = await channel.send(warning)
@@ -248,12 +247,34 @@ async def on_message(message):
                     i -= 1
 
                try:
-                    await nukeChannel.delete()
-                    mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
-                    send = await channel.send(mes)
-                    usa= discord.utils.get(message.guild.roles, name="USA! USA! USA!")
-                    await message.author.remove_roles(usa)
-               
+                    nukeChannel = discord.utils.get(message.guild.channels, name=hiroshima)
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    statement="SELECT * FROM owners WHERE channelid=%s"
+                    data=(nukeChannel.id,)
+                    cursor.execute(statement,data)
+                    rows = cursor.fetchall()
+                    if rows:
+                         for row in rows:
+                              oId = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              role = message.guild.get_role(rID)
+                              print(role)
+                              members = role.members
+                              print(members)
+                              for member in members:
+                                   print(member)
+                                   await member.remove_roles(role)
+                                   mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
+                                   send = await channel.send(mes)
+                              usa = discord.utils.get(message.guild.roles, name="USA! USA! USA!")
+                              await message.author.remove_roles(usa)
                except AttributeError:
                     mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
                     send = await channel.send(mes)
@@ -266,12 +287,136 @@ async def on_message(message):
                     await message.author.remove_roles(usa)
 
      elif "!build" in case:
-          aID = message.author.id
-          channelName = case.replace("!build ","")
-          await message.guild.create_text_channel(channelName)
 
+          roles = [y.name.lower() for y in message.author.roles]
+          if "home builder" in roles:
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    aID = message.author.id
+                    channelName = case.replace("!build ","")
+                    cat = discord.utils.get(message.guild.categories, name="Degen City")
+                    await message.guild.create_role(name=channelName)
+                    role = discord.utils.get(message.guild.roles, name=channelName)
+                    await message.author.add_roles(role)
+                    overwrites = {
+                         role: discord.PermissionOverwrite(read_messages=True, send_messages=True),
+                         message.guild.me: discord.PermissionOverwrite(read_messages=True)
+                    }
+                    await message.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
+                    newChannel = discord.utils.get(message.guild.channels, name=channelName)
+                    print(newChannel.id)
+                    statement = "INSERT INTO owners (owner,channelid,roleid) VALUES (%s, %s,%s)"
+                    data = (aID,newChannel.id,role.id)
+                    cursor.execute(statement,data)
+                    connection.commit()
+                    ownerRole = discord.utils.get(message.guild.roles, name="Home Builder")
+                    await message.author.remove_roles(ownerRole)
+               except database.Error as e:
+                    print(f" remove {e}")
+          else:
+               return
 
+     elif "!privatize" in case:
+          roles = [y.name.lower() for y in message.author.roles]
+          if "home owner" in roles:
+               aID = message.author.id
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    statement = "SELECT * from owners WHERE owner = %s"
+                    data = (aID,)
+                    cursor.execute(statement, data)
+                    rows = cursor.fetchall()
+                    if rows:
+                         for row in rows:
+                              oID = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              if aID == oID:
+                                   channel =  client.get_channel(cID)
+                                   await channel.set_permissions(message.guild.default_role, read_messages=False)
+                                   await channel.set_permissions(message.guild.me, read_messages=True)
+               except database.Error as e:
+                    print(f" remove {e}")
 
+     elif "!invite" in case:
+          roles = [y.name.lower() for y in message.author.roles]
+          if "home owner" in roles:
+               aID = message.author.id
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    invited = case.replace("!invite ", "")
+                    inviteID = int(invited.replace("<@!","").replace(">",""))
+                    member = message.guild.get_member(inviteID)
+                    statement = "SELECT * from owners WHERE owner=(%s)"
+                    data = (aID,)
+                    cursor.execute(statement,data)
+                    rows = cursor.fetchall()
+                    print(rows)
+                    if rows:
+                         for row in rows:
+                              oID = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              if aID == oID:
+                                   print("invite")
+                                   channel =  client.get_channel(cID)
+                                   channelName = channel.name
+                                   role = message.guild.get_role(rID)
+                                   await member.add_roles(role)
+               except database.Error as e:
+                    print(f" remove {e}")
+
+     elif "!rename" in case:
+          roles = [y.name.lower() for y in message.author.roles]
+          if "renovator" in roles:
+               aID = message.author.id
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    newName = case.replace("!rename ", "")
+                    statement = "SELECT * FROM owners WHERE owner=(%s)"
+                    data = (aID,)
+                    cursor.execute(statement,data)
+                    rows = cursor.fetchall()
+                    if rows:
+                         for row in rows:
+                              oID = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              if aID == oID:
+                                   channel = client.get_channel(cID)
+                                   print(channel)
+                                   test=await channel.edit(name=newName)
+                                   print(test)
+                                   ren = discord.utils.get(message.guild.roles, name="Renovator")
+                                   await message.author.remove_roles(ren)
+               except database.Error as e:
+                    print(f" remove {e}")
+               except:
+                   print("oops")
 
 @client.event
 async def on_member_update(before,after):
@@ -414,10 +559,10 @@ async def remove_lawyer():
                          dateNowStr = datetimenow.strftime("%Y-%m-%d")
                          timeNowStr = datetimenow.strftime("%H:%M:%S")
                          mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
-                         newDate = (mDate - addDays).time()
+                         newDate = (mDate - addDays)
                          mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
                          newTime = (mTime - addTime).time()
-                         if uDate <= newTime:
+                         if uDate <= newDate:
                               if uTime <= newTime:
                                    member = client.get_user(uUid)
                                    for guild in client.guilds:
