@@ -378,10 +378,35 @@ async def on_message(message):
                                    print("invite")
                                    channel =  client.get_channel(cID)
                                    channelName = channel.name
-                                   role = discord.utils.get(message.guild.roles, name=channelName)
+                                   role = message.guild.get_role(rID)
                                    await member.add_roles(role)
-
-                                   
+               except database.Error as e:
+                    print(f" remove {e}")
+     
+     elif "!rename" in case:
+          roles = [y.name.lower() for y in message.author.roles]
+          if "renovator" in roles:
+               aID = message.author.id
+               try:
+                    connection = database.connect(
+                         user = dbUser,
+                         password = dbPass,
+                         host='localhost',
+                         db='channels'
+                    )
+                    cursor = connection.cursor(buffered=True)
+                    newName = case.replace("!rename ", "")
+                    statement = "SELECT * FROM owners WHERE owner=(%s)"
+                    data = (aID,)
+                    rows = cursor.fetchall()
+                    if rows:
+                         for row in rows:
+                              oID = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              if aID == oID:
+                                   channel =  client.get_channel(cID)
+                                   channel.edit(name=newName)
                except database.Error as e:
                     print(f" remove {e}")
 
