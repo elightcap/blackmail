@@ -382,7 +382,7 @@ async def on_message(message):
                                    await member.add_roles(role)
                except database.Error as e:
                     print(f" remove {e}")
-     
+
      elif "!rename" in case:
           roles = [y.name.lower() for y in message.author.roles]
           if "renovator" in roles:
@@ -398,6 +398,7 @@ async def on_message(message):
                     newName = case.replace("!rename ", "")
                     statement = "SELECT * FROM owners WHERE owner=(%s)"
                     data = (aID,)
+                    cursor.execute(statement,data)
                     rows = cursor.fetchall()
                     if rows:
                          for row in rows:
@@ -405,10 +406,16 @@ async def on_message(message):
                               cID = int(row[1])
                               rID = int(row[2])
                               if aID == oID:
-                                   channel =  client.get_channel(cID)
-                                   channel.edit(name=newName)
+                                   channel = client.get_channel(cID)
+                                   print(channel)
+                                   test=await channel.edit(name=newName)
+                                   print(test)
+                                   ren = discord.utils.get(message.guild.roles, name="Renovator")
+                                   await message.author.remove_roles(ren)
                except database.Error as e:
                     print(f" remove {e}")
+               except:
+                   print("oops")
 
 @client.event
 async def on_member_update(before,after):
