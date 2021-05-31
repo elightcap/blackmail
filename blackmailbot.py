@@ -287,6 +287,7 @@ async def on_message(message):
                     await message.author.remove_roles(usa)
 
      elif "!build" in case:
+
           roles = [y.name.lower() for y in message.author.roles]
           if "home builder" in roles:
                try:
