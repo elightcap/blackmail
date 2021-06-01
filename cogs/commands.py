@@ -7,6 +7,7 @@ from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
 from cogs.sqlget import sql_select
+from cogs.sqladd import sql_insert
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -197,6 +198,7 @@ class NukeCog(commands.Cog, name="Nuke"):
                          send = await ctx.channel.send(mes)
                          lj = discord.utils.get(ctx.guild.roles, name="Little John")
                          await ctx.author.remove_roles(lj)
+                         await sql_insert("robbed", "users",leaderInfo.id)
                          for member in members:
                               memberProfile = ctx.guild.get_member(int(member))
                               url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(member)
