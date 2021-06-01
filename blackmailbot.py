@@ -135,13 +135,17 @@ async def on_message(message):
                     if "lawyer'd up" in loserroles:
                          mes = "{} has a good lawyer".format(person.mention)
                          send = await message.channel.send(mes)
-                         return
+                         pt = discord.utils.get(message.guild.roles, name="Patent Troll")
+                         await message.author.remove_roles(pt)
                     elif "public defender" in loserroles:
                          mes = "{} was barely able to afford a public defender".format(person.mention)
                          channel = client.get_channel(831400394184851456)
                          send = await channel.send(mes)
                          pd = discord.utils.get(message.guild.roles, name="Public Defender")
                          await person.remove_roles(pd)
+                         pt = discord.utils.get(message.guild.roles, name="Patent Troll")
+                         await message.author.remove_roles(pt)
+
                     else:
                          url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
                          r = requests.get(url, headers=headers)
@@ -161,8 +165,8 @@ async def on_message(message):
                          mes = "{} lost {} because they were too cheap to pay their legal fees".format(person.mention,total)
                          channel = client.get_channel(831400394184851456)
                          send = await channel.send(mes)
-                    pt = discord.utils.get(message.guild.roles, name="Patent Troll")
-                    await message.author.remove_roles(pt)
+                         pt = discord.utils.get(message.guild.roles, name="Patent Troll")
+                         await message.author.remove_roles(pt)
      ###function that will remove
      ###10% of casdh leaders total
      ###money and distributes it
