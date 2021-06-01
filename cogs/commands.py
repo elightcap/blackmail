@@ -9,7 +9,10 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-client = discord.Client()
+intents = discord.Intents.default()
+intents.members = True
+intents.messages=True
+client = discord.Client(intents=intents)
 unbkey = os.getenv('UNBKEY')
 headers = {'Authorization': unbkey}
 pokerBotID = "613156357239078913"
@@ -108,7 +111,7 @@ class NukeCog(commands.Cog, name="Nuke"):
                    print(ctx)
                    loser = int(loser.replace("<@!","").replace(">",""))
                    print(loser)
-                   person = client.guild.get_member(loser)
+                   person = ctx.guild.get_member(loser)
                    print(person)
                    loserroles = [x.name.lower() for x in person.roles]
                    if "lawyer'd up" in loserroles:
