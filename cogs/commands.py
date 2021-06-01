@@ -6,7 +6,7 @@ from typing import cast
 from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
-from sqlget import sql_select
+from cogs.sqlget import sql_select
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -152,7 +152,7 @@ class NukeCog(commands.Cog, name="Nuke"):
      @commands.command(name='testdb')
      @commands.guild_only()
      async def testdb(self, ctx, *, user_input: str):
-          test= sql_select("channels","owners", ctx.author.id)
+          test= await sql_select("channels","owners", ctx.author.id)
           print(test)
 
 

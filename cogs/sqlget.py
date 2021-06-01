@@ -16,7 +16,7 @@ async def sql_select(db, table, uid):
                     db=db
             )
             cursor = connection.cursor(buffered=True)
-            statement = 'SELECT * from (%s) where uid=(%s)'
+            statement = 'SELECT * from %s where owner=%s'
             data = (table, uid)
             cursor.execute(statement, data)
             rows = cursor.fetchall()
