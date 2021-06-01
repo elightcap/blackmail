@@ -16,9 +16,9 @@ async def sql_select(db, table, uid):
                     db=db
             )
             cursor = connection.cursor(buffered=True)
-            statement = 'SELECT * from %s where owner=%s'
-            data = (table, uid)
-            cursor.execute(statement, data)
+            statement = """SELECT * FROM {table_name} where owner=(%s)""".format(table_name=table)
+            data = (uid,)
+            cursor.execute(statement,data)
             rows = cursor.fetchall()
             return rows
     except database.Error as e:

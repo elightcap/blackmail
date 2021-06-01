@@ -155,7 +155,11 @@ class NukeCog(commands.Cog, name="Nuke"):
           channels = "channels"
           owners ="owners"
           test= await sql_select(channels,owners, ctx.author.id)
-          print(test)
+          tup = test[0]
+          oID = tup[0]
+          cID = tup[1]
+          rID = tup[2]
+          print(rID)
 
 
 def setup(bot):
