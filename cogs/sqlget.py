@@ -8,7 +8,7 @@ dbUser = os.getenv('MARIAUSER')
 dbPass = os.getenv('MARIAPASS')
 
 async def sql_select(db, table, uid):
-     try:
+    try:
             connection = database.connect(
                     user = dbUser,
                     password = dbPass,
@@ -21,5 +21,5 @@ async def sql_select(db, table, uid):
             cursor.execute(statement, data)
             rows = cursor.fetchall()
             return rows
-        except database.Error as e:
-            print(f" remove {e}")
+    except database.Error as e:
+        print(f" remove {e}")
