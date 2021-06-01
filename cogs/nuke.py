@@ -9,3 +9,6 @@ class NukeCog(commands.Cog, name="Nuke"):
     @commands.guild_only()
     async def do_nuke(self, ctx, *, our_input: str):
         await ctx.send(our_input)
+
+def setup(bot):
+    bot.add_cog(NukeCog(bot))
