@@ -10,6 +10,7 @@ from discord.utils import get
 from dotenv import load_dotenv
 from cogs.sqlget import sql_select
 from cogs.sqladd import sql_insert
+from cogs.sqldel import sql_remove
 from datetime import datetime, timedelta
 
 load_dotenv()
