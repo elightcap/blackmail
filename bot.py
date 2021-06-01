@@ -9,7 +9,7 @@ import time
 import mysql.connector as database
 from discord.ext import tasks, commands
 from discord.utils import get
-
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
 import sys, traceback
