@@ -1,13 +1,16 @@
+from cogs.sqldel import sql_remove
 import discord
 import requests
 import os
 import json
+import aiocron
 from typing import cast
 from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
 from cogs.sqlget import sql_select
 from cogs.sqladd import sql_insert
+from datetime import datetime, timedelta
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -197,7 +200,9 @@ class NukeCog(commands.Cog, name="Nuke"):
                          mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
                          send = await ctx.channel.send(mes)
                          lj = discord.utils.get(ctx.guild.roles, name="Little John")
+                         rv = discord.utils.get(ctx.guild.roles, name="Robbery Victim")
                          await ctx.author.remove_roles(lj)
+                         await leaderInfo.add_roles(rv)
                          await sql_insert("robbed", "users",leaderInfo.id)
                          for member in members:
                               memberProfile = ctx.guild.get_member(int(member))
@@ -220,6 +225,37 @@ class NukeCog(commands.Cog, name="Nuke"):
           rID = tup[2]
           print(rID)
 
+@aiocron.crontab('*/1 * * * *')
+async def remove_rv(ctx):
+     rows = await sql_select("robbed", "users", "uid","'%'")
+     for row in rows:
+          uUid = int(row[0])
+          uDate = row[1]
+          strTime = str(row[2])
+          uTime = datetime.strptime(strTime,"%H:%M:%S" ).time()
+          try:
+               datetimenow = datetime.now()
+               addTime = timedelta(minutes=1)
+               dateNowStr = datetimenow.strftime("%Y-%m-%d")
+               timeNowStr = datetimenow.strftime("%H:%M:%S")
+               mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
+               mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
+               newTime = (mTime - addTime).time()
+               if uDate <= mDate:
+                    if uTime <= newTime:
+                         member = client.get_user(uUid)
+                         for guild in client.guilds:
+                              for member in guild.members:
+                                   for role in member.roles:
+                                        if role.name == "Robbery Victim":
+                                             role  = discord.utils.get(member.guild.roles, name="Robbery Victim")
+                                             if member.id == uUid:
+                                                  sql_remove("robbed", "users", "uid", uUid)
+                                                  print("blackmail role removed")
+                                                  await member.remove_roles(role)
+          except os.error as e:
+               print(e)
 
+remove_rv.start()
 def setup(bot):
     bot.add_cog(NukeCog(bot))
