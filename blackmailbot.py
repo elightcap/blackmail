@@ -261,7 +261,7 @@ async def on_message(message):
                     rows = cursor.fetchall()
                     if rows:
                          for row in rows:
-                              oId = int(row[0])
+                              oID = int(row[0])
                               cID = int(row[1])
                               rID = int(row[2])
                               role = message.guild.get_role(rID)
@@ -275,6 +275,9 @@ async def on_message(message):
                                    send = await channel.send(mes)
                               usa = discord.utils.get(message.guild.roles, name="USA! USA! USA!")
                               await message.author.remove_roles(usa)
+                              ded = discord.utils.get(message.guild.roles, name="Home Destroyed")
+                              owner = message.guild.get_member(oID)
+                              await owner.add_roles(ded)
                except AttributeError:
                     mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
                     send = await channel.send(mes)
