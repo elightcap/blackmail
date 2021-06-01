@@ -21,3 +21,5 @@ async def sql_select(db, table, uid):
             cursor.execute(statement, data)
             rows = cursor.fetchall()
             return rows
+        except database.Error as e:
+            print(f" remove {e}")
