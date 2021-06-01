@@ -22,6 +22,7 @@ unbkey = os.getenv('UNBKEY')
 headers = {'Authorization': unbkey}
 pokerBotID = "613156357239078913"
 botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156357239078913"
+bot1 = commands.Bot(command_prefix="!",intents=intents)
 
 class NukeCog(commands.Cog, name="Nuke"):
      def __init__(self, bot):
@@ -227,7 +228,7 @@ class NukeCog(commands.Cog, name="Nuke"):
           print(rID)
 
      @aiocron.crontab('*/1 * * * *')
-     async def remove_rv(ctx, self):
+     async def remove_rv():
           rows = await sql_select("robbed", "users", "uid","%")
           for row in rows:
                uUid = int(row[0])
@@ -243,12 +244,16 @@ class NukeCog(commands.Cog, name="Nuke"):
                     mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
                     newTime = (mTime - addTime).time()
                     if uDate <= mDate:
+                         print("date")
                          if uTime <= newTime:
-                              member = ctx.get_user(uUid)
-                              for guild in ctx.guilds:
+                              print("time")
+                              member = bot.get_user(uUid)
+                              print(member)
+                              for guild in bot.guilds:
                                    for member in guild.members:
                                         for role in member.roles:
                                              if role.name == "Robbery Victim":
+                                                  print("role")
                                                   role  = discord.utils.get(member.guild.roles, name="Robbery Victim")
                                                   if member.id == uUid:
                                                        sql_remove("robbed", "users", "uid", uUid)
