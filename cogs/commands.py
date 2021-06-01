@@ -109,16 +109,18 @@ class NukeCog(commands.Cog, name="Nuke"):
                    loserroles = [x.name.lower() for x in person.roles]
                    if "lawyer'd up" in loserroles:
                         mes = "{} has a good lawyer".format(person.mention)
+                        print("good")
                         send = await ctx.channel.send(mes)
                         return
                    elif "public defender" in loserroles:
+                        print("lawyer")
                         mes = "{} was barely able to afford a public defender".format(person.mention)
                         channel = client.get_channel(849121833252159508)
                         send = await channel.send(mes)
                         pd = discord.utils.get(ctx.guild.roles, name="Public Defender")
                         await person.remove_roles(pd)
                    else:
-                        url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
+                        url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(loser)
                         r = requests.get(url, headers=headers)
                         json_data = json.loads(r.text)
                         strCash = json_data['cash']
