@@ -227,8 +227,8 @@ class NukeCog(commands.Cog, name="Nuke"):
           print(rID)
 
 @aiocron.crontab('*/1 * * * *')
-async def remove_rv():
-     rows = await sql_select("robbed", "users", "uid","'%'")
+async def remove_rv(ctx, self):
+     rows = await sql_select("robbed", "users", "uid","%")
      for row in rows:
           uUid = int(row[0])
           uDate = row[1]
@@ -244,8 +244,8 @@ async def remove_rv():
                newTime = (mTime - addTime).time()
                if uDate <= mDate:
                     if uTime <= newTime:
-                         member = bot.get_user(uUid)
-                         for guild in bot.guilds:
+                         member = ctx.get_user(uUid)
+                         for guild in ctx.guilds:
                               for member in guild.members:
                                    for role in member.roles:
                                         if role.name == "Robbery Victim":
@@ -259,4 +259,3 @@ async def remove_rv():
 
 def setup(bot):
     bot.add_cog(NukeCog(bot))
-remove_rv.start()

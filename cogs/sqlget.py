@@ -17,9 +17,12 @@ async def sql_select(db, table, attname, att):
         )
         cursor = connection.cursor(buffered=True)
         statement = """SELECT * FROM {table_name} where {att_name} like (%s)""".format(table_name=table, att_name=attname)
-        data = (table, att)
+        print(statement)
+        data = (att,)
+        print(data)
         cursor.execute(statement, data)
         rows = cursor.fetchall()
+        print(rows)
         return rows
     except database.Error as e:
         print(f" remove {e}")
