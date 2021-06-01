@@ -149,6 +149,63 @@ class NukeCog(commands.Cog, name="Nuke"):
                    pt = discord.utils.get(ctx.guild.roles, name="Patent Troll")
                    await ctx.author.remove_roles(pt)
 
+     @commands.command(name='robinhood')
+     @commands.guild_only()
+     async def robinhood(self,ctx):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          if "little john" in roles:
+               role = discord.utils.get(ctx.guild.roles, name="Merry People")
+               members = [y.id for y in role.members]
+               memberCount = len(members)
+               if memberCount == 0:
+                    print("no members")
+                    return
+               else:
+                    url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/"
+                    r = requests.get(url, headers=headers)
+                    json_data = json.loads(r.text)
+                    leader = next((item for item in json_data if item["rank"] == "1"), None)
+                    leaderInfo = ctx.guild.get_member(int(leader['user_id']))
+                    leaderRoles = [x.name.lower() for x in leaderInfo.roles]
+                    if  "robinhood immune" in leaderRoles:
+                         mes = "{} has outsmarted you! They are immune to my robbery".format(leaderInfo.mention)
+                         send = await ctx.channel.send(mes)
+                         lj = discord.utils.get(ctx.guild.roles, name="Little John")
+                         await ctx.author.remove_roles(lj)
+                    elif  "robbery victim" in leaderRoles:
+                         mes = "I've already stolen from {}! lets give them a chance to learn their lesson".format(leaderInfo.mention)
+                         send = await ctx.channel.send(mes)
+                         lj = discord.utils.get(ctx.guild.roles, name="Little John")
+                         await ctx.author.remove_roles(lj)
+                    else:
+                         leaderProfile = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(leader['user_id'])
+                         r = requests.get(leaderProfile, headers=headers)
+                         json_data = json.loads(r.text)
+                         leaderCash = float(json_data['cash'])
+                         leaderBank = float(json_data['bank'])
+                         percentCash = float(leaderCash*.1)
+                         percentBank = float(leaderBank*.1)
+                         total = float(percentBank+percentCash)
+                         share = str(float(total//memberCount))
+                         feeCash = '-' + str(int(percentCash))
+                         feeBank = '-' + str(int(percentBank))
+                         builder = {'cash': feeCash, 'bank':feeBank}
+                         total = str(int(percentBank + percentCash))
+                         jsonString = json.dumps(builder, indent=4)
+                         rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
+                         mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
+                         send = await ctx.channel.send(mes)
+                         lj = discord.utils.get(ctx.guild.roles, name="Little John")
+                         await ctx.author.remove_roles(lj)
+                         for member in members:
+                              memberProfile = ctx.guild.get_member(int(member))
+                              url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(member)
+                              r = requests.get(url, headers=headers)
+                              json_data = json.loads(r.text)
+                              builder = {'cash': share}
+                              jsonString = json.dumps(builder, indent=4)
+                              rp = requests.patch(url, headers=headers, data=jsonString)
+
      @commands.command(name='testdb')
      @commands.guild_only()
      async def testdb(self, ctx, *, user_input: str):
