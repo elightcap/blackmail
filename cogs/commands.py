@@ -115,7 +115,7 @@ async def strike(self, ctx, *, user_input):
                   return
              elif "public defender" in loserroles:
                   mes = "{} was barely able to afford a public defender".format(person.mention)
-                  channel = client.get_channel(831400394184851456)
+                  channel = client.get_channel(849121833252159508)
                   send = await channel.send(mes)
                   pd = discord.utils.get(ctx.guild.roles, name="Public Defender")
                   await person.remove_roles(pd)
@@ -136,7 +136,7 @@ async def strike(self, ctx, *, user_input):
                   jsonString = json.dumps(builder, indent=4)
                   rp = requests.patch(url, headers=headers, data=jsonString)
                   mes = "{} lost {} because they were too cheap to pay their legal fees".format(person.mention,total)
-                  channel = client.get_channel(831400394184851456)
+                  channel = client.get_channel(849121833252159508)
                   send = await channel.send(mes)
              pt = discord.utils.get(ctx.guild.roles, name="Patent Troll")
              await ctx.author.remove_roles(pt)
