@@ -6,7 +6,7 @@ from typing import cast
 from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
-#import bot
+from sqlget import sql_select
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -148,6 +148,12 @@ class NukeCog(commands.Cog, name="Nuke"):
                         send = await channel.send(mes)
                    pt = discord.utils.get(ctx.guild.roles, name="Patent Troll")
                    await ctx.author.remove_roles(pt)
+
+     @commands.command(name='testdb')
+     @commands.guild_only()
+     async def testdb(self, ctx, *, user_input: str):
+          test= sql_select("channels","owners", ctx.author.id)
+          print(test)
 
 
 def setup(bot):
