@@ -558,7 +558,7 @@ async def remove_lawyer():
                     try:
                          datetimenow = datetime.now()
                          addTime = timedelta(minutes=5)
-                         addDays = timedelta(days=7)
+                         addDays = timedelta(days=2)
                          dateNowStr = datetimenow.strftime("%Y-%m-%d")
                          timeNowStr = datetimenow.strftime("%H:%M:%S")
                          mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
