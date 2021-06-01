@@ -33,10 +33,7 @@ def get_prefix(bot, message):
         return '?'
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
-initial_extensions = ['cogs.commands',
-                                  'sqlget.py',
-                                  'sqlselect.py',
-                                  ]
+initial_extensions = ['cogs.commands']
 
 bot = commands.Bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat")
 
