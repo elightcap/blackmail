@@ -152,7 +152,9 @@ class NukeCog(commands.Cog, name="Nuke"):
      @commands.command(name='testdb')
      @commands.guild_only()
      async def testdb(self, ctx, *, user_input: str):
-          test= await sql_select("channels","owners", ctx.author.id)
+          channels = "channels"
+          owners ="owners"
+          test= await sql_select(channels,owners, ctx.author.id)
           print(test)
 
 
