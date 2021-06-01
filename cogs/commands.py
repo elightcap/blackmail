@@ -104,6 +104,8 @@ class NukeCog(commands.Cog, name="Nuke"):
                    send = await ctx.channel.send(mes)
                    return
               else:
+                   print(loser)
+                   print(ctx)
                    loser = int(loser.replace("<@!","").replace(">",""))
                    print(loser)
                    person = ctx.guild.get_member(loser)
