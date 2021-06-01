@@ -1,9 +1,7 @@
-import os
-from typing import cast
+
 
 from requests.models import CaseInsensitiveDict
 import aiocron
-import requests
 import discord
 import json
 import math
@@ -11,7 +9,7 @@ import time
 import mysql.connector as database
 from discord.ext import tasks, commands
 from discord.utils import get
-from dotenv import load_dotenv
+
 from datetime import datetime, timedelta
 
 import sys, traceback
@@ -22,13 +20,12 @@ GUILD = os.getenv('DISCORD_GUILD')
 unbkey = os.getenv('UNBKEY')
 dbUser = os.getenv('MARIAUSER')
 dbPass = os.getenv('MARIAPASS')
-pokerBotID = "613156357239078913"
 botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156357239078913"
 intents = discord.Intents.default()
 intents.members = True
 intents.messages=True
 client = discord.Client(intents=intents)
-headers = {'Authorization': unbkey}
+
 
 def get_prefix(bot, message):
     prefixes=['!', '!?']
@@ -36,8 +33,10 @@ def get_prefix(bot, message):
         return '?'
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
-initial_extensions = ['cogs.nuke',
-                                  'cogs.invite']
+initial_extensions = ['cogs.commands',
+                                  'sqlget.py',
+                                  'sqlselect.py',
+                                  ]
 
 bot = commands.Bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat")
 
@@ -52,7 +51,5 @@ if __name__ == '__main__':
 @bot.event
 async def on_ready():
     print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
-    await bot.change_presence(activity=discord.Streaming(name='Cashier'))
-    print(f'Logged in')
 
 bot.run(TOKEN, bot=True, reconnect=True)
