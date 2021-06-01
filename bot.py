@@ -39,7 +39,7 @@ def get_prefix(bot, message):
 
 initial_extensions = ['cogs.commands']
 
-bot = commands.Bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat")
+bot = commands.Bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat", intents=intents)
 
 if __name__ == '__main__':
     for extension in initial_extensions:
@@ -52,5 +52,5 @@ if __name__ == '__main__':
 @bot.event
 async def on_ready():
     print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
-
+    print(client)
 bot.run(TOKEN, bot=True, reconnect=True)

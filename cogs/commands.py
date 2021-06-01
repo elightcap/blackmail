@@ -6,7 +6,7 @@ from typing import cast
 from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
-
+#import bot
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -97,7 +97,7 @@ class NukeCog(commands.Cog, name="Nuke"):
           
      @commands.command(name='strike')
      @commands.guild_only()
-     async def strike(self, ctx, *, user_input):
+     async def strike(self, ctx, *, user_input: str):
           roles = [y.name.lower() for y in ctx.author.roles]
           if "patent troll" in roles:
               aID = ctx.author.id
