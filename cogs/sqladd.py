@@ -2,6 +2,7 @@ import os
 from discord.ext import commands
 import mysql.connector as database
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 load_dotenv()
 dbUser = os.getenv('MARIAUSER')
