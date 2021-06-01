@@ -105,7 +105,9 @@ class NukeCog(commands.Cog, name="Nuke"):
                    return
               else:
                    loser = int(loser.replace("<@!","").replace(">",""))
+                   print(loser)
                    person = ctx.guild.get_member(loser)
+                   print(person)
                    loserroles = [x.name.lower() for x in person.roles]
                    if "lawyer'd up" in loserroles:
                         mes = "{} has a good lawyer".format(person.mention)
@@ -120,6 +122,7 @@ class NukeCog(commands.Cog, name="Nuke"):
                         pd = discord.utils.get(ctx.guild.roles, name="Public Defender")
                         await person.remove_roles(pd)
                    else:
+                        print("strike")
                         url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(loser)
                         r = requests.get(url, headers=headers)
                         json_data = json.loads(r.text)
