@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 client = discord.Client()
+unbkey = os.getenv('UNBKEY')
 headers = {'Authorization': unbkey}
 pokerBotID = "613156357239078913"
 botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156357239078913"
