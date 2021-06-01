@@ -108,7 +108,7 @@ class NukeCog(commands.Cog, name="Nuke"):
                    print(ctx)
                    loser = int(loser.replace("<@!","").replace(">",""))
                    print(loser)
-                   person = ctx.guild.get_member(loser)
+                   person = client.guild.get_member(loser)
                    print(person)
                    loserroles = [x.name.lower() for x in person.roles]
                    if "lawyer'd up" in loserroles:
