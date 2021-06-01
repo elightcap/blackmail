@@ -39,7 +39,7 @@ def get_prefix(bot, message):
 initial_extensions = ['cogs.nuke',
                                   'cogs.invite']
 
-bot = commands.bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat")
+bot = commands.Bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat")
 
 if __name__ == '__main__':
     for extension in initial_extensions:
