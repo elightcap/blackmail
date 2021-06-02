@@ -21,6 +21,7 @@ botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156
 class dbCog(commands.Cog, name="db"):
     def __init__(self, bot):
         self.bot = bot
+        self.on_member_update.start()
 
     @client.event
     async def on_member_update(before,after):
