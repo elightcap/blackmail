@@ -246,11 +246,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                               members = role.members
                               for member in members:
                                    await member.remove_roles(role)
-                              ho = discord.utils.get(ctx.guild.roles, name="Home Owner")
                               hd = discord.utils.get(ctx.guild.roles, name="Home Destroyed")
-                              owner_roles = [y.name.lower() for y in owner.roles]
-                              if "home owner" in owner_roles:
-                                   await owner.remove_roles(ho)
                               await owner.add_roles(hd)
                               mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
                               send = await channel.send(mes)
