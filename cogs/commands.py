@@ -288,7 +288,25 @@ class CommandsCog(commands.Cog, name="Commands"):
                ownerRole = discord.utils.get(ctx.guild.roles, name="Home Builder")
                await ctx.author.remove_roles(ownerRole)
 
-
+     @commands.command(name='invite')
+     @commands.guild_only()
+     async def channel_invite(self, ctx, *, user_input : str):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          if "home owner" in roles:
+               aID = ctx.author.id
+               rows = await sql_select("channels", "owners", "channelid", aID)
+               invited = user_input
+               inviteID = int(invited.replace("<@!","").replace(">",""))
+               member = ctx.guild.get_member(inviteID)
+               if rows:
+                    for row in rows:
+                         oID = int(row[0])
+                         cID = int(row[1])
+                         rID = int(row[2])
+                         if aID == oID:
+                              print("invite")
+                              role = ctx.guild.get_role(rID)
+                              await member.add_roles(role)
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
