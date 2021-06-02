@@ -292,7 +292,9 @@ class CommandsCog(commands.Cog, name="Commands"):
      @commands.guild_only()
      async def channel_invite(self, ctx, *, user_input : str):
           roles = [y.name.lower() for y in ctx.author.roles]
-          if "home owner" in roles:
+          if "home destroyed" in roles:
+               return
+          elif "home owner" in roles:
                aID = ctx.author.id
                rows = await sql_select("channels", "owners", "owner", aID)
                invited = user_input
