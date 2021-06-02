@@ -1,15 +1,8 @@
 import os
 
-from requests.models import CaseInsensitiveDict
 import discord
-import json
-import math
-import time
-import mysql.connector as database
 from discord.ext import commands
-from discord.utils import get
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
 
 import sys, traceback
 
@@ -53,5 +46,4 @@ if __name__ == '__main__':
 @bot.event
 async def on_ready():
     print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
-    print(client)
 bot.run(TOKEN, bot=True, reconnect=True)

@@ -108,27 +108,20 @@ class CommandsCog(commands.Cog, name="Commands"):
                    send = await ctx.channel.send(mes)
                    return
               else:
-                   print(loser)
-                   print(ctx)
                    loser = int(loser.replace("<@!","").replace(">",""))
-                   print(loser)
                    person = ctx.guild.get_member(loser)
-                   print(person)
                    loserroles = [x.name.lower() for x in person.roles]
                    if "lawyer'd up" in loserroles:
                         mes = "{} has a good lawyer".format(person.mention)
-                        print("good")
                         send = await ctx.channel.send(mes)
                         return
                    elif "public defender" in loserroles:
-                        print("lawyer")
                         mes = "{} was barely able to afford a public defender".format(person.mention)
                         channel = self.bot.get_channel(849121833252159508)
                         send = await channel.send(mes)
                         pd = discord.utils.get(ctx.guild.roles, name="Public Defender")
                         await person.remove_roles(pd)
                    else:
-                        print("strike")
                         url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(loser)
                         r = requests.get(url, headers=headers)
                         json_data = json.loads(r.text)
@@ -214,9 +207,7 @@ class CommandsCog(commands.Cog, name="Commands"):
      @commands.guild_only()
      async def nuke(self, ctx, *, user_input : str):
           roles = [y.name.lower() for y in ctx.author.roles]
-          print("nuke time")
           if  "usa! usa! usa!" in roles:
-               print("has nuke role")
                hiroshima =  user_input
                if len(hiroshima) < 1:
                     mes = "choose a channel to nuke"
@@ -302,7 +293,6 @@ class CommandsCog(commands.Cog, name="Commands"):
                          cID = int(row[1])
                          rID = int(row[2])
                          if aID == oID:
-                              print("invite")
                               role = ctx.guild.get_role(rID)
                               await member.add_roles(role)
 

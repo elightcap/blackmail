@@ -1,5 +1,4 @@
 import os
-from discord.ext import commands
 import mysql.connector as database
 from dotenv import load_dotenv
 
@@ -17,12 +16,9 @@ async def sql_select(db, table, attname, att):
         )
         cursor = connection.cursor(buffered=True)
         statement = """SELECT * FROM {table_name} where {att_name} like (%s)""".format(table_name=table, att_name=attname)
-        print(statement)
         data = (att,)
-        print(data)
         cursor.execute(statement, data)
         rows = cursor.fetchall()
-        print(rows)
         return rows
     except database.Error as e:
         print(f" remove {e}")
