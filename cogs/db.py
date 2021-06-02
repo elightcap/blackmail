@@ -28,7 +28,7 @@ class dbCog(commands.Cog, name="db"):
         self.remove_rv.start()
         self.remove_lawyer.start()
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(minutes=10)
     async def remove_rv(self):
         rows = await sql_select("robbed", "users", "uid","%")
         for row in rows:
