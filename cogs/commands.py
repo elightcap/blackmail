@@ -213,17 +213,58 @@ class CommandsCog(commands.Cog, name="Commands"):
                               jsonString = json.dumps(builder, indent=4)
                               rp = requests.patch(url, headers=headers, data=jsonString)
 
-     @commands.command(name='testdb')
+     @commands.command(name='nuke')
      @commands.guild_only()
-     async def testdb(self, ctx, *, user_input: str):
-          channels = "channels"
-          owners ="owners"
-          test= await sql_select(channels,owners, ctx.author.id)
-          tup = test[0]
-          oID = tup[0]
-          cID = tup[1]
-          rID = tup[2]
-          print(rID)
+     async def nuke(self, ctx, *, user_input : str):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          print("nuke time")
+          if  "usa! usa! usa!" in roles:
+               print("has nuke role")
+               hiroshima =  user_input
+               if len(hiroshima) < 1:
+                    mes = "choose a channel to nuke"
+                    send = await ctx.channel.send(mes)
+                    return
+               nukeChannel = discord.utils.get(ctx.guild.channels, name=hiroshima)
+               warning = "@everyone NORAD has detected a nuclear warhead! Take cover!"
+               channel = self.bot.get_channel(849121833252159508)
+               send = await channel.send(warning)
+               i = 10
+               while i >= 0:
+                    mes = str(i)
+                    send = await channel.send(mes)
+                    time.sleep(1)
+                    i -= 1
+
+               try:
+                    nukeChannel = discord.utils.get(ctx.guild.channels, name=hiroshima)
+                    rows = sql_select("channels", "owners", "channelid", nukeChannel.id)
+                    if rows:
+                         for row in rows:
+                              oId = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              role = ctx.guild.get_role(rID)
+                              print(role)
+                              members = role.members
+                              print(members)
+                              for member in members:
+                                   print(member)
+                                   await member.remove_roles(role)
+                                   mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
+                                   send = await channel.send(mes)
+                              usa = discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
+                              await ctx.author.remove_roles(usa)
+               except AttributeError:
+                    mes = "{} has implemented a missle defense system. It seems flaky though...".format(hiroshima)
+                    send = await channel.send(mes)
+                    usa= discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
+                    await ctx.author.remove_roles(usa)
+               except:
+                    mes = "You cant nuke a _SUPERPOWER_"
+                    send = await channel.send(mes)
+                    usa= discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
+                    await ctx.author.remove_roles(usa)
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))

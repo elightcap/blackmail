@@ -1,13 +1,12 @@
 import os
 
 from requests.models import CaseInsensitiveDict
-import aiocron
 import discord
 import json
 import math
 import time
 import mysql.connector as database
-from discord.ext import tasks, commands
+from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
@@ -37,7 +36,9 @@ def get_prefix(bot, message):
         return '?'
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
-initial_extensions = ['cogs.commands']
+initial_extensions = ['cogs.commands',
+                                  'cogs.db'
+                                ]
 
 bot = commands.Bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat", intents=intents)
 
