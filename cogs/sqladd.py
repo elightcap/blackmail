@@ -8,7 +8,7 @@ load_dotenv()
 dbUser = os.getenv('MARIAUSER')
 dbPass = os.getenv('MARIAPASS')
 
-async def sql_insert(db, table, uid):
+async def sql_insert(db, table, uid, cid = 1, rid = 1):
     try:
         connection = database.connect(
         user = dbUser,
@@ -17,11 +17,15 @@ async def sql_insert(db, table, uid):
         db=db
         )
         cursor = connection.cursor(buffered=True)
-        datetimenow = datetime.now()
-        mDate = datetimenow.strftime("%Y-%m-%d")
-        mTime = datetimenow.strftime("%H:%M:%S")
-        statement =  """INSERT INTO {table_name} (uid,date,time) VALUES (%s,%s,%s)""".format(table_name=table)
-        data = (uid,mDate,mTime)
+        if db == "robbed":
+            datetimenow = datetime.now()
+            mDate = datetimenow.strftime("%Y-%m-%d")
+            mTime = datetimenow.strftime("%H:%M:%S")
+            statement =  """INSERT INTO {table_name} (uid,date,time) VALUES (%s,%s,%s)""".format(table_name=table)
+            data = (uid,mDate,mTime)
+        elif db == "channels":
+            statement = """INSERT INTO {table_name} (owner,channelid,roleid) VALUES(%s,%s,%s)""".format(table_name=table)
+            data = (uid,cid,rid)
         cursor.execute(statement,data)
         connection.commit()
         print("{} added to {}".format(uid, db))
