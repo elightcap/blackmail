@@ -31,3 +31,6 @@ class dbCog(commands.Cog, name="db"):
                 uid = int(after.id)
                 await sql_insert("robbed", "users", uid)
                 print("rob vic success add")
+
+def setup(bot):
+    bot.add_cog(dbCog(bot))
