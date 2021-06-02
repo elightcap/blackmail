@@ -27,7 +27,7 @@ class dbCog(commands.Cog, name="db"):
         self.remove_blackmail.start()
         self.remove_rhimmune.start()
 
-    @tasks.loop(minutes=10)
+    @tasks.loop(minutes=1)
     async def remove_rv(self):
         rows = await sql_select("robbed", "users", "uid","%")
         for row in rows:
@@ -37,7 +37,7 @@ class dbCog(commands.Cog, name="db"):
              uTime = datetime.strptime(strTime,"%H:%M:%S" ).time()
              try:
                   datetimenow = datetime.now()
-                  addTime = timedelta(minutes=1)
+                  addTime = timedelta(minutes=10)
                   dateNowStr = datetimenow.strftime("%Y-%m-%d")
                   timeNowStr = datetimenow.strftime("%H:%M:%S")
                   mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
