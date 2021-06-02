@@ -308,5 +308,22 @@ class CommandsCog(commands.Cog, name="Commands"):
                               role = ctx.guild.get_role(rID)
                               await member.add_roles(role)
 
+     @commands.command(name='privatize')
+     @commands.guild_only()
+     async def private_channel(self, ctx, *, user_input : str):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          if "home owner" in roles:
+               aID = ctx.author.id
+               rows = await sql_select("channels","owners","owner",aID)
+               if rows:
+                    for row in rows:
+                         oID = int(row[0])
+                         cID = int(row[1])
+                         rID = int(row[2])
+                         if aID == oID:
+                              channel =  client.get_channel(cID)
+                              await channel.set_permissions(ctx.guild.default_role, read_messages=False)
+                              await channel.set_permissions(ctx.guild.me, read_messages=True)
+
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
