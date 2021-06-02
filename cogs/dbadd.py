@@ -23,7 +23,7 @@ class dbaddCog(commands.Cog, name="dbadd"):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_member_update(before,after):
+    async def on_member_update(self,before,after):
         print(after.roles)
         if len(before.roles)<len(after.roles):
             newRole = next(role for role in after.roles if role not in before.roles)   
