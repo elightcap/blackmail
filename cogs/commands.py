@@ -235,23 +235,23 @@ class CommandsCog(commands.Cog, name="Commands"):
 
                try:
                     nukeChannel = discord.utils.get(ctx.guild.channels, name=hiroshima)
-                    print(nukeChannel.id)
                     rows = await sql_select("channels", "owners", "channelid", nukeChannel.id)
-                    print(rows)
                     if rows:
                          for row in rows:
                               oId = int(row[0])
                               cID = int(row[1])
                               rID = int(row[2])
                               role = ctx.guild.get_role(rID)
-                              print(role)
+                              owner = ctx.guild.get_member(int(oID))
                               members = role.members
-                              print(members)
                               for member in members:
-                                   print(member)
                                    await member.remove_roles(role)
-                                   mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
-                                   send = await channel.send(mes)
+                              ho = discord.utils.get(ctx.guild.roles, name="Home Owner")
+                              hd = discord.utils.get(ctx.guild.roles, name="Home Destroyed")
+                              owner.remove_roles(ho)
+                              owner.add_roles(hd)
+                              mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
+                              send = await channel.send(mes)
                               usa = discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
                               await ctx.author.remove_roles(usa)
                except AttributeError:
