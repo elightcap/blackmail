@@ -321,7 +321,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                          cID = int(row[1])
                          rID = int(row[2])
                          if aID == oID:
-                              channel =  client.get_channel(cID)
+                              channel =  self.bot.get_channel(cID)
                               await channel.set_permissions(ctx.guild.default_role, read_messages=False)
                               await channel.set_permissions(ctx.guild.me, read_messages=True)
 
