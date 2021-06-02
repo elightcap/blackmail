@@ -310,7 +310,7 @@ class CommandsCog(commands.Cog, name="Commands"):
 
      @commands.command(name='privatize')
      @commands.guild_only()
-     async def private_channel(self, ctx, *, user_input : str):
+     async def private_channel(self, ctx):
           roles = [y.name.lower() for y in ctx.author.roles]
           if "home owner" in roles:
                aID = ctx.author.id
