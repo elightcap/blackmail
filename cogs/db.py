@@ -22,7 +22,7 @@ headers = {'Authorization': unbkey}
 pokerBotID = "613156357239078913"
 botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156357239078913"
 
-class CommandsCog(commands.Cog, name="Commands"):
+class dbCog(commands.Cog, name="db"):
     def __init__(self, bot):
         self.bot = bot
         self.remove_rv.start()
@@ -64,4 +64,4 @@ class CommandsCog(commands.Cog, name="Commands"):
                   print(e)
 
 def setup(bot):
-    bot.add_cog(CommandsCog(bot))
+    bot.add_cog(dbCog(bot))
