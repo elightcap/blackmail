@@ -4,6 +4,7 @@ import discord
 import requests
 import os
 import json
+import time
 from typing import cast
 from discord.ext import commands
 from discord.utils import get
@@ -25,7 +26,7 @@ botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156
 class CommandsCog(commands.Cog, name="Commands"):
      def __init__(self, bot):
           self.bot = bot
-          
+
      @commands.command(name='buyin')
      @commands.guild_only()
      async def buy_in(self, ctx, *, user_input: str):
