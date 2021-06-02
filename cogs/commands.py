@@ -294,7 +294,7 @@ class CommandsCog(commands.Cog, name="Commands"):
           roles = [y.name.lower() for y in ctx.author.roles]
           if "home owner" in roles:
                aID = ctx.author.id
-               rows = await sql_select("channels", "owners", "channelid", aID)
+               rows = await sql_select("channels", "owners", "owner", aID)
                invited = user_input
                inviteID = int(invited.replace("<@!","").replace(">",""))
                member = ctx.guild.get_member(inviteID)
