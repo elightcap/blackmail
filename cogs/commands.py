@@ -322,6 +322,26 @@ class CommandsCog(commands.Cog, name="Commands"):
                               channel =  self.bot.get_channel(cID)
                               await channel.set_permissions(ctx.guild.default_role, read_messages=False)
                               await channel.set_permissions(ctx.guild.me, read_messages=True)
+     
+     @commands.command(name='kick')
+     @commands.guild_only()
+     async def remove_member(self,ctx,*,user_input : str):
+          aID = ctx.author.id
+          rows = await sql_select("channels", "owners","owner", aID)
+          if rows:
+               for row in rows:
+                         oID = int(row[0])
+                         cID = int(row[1])
+                         rID = int(row[2])
+                         if aID == oID:
+                              remove = user_input
+                              removeID = int(remove.replace("<@!","").replace(">",""))
+                              removeObj = ctx.guild.get_member(removeID)
+                              username = removeObj.name
+                              role = ctx.guild.get_role(rID)
+                              await removeObj.remove_roles(role)
+                              mes = "{} has been evicted!".format(username)
+                              send = await ctx.channel.send(mes)
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
