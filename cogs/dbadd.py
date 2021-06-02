@@ -18,7 +18,7 @@ headers = {'Authorization': unbkey}
 pokerBotID = "613156357239078913"
 botUrl = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/613156357239078913"
 
-class dbCog(commands.Cog, name="dbadd"):
+class dbaddCog(commands.Cog, name="dbadd"):
     def __init__(self, bot):
         self.bot = bot
         self.on_member_update.start()
@@ -33,4 +33,4 @@ class dbCog(commands.Cog, name="dbadd"):
                 print("rob vic success add")
 
 def setup(bot):
-    bot.add_cog(dbCog(bot))
+    bot.add_cog(dbaddCog(bot))
