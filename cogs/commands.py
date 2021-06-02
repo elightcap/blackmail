@@ -263,5 +263,28 @@ class CommandsCog(commands.Cog, name="Commands"):
                     usa= discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
                     await ctx.author.remove_roles(usa)
 
+     @commands.command(name='build')
+     @commands.guild_only()
+     async def channel_create(self, ctx, *, user_input : str):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          if "home builder" in roles:
+               aID = ctx.author.id
+               channelName = user_input
+               cat = discord.utils.get(ctx.guild.categories, name="Degen City")
+               await ctx.guild.create_role(name=channelName)
+               role = discord.utils.get(ctx.guild.roles, name=channelName)
+               await ctx.author.add_roles(role)
+               overwrites = {
+                    role: discord.PermissionOverwrite(read_messages=True, send_messages=True),
+                    ctx.guild.me: discord.PermissionOverwrite(read_messages=True)
+               }
+               await ctx.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
+               newChannel = discord.utils.get(ctx.guild.channels, name=channelName)
+               sql_insert("channels", "owners", aID, newChannel.id, role.id)
+               ownerRole = discord.utils.get(ctx.guild.roles, name="Home Builder")
+               await ctx.author.remove_roles(ownerRole)
+
+
+
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
