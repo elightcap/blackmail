@@ -24,13 +24,21 @@ class dbaddCog(commands.Cog, name="dbadd"):
 
     @commands.Cog.listener()
     async def on_member_update(self,before,after):
-        print(after.roles)
         if len(before.roles)<len(after.roles):
-            newRole = next(role for role in after.roles if role not in before.roles)   
+            newRole = next(role for role in after.roles if role not in before.roles)
+            uid = int(after.id)
             if newRole.name == "Robbery Victim":
-                uid = int(after.id)
                 await sql_insert("robbed", "users", uid)
                 print("rob vic success add")
+            elif newRole.name == "Blackmailer":
+                await sql_insert("blackmailer", "users", uid)
+                print("blackmail success add")
+            elif newRole.name == "Lawyer'd Up":
+                await sql_insert("lawyer", "users", uid)
+                print("lawyer vic success add")
+            elif newRole.name == "Robinhood Immune":
+                await sql_insert("rhimmune", "users", uid)
+
 
 def setup(bot):
     bot.add_cog(dbaddCog(bot))
