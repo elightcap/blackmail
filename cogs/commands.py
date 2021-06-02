@@ -235,7 +235,9 @@ class CommandsCog(commands.Cog, name="Commands"):
 
                try:
                     nukeChannel = discord.utils.get(ctx.guild.channels, name=hiroshima)
-                    rows = sql_select("channels", "owners", "channelid", nukeChannel.id)
+                    print(nukeChannel.id)
+                    rows = await sql_select("channels", "owners", "channelid", nukeChannel.id)
+                    print(rows)
                     if rows:
                          for row in rows:
                               oId = int(row[0])
