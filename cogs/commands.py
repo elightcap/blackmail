@@ -280,7 +280,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                }
                await ctx.guild.create_text_channel(channelName, overwrites=overwrites, category=cat)
                newChannel = discord.utils.get(ctx.guild.channels, name=channelName)
-               sql_insert("channels", "owners", aID, newChannel.id, role.id)
+               await sql_insert("channels", "owners", aID, newChannel.id, role.id)
                ownerRole = discord.utils.get(ctx.guild.roles, name="Home Builder")
                await ctx.author.remove_roles(ownerRole)
 
