@@ -238,7 +238,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                     rows = await sql_select("channels", "owners", "channelid", nukeChannel.id)
                     if rows:
                          for row in rows:
-                              oId = int(row[0])
+                              oID = int(row[0])
                               cID = int(row[1])
                               rID = int(row[2])
                               role = ctx.guild.get_role(rID)
@@ -248,8 +248,8 @@ class CommandsCog(commands.Cog, name="Commands"):
                                    await member.remove_roles(role)
                               ho = discord.utils.get(ctx.guild.roles, name="Home Owner")
                               hd = discord.utils.get(ctx.guild.roles, name="Home Destroyed")
-                              owner.remove_roles(ho)
-                              owner.add_roles(hd)
+                              await owner.remove_roles(ho)
+                              await owner.add_roles(hd)
                               mes = "Tactical nuke deployed! https://giphy.com/gifs/HhTXt43pk1I1W"
                               send = await channel.send(mes)
                               usa = discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
