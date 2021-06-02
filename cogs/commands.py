@@ -1,3 +1,4 @@
+
 from cogs.sqldel import sql_remove
 import discord
 import requests
@@ -5,7 +6,7 @@ import os
 import json
 import aiocron
 from typing import cast
-from discord.ext import commands
+from discord.ext import commands,tasks
 from discord.utils import get
 from dotenv import load_dotenv
 from cogs.sqlget import sql_select
@@ -27,6 +28,7 @@ bot1 = commands.Bot(command_prefix="!",intents=intents)
 class NukeCog(commands.Cog, name="Nuke"):
      def __init__(self, bot):
           self.bot = bot
+          self.remove_rv.start()
 
      @commands.command(name='nuke')
      async def do_nuke(self, ctx, *, our_input: str):
@@ -227,11 +229,12 @@ class NukeCog(commands.Cog, name="Nuke"):
           rID = tup[2]
           print(rID)
 
-     @aiocron.crontab('*/1 * * * *')
-     async def remove_rv():
+     @tasks.loop(minutes=1)
+     async def remove_rv(self):
           rows = await sql_select("robbed", "users", "uid","%")
           for row in rows:
                uUid = int(row[0])
+               print(uUid)
                uDate = row[1]
                strTime = str(row[2])
                uTime = datetime.strptime(strTime,"%H:%M:%S" ).time()
@@ -247,16 +250,16 @@ class NukeCog(commands.Cog, name="Nuke"):
                          print("date")
                          if uTime <= newTime:
                               print("time")
-                              member = bot.get_user(uUid)
+                              member = self.bot.get_user(uUid)
                               print(member)
-                              for guild in bot.guilds:
+                              for guild in self.bot.guilds:
                                    for member in guild.members:
                                         for role in member.roles:
                                              if role.name == "Robbery Victim":
                                                   print("role")
                                                   role  = discord.utils.get(member.guild.roles, name="Robbery Victim")
                                                   if member.id == uUid:
-                                                       sql_remove("robbed", "users", "uid", uUid)
+                                                       await sql_remove("robbed", "users", "uid", uUid)
                                                        print("blackmail role removed")
                                                        await member.remove_roles(role)
                except os.error as e:
