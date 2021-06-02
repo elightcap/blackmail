@@ -24,6 +24,8 @@ class dbCog(commands.Cog, name="db"):
         self.bot = bot
         self.remove_rv.start()
         self.remove_lawyer.start()
+        self.remove_blackmail.start()
+        self.remove_rhimmune.start()
 
     @tasks.loop(minutes=10)
     async def remove_rv(self):
@@ -119,6 +121,37 @@ class dbCog(commands.Cog, name="db"):
                                                      await member.remove_roles(role)
              except os.error as e:
                   print(e)
+
+    @tasks.loop(minutes=1)
+    async def remove_rhimmune(self):
+          rows = await sql_select("rhimmune", "users", "uid","%")
+          for row in rows:
+               uUid = int(row[0])
+               uDate = row[1]
+               strTime = str(row[2])
+               uTime = datetime.strptime(strTime,"%H:%M:%S" ).time()
+               try:
+                    datetimenow = datetime.now()
+                    addTime = timedelta(hours=2)
+                    dateNowStr = datetimenow.strftime("%Y-%m-%d")
+                    timeNowStr = datetimenow.strftime("%H:%M:%S")
+                    mDate = (datetime.strptime(dateNowStr, "%Y-%m-%d")).date()
+                    mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
+                    newTime = (mTime - addTime).time()
+                    if uDate <= mDate:
+                         if uTime <= newTime:
+                              member = self.bot.get_user(uUid)
+                              for guild in self.bot.guilds:
+                                   for member in guild.members:
+                                        for role in member.roles:
+                                             if role.name == "Robinhood Immune":
+                                                  role  = discord.utils.get(member.guild.roles, name="Robinhood Immune")
+                                                  if member.id == uUid:
+                                                       await sql_remove("rhimmune", "users", "uid", uUid)
+                                                       print("immune role removed")
+                                                       await member.remove_roles(role)
+               except os.error as e:
+                    print(e)
 
 def setup(bot):
     bot.add_cog(dbCog(bot))
