@@ -335,5 +335,27 @@ class CommandsCog(commands.Cog, name="Commands"):
                                    mes = "{} has been evicted!".format(username)
                                    send = await ctx.channel.send(mes)
 
+     @commands.command(name='rename')
+     @commands.guild_only()
+     async def rename_channel(self, ctx, *, user_input : str):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          if "renovator" in roles:
+               aID = ctx.author.id
+               newName = user_input
+                    rows = await sql_select("channels", "owners", "owner", aID)
+                    if rows:
+                         for row in rows:
+                              oID = int(row[0])
+                              cID = int(row[1])
+                              rID = int(row[2])
+                              if aID == oID:
+                                   channel = client.get_channel(cID)
+                                   print(channel)
+                                   test=await channel.edit(name=newName)
+                                   print(test)
+                                   ren = discord.utils.get(ctx.guild.roles, name="Renovator")
+                                   await ctx.author.remove_roles(ren)
+
+
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
