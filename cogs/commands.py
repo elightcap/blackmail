@@ -261,7 +261,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                     usa= discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
                     await ctx.author.remove_roles(usa)
           else:
-               mes = "No nukes elft in your arsenal"
+               mes = "No nukes left in your arsenal"
                send = await ctx.channel.send(mes)
 
      @commands.command(name='build')
@@ -293,7 +293,7 @@ class CommandsCog(commands.Cog, name="Commands"):
      async def channel_invite(self, ctx, *, user_input : str):
           roles = [y.name.lower() for y in ctx.author.roles]
           if "home destroyed" in roles:
-               mes = "Your home was destroyed, you'll need to hire a Cleanup Crew before you can rebuild"
+               mes = "You need to rebuild your home before anyone bothers visting"
                send = await ctx.channel.send(mes)
                return
           elif "home owner" in roles:
@@ -311,7 +311,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                               role = ctx.guild.get_role(rID)
                               await member.add_roles(role)
           else:
-               mes = "Theres nothing for you to rebuild! try buying a house first."
+               mes = "Where are you inviting people? the dumpster behind Chipotle?"
                send = await ctx.channel.send(mes)
 
      @commands.command(name='privatize')
