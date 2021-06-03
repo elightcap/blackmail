@@ -349,7 +349,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                          cID = int(row[1])
                          rID = int(row[2])
                          if aID == oID:
-                              channel = client.get_channel(cID)
+                              channel = self.bot.get_channel(cID)
                               print(channel)
                               test=await channel.edit(name=newName)
                               print(test)
