@@ -142,6 +142,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                         send = await channel.send(mes)
                    pt = discord.utils.get(ctx.guild.roles, name="Patent Troll")
                    await ctx.author.remove_roles(pt)
+          else:
+               mes = "You don't have the legal prowess to copy strike"
+               send = await ctx.channel.send(mes)
 
      @commands.command(name='robinhood')
      @commands.guild_only()
@@ -152,7 +155,8 @@ class CommandsCog(commands.Cog, name="Commands"):
                members = [y.id for y in role.members]
                memberCount = len(members)
                if memberCount == 0:
-                    print("no members")
+                    mes = "My merry gang has no members!"
+                    send = await ctx.channel.send(mes)
                     return
                else:
                     url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/"
@@ -202,6 +206,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                               builder = {'cash': share}
                               jsonString = json.dumps(builder, indent=4)
                               rp = requests.patch(url, headers=headers, data=jsonString)
+          else:
+               mes= "Little John role required"
+               send = await ctx.channel.send(mes)
 
      @commands.command(name='nuke')
      @commands.guild_only()
@@ -253,6 +260,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                     send = await channel.send(mes)
                     usa= discord.utils.get(ctx.guild.roles, name="USA! USA! USA!")
                     await ctx.author.remove_roles(usa)
+          else:
+               mes = "No nukes elft in your arsenal"
+               send = await ctx.channel.send(mes)
 
      @commands.command(name='build')
      @commands.guild_only()
@@ -274,12 +284,17 @@ class CommandsCog(commands.Cog, name="Commands"):
                await sql_insert("channels", "owners", aID, newChannel.id, role.id)
                ownerRole = discord.utils.get(ctx.guild.roles, name="Home Builder")
                await ctx.author.remove_roles(ownerRole)
+          else:
+               mes = "Youre too clumsy to try to build your own home"
+               send = await ctx.channel.send(mes)
 
      @commands.command(name='invite')
      @commands.guild_only()
      async def channel_invite(self, ctx, *, user_input : str):
           roles = [y.name.lower() for y in ctx.author.roles]
           if "home destroyed" in roles:
+               mes = "Your home was destroyed, you'll need to hire a Cleanup Crew before you can rebuild"
+               send = await ctx.channel.send(mes)
                return
           elif "home owner" in roles:
                aID = ctx.author.id
@@ -295,6 +310,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                          if aID == oID:
                               role = ctx.guild.get_role(rID)
                               await member.add_roles(role)
+          else:
+               mes = "Theres nothing for you to rebuild! try buying a house first."
+               send = await ctx.channel.send(mes)
 
      @commands.command(name='privatize')
      @commands.guild_only()
@@ -312,6 +330,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                               channel =  self.bot.get_channel(cID)
                               await channel.set_permissions(ctx.guild.default_role, read_messages=False)
                               await channel.set_permissions(ctx.guild.me, read_messages=True)
+          else:
+               mes = "you cant make the dumpster behind Chipotle private"
+               send = await ctx.channel.send(mes)
      
      @commands.command(name='kick')
      @commands.guild_only()
@@ -334,6 +355,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                                    await removeObj.remove_roles(role)
                                    mes = "{} has been evicted!".format(username)
                                    send = await ctx.channel.send(mes)
+          else:
+               mes = "And you cant kick the other bums out of the dumpster behind Chipotle!"
+               send = await ctx.channel.send(mes)
 
      @commands.command(name='rename')
      @commands.guild_only()
@@ -350,11 +374,12 @@ class CommandsCog(commands.Cog, name="Commands"):
                          rID = int(row[2])
                          if aID == oID:
                               channel = self.bot.get_channel(cID)
-                              print(channel)
-                              test=await channel.edit(name=newName)
-                              print(test)
+                              await channel.edit(name=newName)
                               ren = discord.utils.get(ctx.guild.roles, name="Renovator")
                               await ctx.author.remove_roles(ren)
+          else:
+               mes = "Looks like you forgot to pay the town building fees"
+               send = await ctx.channel.send(mes)
 
 
 def setup(bot):
