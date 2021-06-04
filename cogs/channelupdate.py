@@ -23,9 +23,9 @@ class channelUpdateCog(commands.Cog, name="channelUpdate"):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_guild_channel_update(before, after):
-        print(before)
-        print(after)
+    async def on_guild_channel_update(self, before, after):
+        print(before.name)
+        print(after.name)
 
 def setup(bot):
     bot.add_cog(channelUpdateCog(bot))
