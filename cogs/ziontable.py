@@ -10,13 +10,13 @@ class channelTableCog(commands.Cog, name="channelTable"):
         self.update_table.start()
 
     @tasks.loop(minutes=1)
-    async def update_table(self, ctx):
+    async def update_table(self):
         embedVar = discord.Embed(title="Channels", description="The channels", color=0x00ff00)
         rows = sql_select("channels", "owners", "owner", "%")
         for row in rows:
             oID = row[0]
             cID = row[1]
-            owner = ctx.guild.get_member(oID)
+            owner = self.bot.get_member(oID)
             channel = self.bot.get_channel(cID)
             embedVar.add_field(name=f'**{channel.name}**', value=f'>{owner.name}' )
         channel = self.bot.get_channel(850206859898257408)
