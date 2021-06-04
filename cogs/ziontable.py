@@ -12,7 +12,7 @@ class channelTableCog(commands.Cog, name="channelTable"):
     @tasks.loop(minutes=1)
     async def update_table(self):
         embedVar = discord.Embed(title="Channels", description="The channels", color=0x00ff00)
-        rows = sql_select("channels", "owners", "owner", "%")
+        rows = await sql_select("channels", "owners", "owner", "%")
         for row in rows:
             oID = row[0]
             cID = row[1]
