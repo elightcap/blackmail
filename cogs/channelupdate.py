@@ -25,7 +25,7 @@ class channelUpdateCog(commands.Cog, name="channelUpdate"):
     @commands.Cog.listener()
     async def on_guild_channel_update(self, before, after):
         rows = await sql_select("channels","owners","owner","%")
-        embedVar = discord.Embed(title="Channels Fuck You", description="The channels", color=0x00ff00)
+        embedVar = discord.Embed(title="Current Channels and Owners", description="NUKE THEM ALL", color="#FF0000")
         rows = await sql_select("channels", "owners", "owner", "%")
         if rows:
             for row in rows:
@@ -34,9 +34,9 @@ class channelUpdateCog(commands.Cog, name="channelUpdate"):
                 owner = self.bot.get_user(oID)
                 oChannel = self.bot.get_channel(cID)
                 embedVar.add_field(name=f'**{oChannel.name}**', value=f'> Owned By: {owner.name}' )
-        channel = self.bot.get_channel(850206859898257408)
-        msg = await channel.fetch_message(850221103963045898)
-        send = await msg.edit(embed=embedVar)
+        channel = self.bot.get_channel(847311082091184138)
+        #msg = await channel.fetch_message(850221103963045898)
+        send = await channel.send(embed=embedVar)
 
 def setup(bot):
     bot.add_cog(channelUpdateCog(bot))
