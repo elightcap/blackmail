@@ -32,6 +32,7 @@ class channelTableCog(commands.Cog, name="channelTable"):
                 oChannel = self.bot.get_channel(cID)
                 embedVar.add_field(name=f'**{oChannel.name}**', value=f'> Owned By: {owner.name}' )
         channel = self.bot.get_channel(850206859898257408)
+        msg = channel.fetch_message(850221111819370517)
         send = await msg.edit(embed=embedVar)
 
 
