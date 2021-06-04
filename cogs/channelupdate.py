@@ -25,7 +25,7 @@ class channelUpdateCog(commands.Cog, name="channelUpdate"):
     @commands.Cog.listener()
     async def on_guild_channel_update(self, before, after):
         rows = await sql_select("channels","owners","owner","%")
-        embedVar = discord.Embed(title="Current Channels and Owners", description="NUKE THEM ALL", color="#FF0000")
+        embedVar = discord.Embed(title="Current Channels and Owners", description="NUKE THEM ALL", color=0xE74C3C)
         rows = await sql_select("channels", "owners", "owner", "%")
         if rows:
             for row in rows:
