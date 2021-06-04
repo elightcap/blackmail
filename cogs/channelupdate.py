@@ -35,8 +35,8 @@ class channelUpdateCog(commands.Cog, name="channelUpdate"):
                 oChannel = self.bot.get_channel(cID)
                 embedVar.add_field(name=f'**{oChannel.name}**', value=f'> Owned By: {owner.name}' )
         channel = self.bot.get_channel(847311082091184138)
-        #msg = await channel.fetch_message(850221103963045898)
-        send = await channel.send(embed=embedVar)
+        msg = await channel.fetch_message(850234968927633408)
+        send = await msg.edit(embed=embedVar)
 
 def setup(bot):
     bot.add_cog(channelUpdateCog(bot))

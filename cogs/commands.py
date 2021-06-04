@@ -378,6 +378,10 @@ class CommandsCog(commands.Cog, name="Commands"):
                               await channel.edit(name=newName)
                               ren = discord.utils.get(ctx.guild.roles, name="Renovator")
                               await ctx.author.remove_roles(ren)
+                         else:
+                             print("busted")
+               else:
+                   print("broken2.0")
           else:
                mes = "Looks like you forgot to pay the town building fees"
                send = await ctx.channel.send(mes)
