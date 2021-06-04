@@ -13,12 +13,13 @@ class channelTableCog(commands.Cog, name="channelTable"):
     async def update_table(self):
         embedVar = discord.Embed(title="Channels", description="The channels", color=0x00ff00)
         rows = await sql_select("channels", "owners", "owner", "%")
-        for row in rows:
-            oID = row[0]
-            cID = row[1]
-            owner = self.bot.get_member(oID)
-            channel = self.bot.get_channel(cID)
-            embedVar.add_field(name=f'**{channel.name}**', value=f'>{owner.name}' )
+        if rows:
+            for row in rows:
+                oID = row[0]
+                cID = row[1]
+                owner = self.bot.get_user(oID)
+                channel = self.bot.get_channel(cID)
+                embedVar.add_field(name=f'**{channel.name}**', value=f'>{owner.name}' )
         channel = self.bot.get_channel(850206859898257408)
         send = await channel.send(embed=embedVar)
 
