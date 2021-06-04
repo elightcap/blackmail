@@ -23,8 +23,8 @@ class channelUpdateCog(commands.Cog, name="channelUpdate"):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_message(ctx):
-        if ctx.message.type == "channel_name_change":
+    async def on_message(self, message):
+        if message.type == discord.MessageType.pins_add:
             print("name change")
 
 def setup(bot):
