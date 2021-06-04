@@ -53,6 +53,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                if amount > 200000:
                     mes = "The maximum amount the cashier allows is 200,000 chips"
                     send = await ctx.channel.send(mes)
+               elif amount < 1000:
+                   mes = "Minimum buyin is 10000"
+                   send = await ctx.channel.send(mes)
                else:
                     print("buyin")
                     mes = "!pac {0.author.mention} {1}".format(ctx, amount)
@@ -370,22 +373,20 @@ class CommandsCog(commands.Cog, name="Commands"):
                rows = await sql_select("channels", "owners", "owner", aID)
                if rows:
                     for row in rows:
+                         print(row)
                          oID = int(row[0])
                          cID = int(row[1])
                          rID = int(row[2])
                          if aID == oID:
                               channel = self.bot.get_channel(cID)
-                              await channel.edit(name=newName)
+                              print(channel)
+                              print(newName)
+                              rename = await channel.edit(name=newName)
                               ren = discord.utils.get(ctx.guild.roles, name="Renovator")
                               await ctx.author.remove_roles(ren)
-                         else:
-                             print("busted")
-               else:
-                   print("broken2.0")
           else:
                mes = "Looks like you forgot to pay the town building fees"
                send = await ctx.channel.send(mes)
-
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
