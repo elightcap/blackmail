@@ -1,0 +1,4 @@
+irm
+exit
+Get-PSRepository
+exit
