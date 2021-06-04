@@ -273,7 +273,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                channelName = user_input
                cat = discord.utils.get(ctx.guild.categories, name="Degen City")
                await ctx.guild.create_role(name=channelName)
-               channelName=channelName.replace(" " "-")
+               channelName=channelName.replace(" ", "-")
                role = discord.utils.get(ctx.guild.roles, name=channelName)
                await ctx.author.add_roles(role)
                overwrites = {
