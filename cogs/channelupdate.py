@@ -26,3 +26,6 @@ class channelUpdateCog(commands.Cog, name="channelUpdate"):
     async def on_message(ctx):
         if ctx.message.type == "channel_name_change":
             print("name change")
+
+def setup(bot):
+    bot.add_cog(channelUpdateCog(bot))
