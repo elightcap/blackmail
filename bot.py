@@ -7,10 +7,6 @@ from dotenv import load_dotenv
 import sys, traceback
 
 load_dotenv()
-intents = discord.Intents.default()
-intents.members = True
-intents.messages=True
-client = discord.Client(intents=intents)
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 unbkey = os.getenv('UNBKEY')
