@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord.utils import get
 from dotenv import load_dotenv
 import re
+import time
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -30,11 +31,12 @@ class BribeCog(commands.Cog, name="Bribe"):
           member = ctx.guild.get_member(targetID)
           pw = "!pw {}".format(member.mention)
           send = await ctx.channel.send(pw)
-          @client.event
-          async def on_raw_message_edit(edit):
-              print(send.id)
-              msg = await ctx.channel.fetch_message(850573078215000064)
-              embeds = msg.embeds
+          print(send.id)
+          msg = await ctx.channel.fetch_message(send.id)
+          @commands.Cog.listener()
+          async def on_raw_message_edit(before, after):
+              embeds = after.embeds
+              print(after)
               for emb in embeds:
                   mDict = emb.to_dict()
                   desc = mDict['description']
@@ -43,6 +45,10 @@ class BribeCog(commands.Cog, name="Bribe"):
                   myMatch = result.group(0)
                   chipCount = int(myMatch.replace("*","").replace("chips",""))
                   print(chipCount)
+
+     @commands.Cog.listener()
+     async def on_raw_message_edit(before,after):
+         print(after)
 
 def setup(bot):
     bot.add_cog(BribeCog(bot))
