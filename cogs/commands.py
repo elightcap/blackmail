@@ -388,5 +388,21 @@ class CommandsCog(commands.Cog, name="Commands"):
                mes = "Looks like you forgot to pay the town building fees"
                send = await ctx.channel.send(mes)
 
+     @commands.command(name='channelhack')
+     @commands.guild_only()
+     async def get_channelPerms(self, ctx, *, user_input : str):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          if "the chosen one" in roles:
+               author = ctx.author
+               channelName = user_input
+               channel = discord.utils.get(ctx.guild.channels, name=channelName)
+               cID = channel.id
+               rows = await sql_select("channels", "owners", "channelID", cID)
+               if rows:
+                    for row in rows:
+                         rID = int(row[2])
+                              role = ctx.guild.get_role(rID)
+                              await author.add_roles(role)
+
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
