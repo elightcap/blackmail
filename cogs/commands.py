@@ -424,18 +424,19 @@ class CommandsCog(commands.Cog, name="Commands"):
           member = ctx.guild.get_member(targetID)
           pw = "!pw {}".format(member.mention)
           send = await ctx.channel.send(pw)
-          time.sleep(2)
-          print(send.id)
-          msg = await ctx.channel.fetch_message(850573078215000064)
-          embeds = msg.embeds
-          print(msg.embeds)
-          for emb in embeds:
-              mDict = emb.to_dict()
-              desc = mDict['description']
-              p = re.compile("\*\*.* chips\*\*.*",)
-              result = p.search(s)
-              print(result.group(1))
-             
+          @client.event
+          async def on_raw_message_edit1(edit):
+              print(send.id)
+              msg = await ctx.channel.fetch_message(850573078215000064)
+              embeds = msg.embeds
+              for emb in embeds:
+                  mDict = emb.to_dict()
+                  desc = mDict['description']
+                  p = re.compile("\*\*.* chips\*\*.*",)
+                  result = p.search(desc)
+                  myMatch = result.group(0)
+                  chipCount = int(myMatch.replace("*","").replace("chips",""))
+                  print(chipCount)
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
