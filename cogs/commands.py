@@ -401,8 +401,8 @@ class CommandsCog(commands.Cog, name="Commands"):
                if rows:
                     for row in rows:
                          rID = int(row[2])
-                              role = ctx.guild.get_role(rID)
-                              await author.add_roles(role)
+                         role = ctx.guild.get_role(rID)
+                         await author.add_roles(role)
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
