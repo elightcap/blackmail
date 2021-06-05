@@ -410,7 +410,8 @@ class CommandsCog(commands.Cog, name="Commands"):
                     mes = "Theres nothing to hack there"
                     send = await ctx.channel.send(mes)
           else:
-               mes = "You dont have the hacking skills for that"
+               mes = "You don't have the hacking skills for that"
+               send = await ctx.channel.send(mes)
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
