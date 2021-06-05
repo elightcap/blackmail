@@ -1,5 +1,3 @@
-
-
 import discord
 import requests
 import os
@@ -413,30 +411,6 @@ class CommandsCog(commands.Cog, name="Commands"):
           else:
                mes = "You don't have the hacking skills for that"
                send = await ctx.channel.send(mes)
-
-     @commands.command(name='pokerbribe')
-     @commands.guild_only()
-     async def give_bribe(self, ctx, *, user_input: str):
-          roles = [y.name.lower() for y in ctx.author.roles]
-          #if "poker bribe" in roles:
-          target = user_input
-          targetID = int(target.replace("<@!","").replace(">",""))
-          member = ctx.guild.get_member(targetID)
-          pw = "!pw {}".format(member.mention)
-          send = await ctx.channel.send(pw)
-          @client.event
-          async def on_raw_message_edit1(edit):
-              print(send.id)
-              msg = await ctx.channel.fetch_message(850573078215000064)
-              embeds = msg.embeds
-              for emb in embeds:
-                  mDict = emb.to_dict()
-                  desc = mDict['description']
-                  p = re.compile("\*\*.* chips\*\*.*",)
-                  result = p.search(desc)
-                  myMatch = result.group(0)
-                  chipCount = int(myMatch.replace("*","").replace("chips",""))
-                  print(chipCount)
-
+               
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
