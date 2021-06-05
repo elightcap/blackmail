@@ -396,13 +396,21 @@ class CommandsCog(commands.Cog, name="Commands"):
                author = ctx.author
                channelName = user_input
                channel = discord.utils.get(ctx.guild.channels, name=channelName)
-               cID = channel.id
-               rows = await sql_select("channels", "owners", "channelID", cID)
-               if rows:
-                    for row in rows:
-                         rID = int(row[2])
-                         role = ctx.guild.get_role(rID)
-                         await author.add_roles(role)
+               try:
+                    cID = channel.id
+                    rows = await sql_select("channels", "owners", "channelID", cID)
+                    if rows:
+                         for row in rows:
+                              rID = int(row[2])
+                              role = ctx.guild.get_role(rID)
+                              await author.add_roles(role)
+                    mes = "https://giphy.com/gifs/film-opening-trinity-Azwmdv1NTSe9W"
+                    send = await ctx.channel.send(mes)
+               except AttributeError:
+                    mes = "Theres nothing to hack there"
+                    send = await ctx.channel.send(mes)
+          else:
+               mes = "You dont have the hacking skills for that"
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
