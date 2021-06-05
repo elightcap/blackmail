@@ -412,6 +412,19 @@ class CommandsCog(commands.Cog, name="Commands"):
           else:
                mes = "You don't have the hacking skills for that"
                send = await ctx.channel.send(mes)
+     @commands.command(name='pokerbribe')
+     @commands.guild_only()
+     async def give_bribe(self,ctx, user_input : str):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          #if "poker bribe" in roles:
+          target = user_input
+          targetID = int(target.replace("<@!","").replace(">",""))
+          member = ctx.guild.get_member(targetID)
+          pw = "!pw {}".format(member.mention)
+          @commands.Cog.listener()
+          async def on_raw_message_edit(edit):
+               msgData = edit.data
+               print(msgData)
 
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
