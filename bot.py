@@ -28,7 +28,8 @@ def get_prefix(bot, message):
 initial_extensions = ['cogs.commands',
                                   'cogs.db',
                                   'cogs.dbadd',
-                                  'cogs.channelupdate'
+                                  'cogs.channelupdate',
+                                  'cogs.bribe'
                                 ]
 
 bot = commands.Bot(command_prefix=get_prefix, description="Bot to do stuff with unbelieveaboat", intents=intents)
