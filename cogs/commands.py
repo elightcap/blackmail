@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from cogs.sqlget import sql_select
 from cogs.sqladd import sql_insert
 from datetime import datetime, timedelta
+import re
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -431,6 +432,9 @@ class CommandsCog(commands.Cog, name="Commands"):
           for emb in embeds:
               mDict = emb.to_dict()
               desc = mDict['description']
+              p = re.compile("\*\*.* chips\*\*.*",)
+              result = p.search(s)
+              print(result.group(1))
              
 
 def setup(bot):
