@@ -34,7 +34,7 @@ class BribeCog(commands.Cog, name="Bribe"):
           print(send.id)
           msg = await ctx.channel.fetch_message(send.id)
           @commands.Cog.listener()
-          async def on_raw_message_edit(before, after):
+          async def on_rew_message_edit(edit):
               embeds = after.embeds
               print(after)
               for emb in embeds:
@@ -45,10 +45,11 @@ class BribeCog(commands.Cog, name="Bribe"):
                   myMatch = result.group(0)
                   chipCount = int(myMatch.replace("*","").replace("chips",""))
                   print(chipCount)
+          await self.bot.process_commands(edit)
 
-     @commands.Cog.listener()
-     async def on_raw_message_edit(before,after):
-         print(after)
+#     @commands.Cog.listener()
+#     async def on_raw_message_edit(before,after):
+#         print(after)
 
 def setup(bot):
     bot.add_cog(BribeCog(bot))

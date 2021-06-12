@@ -76,27 +76,27 @@ class CommandsCog(commands.Cog, name="Commands"):
           ##an event on edit. through this part we are filtering messages from users that
           #are not poker bot, or messages that are from poker bot that we dont want to do 
           ##shit with
-          @client.event
-          async def on_raw_message_edit(edit):
-               msgData = edit.data
-               editID = str(msgData['author']['id'])
-               ##making sure the editor is poker bot
-               if editID == pokerBotID:
-               #print("in for loop")
-                    if "done! I removed" in str(edit):
-                         print("user has chips")
-                         payout = str((amount//2)*.9)
-                         rake = str((amount//2)*.1)
-                         payBuilder = {'cash': payout}
-                         rakeBuilder = {'bank': rake}
-                         payJson = json.dumps(payBuilder, indent=4)
-                         rakeJson = json.dumps(rakeBuilder, indent=4)
-                         rp = requests.patch(url, headers=headers, data=payJson)
-                         rr = requests.patch(botUrl, headers=headers, data=rakeJson)
-                    elif "this user only has" in str(edit):
-                         print("user doesnt have chips")
-                         mes = "ya broke"
-                         send = await ctx.channel.send(mes)
+          class MyBot(self.bot):
+               async def on_raw_message_edit(self, edit):
+                    msgData = edit.data
+                    editID = str(msgData['author']['id'])
+                    ##making sure the editor is poker bot
+                    if editID == pokerBotID:
+                    #print("in for loop")
+                         if "done! I removed" in str(edit):
+                              print("user has chips")
+                              payout = str((amount//2)*.9)
+                              rake = str((amount//2)*.1)
+                              payBuilder = {'cash': payout}
+                              rakeBuilder = {'bank': rake}
+                              payJson = json.dumps(payBuilder, indent=4)
+                              rakeJson = json.dumps(rakeBuilder, indent=4)
+                              rp = requests.patch(url, headers=headers, data=payJson)
+                              rr = requests.patch(botUrl, headers=headers, data=rakeJson)
+                         elif "this user only has" in str(edit):
+                              print("user doesnt have chips")
+                              mes = "ya broke"
+                              send = await ctx.channel.send(mes)
           
      @commands.command(name='strike')
      @commands.guild_only()
@@ -124,7 +124,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                         pd = discord.utils.get(ctx.guild.roles, name="Public Defender")
                         await person.remove_roles(pd)
                    else:
-                        url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(loser)
+                        url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(loser)
                         r = requests.get(url, headers=headers)
                         json_data = json.loads(r.text)
                         strCash = json_data['cash']
@@ -161,7 +161,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                     send = await ctx.channel.send(mes)
                     return
                else:
-                    url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/"
+                    url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/"
                     r = requests.get(url, headers=headers)
                     json_data = json.loads(r.text)
                     leader = next((item for item in json_data if item["rank"] == "1"), None)
@@ -178,7 +178,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                          lj = discord.utils.get(ctx.guild.roles, name="Little John")
                          await ctx.author.remove_roles(lj)
                     else:
-                         leaderProfile = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(leader['user_id'])
+                         leaderProfile = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(leader['user_id'])
                          r = requests.get(leaderProfile, headers=headers)
                          json_data = json.loads(r.text)
                          leaderCash = float(json_data['cash'])
@@ -202,7 +202,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                          await sql_insert("robbed", "users",leaderInfo.id)
                          for member in members:
                               memberProfile = ctx.guild.get_member(int(member))
-                              url = "https://unbelievaboat.com/api/v1/guilds/267179220051034112/users/{}".format(member)
+                              url = "https://unbelievaboat.com/api/v1/guilds/86565008669958144/users/{}".format(member)
                               r = requests.get(url, headers=headers)
                               json_data = json.loads(r.text)
                               builder = {'cash': share}
