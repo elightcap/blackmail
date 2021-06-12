@@ -76,7 +76,7 @@ class dbCog(commands.Cog, name="db"):
                   mTime = datetime.strptime(timeNowStr, "%H:%M:%S")
                   newTime = (mTime - addTime).time()
                   newDate = (mDate - addDays)
-                  if uDate <= mDate:
+                  if uDate <= newDate:
                        if uTime <= newTime:
                             member = self.bot.get_user(uUid)
                             for guild in self.bot.guilds:
