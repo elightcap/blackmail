@@ -412,5 +412,24 @@ class CommandsCog(commands.Cog, name="Commands"):
                mes = "You don't have the hacking skills for that"
                send = await ctx.channel.send(mes)
                
+     @commands.command(name='ransomware')
+     @commands.guild_only()
+     async def remove_bank(self,ctx):
+          roles = [y.name.lower() for y in ctx.author.roles]
+          if "dark web" in roles:
+               for guild in self.bot.guilds:
+                    for member in guild.members:
+                         for role in member.roles:
+                              if role.name == "DC Bank Member":
+                                   role  = discord.utils.get(member.guild.roles, name="DC Bank Member")
+                                   await member.remove_roles(role)
+               mes = "{0.author.mention} has deployed ransomware to the banks! All the systems are down!".format(ctx)
+               channel = self.bot.get_channel(831400394184851456)
+               send = await channel.send(mes)
+          else:
+               mes = "You dont have any ransomware to use"
+               send = await ctx.channel.send(mes)
+
+
 def setup(bot):
     bot.add_cog(CommandsCog(bot))
