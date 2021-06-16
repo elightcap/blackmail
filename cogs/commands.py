@@ -426,6 +426,9 @@ class CommandsCog(commands.Cog, name="Commands"):
                mes = "{0.author.mention} has deployed ransomware to the banks! All the systems are down!".format(ctx)
                channel = self.bot.get_channel(831400394184851456)
                send = await channel.send(mes)
+               dwrole = discord.utils.get(ctx.guild.roles, name="Dark Web")
+               await ctx.author.remove_roles(dwrole)
+
           else:
                mes = "You dont have any ransomware to use"
                send = await ctx.channel.send(mes)
