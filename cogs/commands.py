@@ -139,7 +139,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                         total = str(int(percentBank + percentCash))
                         jsonString = json.dumps(builder, indent=4)
                         rp = requests.patch(url, headers=headers, data=jsonString)
-                        mes = "{} lost {} because they were too cheap to pay their legal fees".format(person.mention,total)
+                        mes = "After being sued by {0.author.mention}, {1} lost {2} because they were too cheap to pay their legal fees".format(person.mention,total)
                         channel = self.bot.get_channel(831400394184851456)
                         send = await channel.send(mes)
                    pt = discord.utils.get(ctx.guild.roles, name="Patent Troll")
@@ -193,7 +193,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                          total = str(int(percentBank + percentCash))
                          jsonString = json.dumps(builder, indent=4)
                          rp = requests.patch(leaderProfile, headers=headers, data=jsonString)
-                         mes = "I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {} from {} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
+                         mes = "Whats that {0.author.mention}? I steal from the rich and give to the needy! My name is Robinhood and i am very greedy! I took {1} from {2} to distribute amongst my Merry People.".format(total, leaderInfo.mention)
                          send = await ctx.channel.send(mes)
                          lj = discord.utils.get(ctx.guild.roles, name="Little John")
                          rv = discord.utils.get(ctx.guild.roles, name="Robbery Victim")
@@ -223,7 +223,7 @@ class CommandsCog(commands.Cog, name="Commands"):
                     send = await ctx.channel.send(mes)
                     return
                nukeChannel = discord.utils.get(ctx.guild.channels, name=hiroshima)
-               warning = "@everyone NORAD has detected a nuclear warhead! Take cover!"
+               warning = "@everyone NORAD has detected a nuclear warhead launched by {0.author.mention}! Take cover!".format(ctx)
                channel = self.bot.get_channel(831400394184851456)
                send = await channel.send(warning)
                i = 10
