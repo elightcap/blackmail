@@ -432,6 +432,12 @@ class CommandsCog(commands.Cog, name="Commands"):
           else:
                mes = "You dont have any ransomware to use"
                send = await ctx.channel.send(mes)
+     
+     @commands.command(name='whosthebest')
+     @commands.guild_only()
+     async def answer_question(self,ctx):
+          mes = "Nobody. everyone in this server is a horrible person. You all need help. I'm serious"
+          send = await ctx.channel.send(mes)
 
 
 def setup(bot):
